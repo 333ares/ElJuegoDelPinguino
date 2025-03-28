@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class EventoEspecial {
 
-	String descripción;
+	String descripcion;
 
 	// CONSTRUCTOR
 	public EventoEspecial(String descripción) {
-		this.descripción = descripción;
+		this.descripcion = descripción;
 	}
 
 	// FUNCIONES
@@ -18,11 +18,11 @@ public class EventoEspecial {
 
 	// GETTERS Y SETTERS
 	public String getDescripción() {
-		return descripción;
+		return descripcion;
 	}
 
 	public void setDescripción(String descripción) {
-		this.descripción = descripción;
+		this.descripcion = descripción;
 	}
 
 }
