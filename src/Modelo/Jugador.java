@@ -27,7 +27,7 @@ public class Jugador {
 
 	}
 
-	public void usarBolaNieve(/* Poner aqui dentro "jugador" */) {
+	public void usarBolaNieve(ArrayList<Jugador> jugadores) {
 
 	}
 

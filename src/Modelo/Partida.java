@@ -11,7 +11,6 @@ public class Partida {
 
 	// CONSTRUCTOR
 	public Partida(ArrayList<Jugador> jugadores, ArrayList<CPU> cpu, int[][] tablero, int turnoActual) {
-		super();
 		this.jugadores = jugadores;
 		this.cpu = cpu;
 		this.tablero = tablero;
