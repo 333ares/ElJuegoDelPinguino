@@ -1,7 +1,5 @@
 package clases;
 
-import java.util.ArrayList;
-
 public class Partida {
 
 	Tablero tablero;
