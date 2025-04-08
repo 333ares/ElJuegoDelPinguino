@@ -1,4 +1,4 @@
-package Modelo;
+package clases;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Casilla {
 	}
 
 	// FUNCIONES
-	public void aplicarEfecto(ArrayList<Jugador> jugadores) {
+	public void aplicarEfecto(ArrayList<GestorJugador> jugadores) {
 
 	}
 

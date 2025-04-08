@@ -1,13 +1,13 @@
-package Modelo;
+package clases;
 
 import java.util.ArrayList;
 
-public class Tablero {
+public class GestorTablero {
 
 	ArrayList<Casilla> casillas = new ArrayList<Casilla>();
 	
 	// CONSTRUCTOR
-	public Tablero(ArrayList<Casilla> casillas) {
+	public GestorTablero(ArrayList<Casilla> casillas) {
 		this.casillas = casillas;
 	}
 	

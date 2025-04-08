@@ -1,8 +1,8 @@
-package Modelo;
+package clases;
 
 import java.util.ArrayList;
 
-public class Jugador {
+public class GestorJugador {
 
 	String nombre;
 	String colorFicha;
@@ -12,7 +12,7 @@ public class Jugador {
 	ArrayList<BolaNieve> bolasNieve = new ArrayList<BolaNieve>();
 
 	// CONSTRUCTOR
-	public Jugador(String nombre, String colorFicha, int posicion, ArrayList<Dado> dados, ArrayList<Pez> peces,
+	public GestorJugador(String nombre, String colorFicha, int posicion, ArrayList<Dado> dados, ArrayList<Pez> peces,
 			ArrayList<BolaNieve> bolasNieve) {
 		this.nombre = nombre;
 		this.colorFicha = colorFicha;
@@ -27,7 +27,7 @@ public class Jugador {
 
 	}
 
-	public void usarBolaNieve(ArrayList<Jugador> jugadores) {
+	public void usarBolaNieve(ArrayList<GestorJugador> jugadores) {
 
 	}
 

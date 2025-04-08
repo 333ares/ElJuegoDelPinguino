@@ -1,16 +1,16 @@
-package Modelo;
+package clases;
 
 import java.util.ArrayList;
 
 public class Partida {
 
-	ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+	ArrayList<GestorJugador> jugadores = new ArrayList<GestorJugador>();
 	ArrayList<CPU> cpu = new ArrayList<CPU>();
 	int[][] tablero;
 	int turnoActual;
 
 	// CONSTRUCTOR
-	public Partida(ArrayList<Jugador> jugadores, ArrayList<CPU> cpu, int[][] tablero, int turnoActual) {
+	public Partida(ArrayList<GestorJugador> jugadores, ArrayList<CPU> cpu, int[][] tablero, int turnoActual) {
 		this.jugadores = jugadores;
 		this.cpu = cpu;
 		this.tablero = tablero;
