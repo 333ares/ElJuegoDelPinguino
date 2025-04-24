@@ -1,12 +1,13 @@
 package modelo;
 
-public class Evento {
+public abstract class Evento extends Casilla {
 
 	String tipoEvento;
 
 	// CONSTRUCTOR
-	public Evento(String tipoEvento) {
-		this.tipoEvento = tipoEvento;
+	public Evento(int posicion, String tipoEvento) {
+		super(posicion);
+		// TODO Auto-generated constructor stub
 	}
 
 	// FUNCIONES

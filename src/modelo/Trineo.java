@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Trineo extends Casilla {
 	
-	public Trineo(int posicion, ArrayList<Jugador> jugadoresActuales) {
+	public Trineo(int posicion) {
 		super(posicion, jugadoresActuales);
 
 	}

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Agujero extends Casilla {
 
-	public Agujero(int posicion, ArrayList<Jugador> jugadoresActuales) {
+	public Agujero(int posicion) {
 		super(posicion, jugadoresActuales);
 
 	}
