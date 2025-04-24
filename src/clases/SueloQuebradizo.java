@@ -1,9 +1,14 @@
 package clases;
 
-public class SueloQuebradizo {
+public class SueloQuebradizo extends Casilla {
 
-	// FUNCIONES
-	public void realizarAccion() {
-
+	public SueloQuebradizo(int posicion) {
+		super(posicion);
 	}
+
+	public void realizarAccion(Jugador j) {
+		
+	}
+
+	
 }
