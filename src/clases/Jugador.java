@@ -41,16 +41,13 @@ public abstract class Jugador extends GestorJugador {
 
 	// FUNCIONES
 
-	public void aplastarJugador(Pinguino p) {
+	public void tirarDado(int maximoDado) {
 
 	}
 
-	public void golpearJugador(Pinguino p) {
+	public void moverPosicion(int p) {
 
 	}
 
-	public void esSobornado() {
-
-	}
 
 }
