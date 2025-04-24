@@ -1,8 +1,16 @@
 package modelo;
 
-public class Agujero {
+import java.util.ArrayList;
 
-	public void realizarAccion(){
-		
+public class Agujero extends Casilla {
+
+	public Agujero(int posicion, ArrayList<Jugador> jugadoresActuales) {
+		super(posicion, jugadoresActuales);
+
 	}
+
+	public void realizarAccion(Jugador j) {
+
+	}
+
 }

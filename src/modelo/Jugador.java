@@ -48,7 +48,7 @@ public abstract class Jugador extends GestorJugador {
 	}
 
 	public void moverPosicion(int p) {
-
+		this.posicion = p;
 	}
 
 
