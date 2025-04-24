@@ -1,6 +1,10 @@
-package clases;
+package controlador;
 
 import java.util.ArrayList;
+
+import modelo.Casilla;
+import modelo.Jugador;
+import modelo.Pinguino;
 
 public class GestorTablero {
 

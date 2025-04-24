@@ -1,17 +1,15 @@
-package clases;
+package modelo;
 
 import java.util.ArrayList;
 
-public abstract class Casilla extends Tablero {
+public abstract class Casilla { //Esta clase es abstracta porque la utilizamos como base para las clases Oso, Trineo, Agujero...
 
 	int posicion;
 	ArrayList<Jugador> jugadoresActuales = new ArrayList<Jugador>();
 
 	// CONSTRUCTOR
 
-	public Casilla(ArrayList<Casilla> casillas, ArrayList<Jugador> jugadores, int turnos, Jugador jugadorActual,
-			int posicion, ArrayList<Jugador> jugadoresActuales) {
-		super(casillas, jugadores, turnos, jugadorActual);
+	public Casilla(int posicion, ArrayList<Jugador> jugadoresActuales) {
 		this.posicion = posicion;
 		this.jugadoresActuales = jugadoresActuales;
 	}
@@ -39,6 +37,6 @@ public abstract class Casilla extends Tablero {
 
 	}
 
-	public abstract void realizarAccion();
+	public abstract void realizarAccion(Jugador j);
 
 }
