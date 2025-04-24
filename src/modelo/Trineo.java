@@ -1,9 +1,14 @@
 package modelo;
 
-public class Trineo {
+public class Trineo extends Casilla {
 	
-	public void realizarAccion() {
+	public Trineo(int posicion) {
+		super(posicion);
 
+	}
+
+	public void realizarAccion(Jugador j) {
+		
 	}
 
 }
