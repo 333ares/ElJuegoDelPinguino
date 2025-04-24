@@ -1,4 +1,6 @@
-package clases;
+package modelo;
+
+import controlador.GestorJugador;
 
 public abstract class Jugador extends GestorJugador {
 

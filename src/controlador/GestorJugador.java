@@ -1,5 +1,8 @@
-package clases;
+package controlador;
 
+import modelo.Foca;
+import modelo.Jugador;
+import modelo.Pinguino;
 
 public class GestorJugador {
 	
