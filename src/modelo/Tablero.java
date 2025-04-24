@@ -1,4 +1,4 @@
-package clases;
+package modelo;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,7 @@ public class Tablero {
 
 	// FUNCIONES
 	public void actualizarTablero() {
-
+		
 	}
 
 	public void actualizarjugador(Jugador j) {
