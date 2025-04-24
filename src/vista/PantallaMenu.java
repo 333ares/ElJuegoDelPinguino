@@ -1,4 +1,6 @@
-package clases;
+package vista;
+
+import modelo.Tablero;
 
 public class PantallaMenu {
 

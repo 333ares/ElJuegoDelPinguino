@@ -1,4 +1,6 @@
-package clases;
+package controlador;
+
+import modelo.Tablero;
 
 public class GestorPartidas {
 
