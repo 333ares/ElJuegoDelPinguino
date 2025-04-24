@@ -59,4 +59,28 @@ public class Tablero {
 	public void actualizarjugador(Jugador j) {
 
 	}
+	
+	private void inicializarCasillas() {
+	    for (int i = 0; i < casillas.length; i++) {
+	        // Aumentamos el número de opciones para que haya más casillas normales
+	        int tipo = (int) (Math.random() * 10); // 10 opciones
+	        switch (tipo) {
+	            case 0:
+	                casillas[i] = new Oso(i);
+	                break;
+	            case 1:
+	                casillas[i] = new Agujero(i);
+	                break;
+	            case 2:
+	                casillas[i] = new Trineo(i);
+	                break;
+	            case 3:
+	                casillas[i] = new Evento(i);
+	                break;
+	            default: // Casilla normal para los casos 4-9
+	                casillas[i] = new CasillaNormal(i);
+	                break;
+	        }
+	    }
+	}
 }
