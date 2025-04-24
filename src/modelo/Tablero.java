@@ -3,25 +3,27 @@ package modelo;
 import java.util.ArrayList;
 
 public class Tablero {
-	ArrayList<Casilla> casillas = new ArrayList<Casilla>();
+
+	Casilla [] casillas;
 	ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 	int turnos;
 	Jugador jugadorActual;
 
 	// CONSTRUCTOR
-	public Tablero(ArrayList<Casilla> casillas, ArrayList<Jugador> jugadores, int turnos, Jugador jugadorActual) {
-		this.casillas = casillas;
+	public Tablero(Casilla[] casillas, ArrayList<Jugador> jugadores, int turnos, Jugador jugadorActual) {
+		super();
+		this.casillas = new Casilla[50];
 		this.jugadores = jugadores;
 		this.turnos = turnos;
 		this.jugadorActual = jugadorActual;
 	}
 
 	// GETTERS Y SETTERS
-	public ArrayList<Casilla> getCasillas() {
+	public Casilla[] getCasillas() {
 		return casillas;
 	}
 
-	public void setCasillas(ArrayList<Casilla> casillas) {
+	public void setCasillas(Casilla[] casillas) {
 		this.casillas = casillas;
 	}
 
