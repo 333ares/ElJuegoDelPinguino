@@ -1,6 +1,6 @@
 package modelo;
 
-public abstract class Evento extends Casilla {
+public class Evento extends Casilla {
 
 	String tipoEvento;
 
@@ -10,8 +10,9 @@ public abstract class Evento extends Casilla {
 		// TODO Auto-generated constructor stub
 	}
 
-	// FUNCIONES
-	public void realizarAccion() {
-
+	@Override
+	public void realizarAccion(Jugador j) {
+		// TODO Auto-generated method stub
+		
 	}
 }
