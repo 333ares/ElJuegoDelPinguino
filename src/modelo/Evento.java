@@ -5,7 +5,7 @@ public class Evento extends Casilla {
 	String tipoEvento;
 
 	// CONSTRUCTOR
-	public Evento(int posicion, String tipoEvento) {
+	public Evento(int posicion) {
 		super(posicion);
 		// TODO Auto-generated constructor stub
 	}
