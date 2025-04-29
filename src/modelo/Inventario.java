@@ -22,4 +22,14 @@ public class Inventario {
 		this.lista = lista;
 	}
 	
+	
+	public void añadirItem(Item item) {
+	    lista.add(item);
+	}
+
+
+	public void quitarItem(Item item) {
+	    lista.remove(item);
+	}
+
 }
