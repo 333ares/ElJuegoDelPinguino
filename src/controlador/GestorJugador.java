@@ -1,6 +1,8 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import modelo.Foca;
 import modelo.Item;
@@ -10,7 +12,7 @@ import modelo.Pinguino;
 public class GestorJugador {
 
 	public void jugadorUsaItem(Jugador j, String nombreItem) {
-		  // Busca el ítem en el inventario del jugador
+	    // Busca el ítem en el inventario del jugador
 	    for (Item item : j.getPinguino().getInv().getLista()) {
 	        if (item.getNombre().equals(nombreItem)) {
 	            // Implementa el efecto del ítem
@@ -21,15 +23,31 @@ public class GestorJugador {
 	                j.setProtegidoDelOso(true);
 	            } else if ("bola de nieve".equals(nombreItem)) {
 	                System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
-	                // Ejemplo de lógica para seleccionar otro jugador y hacerle retroceder
+	                // Lógica para seleccionar otro jugador y hacerle retroceder
+	                ArrayList<Jugador> otrosJugadores = new ArrayList<>();
 	                for (Jugador otroJugador : j.getTablero().getJugadores()) {
 	                    if (!otroJugador.equals(j)) {
-	                        int nuevaPosicion = otroJugador.getPosicion() - 3; // Retroceder 3 casillas
-	                        if (nuevaPosicion < 0) nuevaPosicion = 0;
-	                        otroJugador.setPosicion(nuevaPosicion);
-	                        System.out.println(otroJugador.getNombre() + " retrocede 3 casillas.");
-	                        break; // Solo afecta al primer jugador encontrado
+	                        otrosJugadores.add(otroJugador);
 	                    }
+	                }
+	                if (!otrosJugadores.isEmpty()) {
+	                    System.out.println("Seleccione un jugador:");
+	                    for (int i = 0; i < otrosJugadores.size(); i++) {
+	                        System.out.println((i + 1) + ". " + otrosJugadores.get(i).getNombre());
+	                    }
+	                    Scanner s = new Scanner(System.in);
+	                    int seleccion = s.nextInt();
+	                    if (seleccion > 0 && seleccion <= otrosJugadores.size()) {
+	                        Jugador objetivo = otrosJugadores.get(seleccion - 1);
+	                        int nuevaPosicion = objetivo.getPosicion() - 3; // Retroceder 3 casillas
+	                        if (nuevaPosicion < 0) nuevaPosicion = 0;
+	                        objetivo.setPosicion(nuevaPosicion);
+	                        System.out.println(objetivo.getNombre() + " retrocede 3 casillas.");
+	                    } else {
+	                        System.out.println("Selección inválida.");
+	                    }
+	                } else {
+	                    System.out.println("No hay otros jugadores para afectar.");
 	                }
 	                j.getPinguino().getInv().quitarItem(item);
 	            } else if ("dado rápido".equals(nombreItem)) {
@@ -63,10 +81,13 @@ public class GestorJugador {
 		}
 
 	}
-
+	
 	public void jugadorFinalizaTurno(Jugador j) {
-
+	    // Resetear la protección contra el Oso
+	    j.setProtegidoDelOso(false);
+	    System.out.println(j.getNombre() + " ha finalizado su turno.");
 	}
+
 
 	public void pinguinoEvento(Pinguino p) {
 
