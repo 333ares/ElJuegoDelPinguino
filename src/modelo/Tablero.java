@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Tablero {
 
-	Casilla [] casillas;
+	static Casilla [] casillas;
 	ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 	int turnos;
 	Jugador jugadorActual;
@@ -20,7 +20,7 @@ public class Tablero {
 	}
 
 	// GETTERS Y SETTERS
-	public Casilla[] getCasillas() {
+	public static Casilla[] getCasillas() {
 		return casillas;
 	}
 
