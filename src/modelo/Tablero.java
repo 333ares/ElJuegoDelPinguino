@@ -86,6 +86,7 @@ public class Tablero {
 	}
 	
 	public void mostrarTablero () {
+		//Este método imprime en consola el tipo de cada casilla del tablero para verificar que se hayan creado correctamente.
 		  for (int i = 0; i < casillas.length; i++) {
 		        System.out.print(casillas[i].getClass().getSimpleName() + " ");
 		        // casillas[i] obtendra el nombre de la clase en la posicion i (Por ejemplo: Oso).
