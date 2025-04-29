@@ -48,9 +48,11 @@ public abstract class Jugador extends GestorJugador {
 	}
 
 	public void moverPosicion(int nuevaPosicion) {
+		// El if se utiliza para asegurar que la nueva posición del jugador esté dentro de los límites del tablero (0 a 49, ya que hay 50 casillas).
 		if (nuevaPosicion >= 0 && nuevaPosicion < 50) {
 			this.posicion = nuevaPosicion;
 		}
+		
 	}
 
 
