@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PantallaMenu {
     public void mostrarMenu() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner s = new Scanner(System.in);
         int opcion;
 
         do {
@@ -12,7 +12,7 @@ public class PantallaMenu {
             System.out.println("2. Cargar Partida");
             System.out.println("3. Salir");
             System.out.print("Seleccione una opción: ");
-            opcion = scanner.nextInt();
+            opcion = s.nextInt();
 
             switch (opcion) {
                 case 1:
