@@ -11,8 +11,9 @@ public class Evento extends Casilla {
 	}
 
 	@Override
+	// Define el comportamiento que ocurre cuando un jugador cae en una casilla de
+	// evento.
 	public void realizarAccion(Jugador j) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Evento aleatorio activado!");
 	}
 }

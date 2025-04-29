@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Random;
+
 import controlador.GestorJugador;
 
 public abstract class Jugador extends GestorJugador {
@@ -7,16 +9,24 @@ public abstract class Jugador extends GestorJugador {
 	int posicion;
 	String nombre;
 	String color;
+	Pinguino pinguino;
 
 	// CONSTRUCTOR
-	public Jugador(int posicion, String nombre, String color) {
+	public Jugador(int posicion, String nombre, String color, Pinguino pinguino) {
 		super();
 		this.posicion = posicion;
 		this.nombre = nombre;
 		this.color = color;
+		this.pinguino = pinguino;
 	}
 
 	// GETTERS Y SETTERS
+	public Pinguino getPinguino() { // El método getPinguino se utiliza para obtener el objeto Pinguino asociado al jugador.
+		return pinguino;
+	}
+	public Pinguino setPinguino() {
+		return pinguino;
+	}
 	public int getPosicion() {
 		return posicion;
 	}
@@ -44,13 +54,17 @@ public abstract class Jugador extends GestorJugador {
 	// FUNCIONES
 
 	public void tirarDado(int maximoDado) {
-
+	    Random randomdado = new Random();
+	    int resultado = randomdado.nextInt(maximoDado) + 1;
+	    System.out.println("Resultado del dado: " + resultado);
 	}
 
 	public void moverPosicion(int nuevaPosicion) {
+		// El if se utiliza para asegurar que la nueva posición del jugador esté dentro de los límites del tablero (0 a 49, ya que hay 50 casillas).
 		if (nuevaPosicion >= 0 && nuevaPosicion < 50) {
 			this.posicion = nuevaPosicion;
 		}
+		
 	}
 
 
