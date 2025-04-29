@@ -83,4 +83,17 @@ public abstract class Jugador extends GestorJugador {
 
 	}
 
+    // Método para proteger al jugador del Oso
+    private boolean protegidoDelOso = false;
+
+
+    public void setProtegidoDelOso(boolean protegidoDelOso) {
+        this.protegidoDelOso = protegidoDelOso;
+    }
+
+
+    public boolean isProtegidoDelOso() {
+        return protegidoDelOso;
+    }
+
 }
