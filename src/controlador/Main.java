@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import vista.PantallaMenu;
 
 public class Main extends Application {
 
@@ -22,8 +21,7 @@ public class Main extends Application {
 	}
 
     public static void main(String[] args) {
-        PantallaMenu pantallaMenu = new PantallaMenu();
-        pantallaMenu.mostrarMenu();
+        launch(args);
  
     }
 }
