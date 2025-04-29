@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Tablero {
 
-	Casilla [] casillas;
+	static Casilla [] casillas;
 	ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 	int turnos;
 	Jugador jugadorActual;
@@ -20,7 +20,7 @@ public class Tablero {
 	}
 
 	// GETTERS Y SETTERS
-	public Casilla[] getCasillas() {
+	public static Casilla[] getCasillas() {
 		return casillas;
 	}
 
@@ -86,9 +86,17 @@ public class Tablero {
 	}
 	
 	public void mostrarTablero () {
+		//Este método imprime en consola el tipo de cada casilla del tablero para verificar que se hayan creado correctamente.
 		  for (int i = 0; i < casillas.length; i++) {
 		        System.out.print(casillas[i].getClass().getSimpleName() + " ");
-		        if ((i + 1) % 10 == 0) System.out.println();
+		        // casillas[i] obtendra el nombre de la clase en la posicion i (Por ejemplo: Oso).
+		        if ((i + 1) % 10 == 0) 
+		        System.out.println();// Salto de línea cada 10 casillas
+		        // Este condicional verifica si la posición actual (i + 1) es divisible por 10.
+		        // Si es así, significa que hemos llegado al final de una fila.
+		        //  Y se imprimira un salto de línea para que la siguiente casilla aparezca en una nueva fila.
+
+		        
 		    }
 	}
 }
