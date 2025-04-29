@@ -54,9 +54,10 @@ public abstract class Jugador extends GestorJugador {
 	// FUNCIONES
 
 	public void tirarDado(int maximoDado) {
-	    Random randomdado = new Random();
-	    int resultado = randomdado.nextInt(maximoDado) + 1;
-	    System.out.println("Resultado del dado: " + resultado);
+		  Random random = new Random();
+		    int resultado = random.nextInt(6) + 1; // Dado de 1 a 6
+		    System.out.println("Has tirado el dado y ha salido: " + resultado);
+
 	}
 
 	public void moverPosicion(int nuevaPosicion) {
