@@ -7,16 +7,24 @@ public abstract class Jugador extends GestorJugador {
 	int posicion;
 	String nombre;
 	String color;
+	Pinguino pinguino;
 
 	// CONSTRUCTOR
-	public Jugador(int posicion, String nombre, String color) {
+	public Jugador(int posicion, String nombre, String color, Pinguino pinguino) {
 		super();
 		this.posicion = posicion;
 		this.nombre = nombre;
 		this.color = color;
+		this.pinguino = pinguino;
 	}
 
 	// GETTERS Y SETTERS
+	public Pinguino getPinguino() { // El método getPinguino se utiliza para obtener el objeto Pinguino asociado al jugador.
+		return pinguino;
+	}
+	public Pinguino setPinguino() {
+		return pinguino;
+	}
 	public int getPosicion() {
 		return posicion;
 	}
