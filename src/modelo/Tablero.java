@@ -90,7 +90,8 @@ public class Tablero {
 		  for (int i = 0; i < casillas.length; i++) {
 		        System.out.print(casillas[i].getClass().getSimpleName() + " ");
 		        // casillas[i] obtendra el nombre de la clase en la posicion i (Por ejemplo: Oso).
-		        if ((i + 1) % 10 == 0) System.out.println();
+		        if ((i + 1) % 10 == 0) 
+		        System.out.println();// Salto de línea cada 10 casillas
 		        // Este condicional verifica si la posición actual (i + 1) es divisible por 10.
 		        // Si es así, significa que hemos llegado al final de una fila.
 		        //  Y se imprimira un salto de línea para que la siguiente casilla aparezca en una nueva fila.
