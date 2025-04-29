@@ -47,8 +47,10 @@ public abstract class Jugador extends GestorJugador {
 
 	}
 
-	public void moverPosicion(int p) {
-		this.posicion = p;
+	public void moverPosicion(int nuevaPosicion) {
+		if (nuevaPosicion >= 0 && nuevaPosicion < 50) {
+			this.posicion = nuevaPosicion;
+		}
 	}
 
 
