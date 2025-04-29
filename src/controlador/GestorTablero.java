@@ -13,6 +13,7 @@ public class GestorTablero {
     }
 
     public void actualizarMovimientoJugador(Jugador j, int movimientos) {
+    	// Este método actualiza la posición del jugador en el tablero y activa el efecto de la casilla correspondiente.
         int nuevaPosicion = j.getPosicion() + movimientos;
         if (nuevaPosicion >= 0 && nuevaPosicion < tablero.getCasillas().length) {
             j.setPosicion(nuevaPosicion);

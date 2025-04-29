@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Random;
+
 import controlador.GestorJugador;
 
 public abstract class Jugador extends GestorJugador {
@@ -52,7 +54,9 @@ public abstract class Jugador extends GestorJugador {
 	// FUNCIONES
 
 	public void tirarDado(int maximoDado) {
-
+	    Random randomdado = new Random();
+	    int resultado = randomdado.nextInt(maximoDado) + 1;
+	    System.out.println("Resultado del dado: " + resultado);
 	}
 
 	public void moverPosicion(int nuevaPosicion) {
