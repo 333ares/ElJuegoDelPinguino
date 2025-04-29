@@ -16,6 +16,7 @@ public class Tablero {
 		this.jugadores = jugadores;
 		this.turnos = turnos;
 		this.jugadorActual = jugadorActual;
+		inicializarCasillas();
 	}
 
 	// GETTERS Y SETTERS
@@ -82,5 +83,12 @@ public class Tablero {
 	                break;
 	        }
 	    }
+	}
+	
+	public void mostrarTablero () {
+		  for (int i = 0; i < casillas.length; i++) {
+		        System.out.print(casillas[i].getClass().getSimpleName() + " ");
+		        if ((i + 1) % 10 == 0) System.out.println();
+		    }
 	}
 }
