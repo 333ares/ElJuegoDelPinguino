@@ -1,22 +1,25 @@
 package controlador;
 
-import java.util.ArrayList;
-
 import modelo.Casilla;
 import modelo.Jugador;
 import modelo.Pinguino;
+import modelo.Tablero;
 
 public class GestorTablero {
+    private Tablero tablero;
 
-	public void actualizarMovimientoJugador(Jugador j, int movimientos) {
-		   int nuevaPosicion = j.getPosicion() + movimientos;
-		    if (nuevaPosicion >= 0 && nuevaPosicion < tablero.getCasillas().length) {
-		        j.moverPosicion(nuevaPosicion);
-		        tablero.getCasillas()[nuevaPosicion].activarEfecte(j.getPinguino());
-		    }
+    public GestorTablero(Tablero tablero) {
+        this.tablero = tablero;
+    }
 
-	}
-	
+    public void actualizarMovimientoJugador(Jugador j, int movimientos) {
+        int nuevaPosicion = j.getPosicion() + movimientos;
+        if (nuevaPosicion >= 0 && nuevaPosicion < tablero.getCasillas().length) {
+            j.setPosicion(nuevaPosicion);
+            tablero.getCasillas()[nuevaPosicion].realizarAccion(j); 
+        }
+    }
+
 	public void ejecutarCasilla (Pinguino p, Casilla c) {
 		
 	}
