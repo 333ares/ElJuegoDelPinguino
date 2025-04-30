@@ -2,15 +2,30 @@ package vista;
 
 import java.util.Random;
 
+import controlador.GestorJugador;
+import controlador.GestorTablero;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import modelo.Jugador;
 
 public class pantallaJuegoController {
 
+	
+	 private GestorJugador gestorJugador;
+	    private GestorTablero gestorTablero;
+	    private Jugador jugadorActual;
+
+	    // Método para inicializar el controlador con las dependencias necesarias
+	    public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
+	        this.gestorJugador = gestorJugador;
+	        this.gestorTablero = gestorTablero;
+	        this.jugadorActual = jugadorActual;
+	    }
+	    
     // Menu items
     @FXML private MenuItem newGame;
     @FXML private MenuItem saveGame;
@@ -78,14 +93,14 @@ public class pantallaJuegoController {
 
     @FXML
     private void handleDado(ActionEvent event) {
-        Random rand = new Random();
-        int diceResult = rand.nextInt(6) + 1;
+    	  Random rand = new Random();
+    	    int diceResult = rand.nextInt(6) + 1;
 
-        // Update the Text 
-        dadoResultText.setText("Ha salido: " + diceResult);
+    	    // Actualizar la posición del jugador usando el gestor de tablero
+    	    gestorTablero.actualizarMovimientoJugador(jugadorActual, diceResult);
 
-        // Update the position
-        moveP1(diceResult);
+    	   
+    	    dadoResultText.setText("Ha salido: " + diceResult);
     }
 
     private void moveP1(int steps) {
@@ -107,25 +122,25 @@ public class pantallaJuegoController {
 
     @FXML
     private void handleRapido() {
-        System.out.println("Fast.");
-        // TODO
+    	   // Lógica para usar un dado rápido
+        gestorJugador.jugadorUsaItem(jugadorActual, "dado rápido");
     }
 
     @FXML
     private void handleLento() {
-        System.out.println("Slow.");
-        // TODO
+    	   // Lógica para usar un dado lento
+        gestorJugador.jugadorUsaItem(jugadorActual, "dado lento");
     }
 
     @FXML
     private void handlePeces() {
-        System.out.println("Fish.");
-        // TODO
+    	  // Lógica para usar un pez
+        gestorJugador.jugadorUsaItem(jugadorActual, "pez");
     }
 
     @FXML
     private void handleNieve() {
-        System.out.println("Snow.");
-        // TODO
+    	   // Lógica para usar una bola de nieve
+        gestorJugador.jugadorUsaItem(jugadorActual, "bola de nieve");
     }
 }

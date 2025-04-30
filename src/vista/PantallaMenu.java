@@ -35,11 +35,7 @@ public class PantallaMenu {
                     int numJugadores = s.nextInt();
                     if (numJugadores >= 2 && numJugadores <= 4) {
                         for (int i = 0; i < numJugadores; i++) {
-                            // Aquí código para añadir jugadores al tablero
-                            // Ejemplo:
-                            Jugador jugador = new Jugador (0, "Jugador " + (i + 1), "Color", new Pinguino(new Inventario(new ArrayList<>())));
-                            jugador.setTablero(tablero);
-                            tablero.getJugadores().add(jugador);
+                            
                         }
                         System.out.println("Partida iniciada con " + numJugadores + " jugadores.");
                     } else {

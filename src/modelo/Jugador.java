@@ -4,7 +4,7 @@ import java.util.Random;
 
 import controlador.GestorJugador;
 
-public abstract class Jugador extends GestorJugador {
+public class Jugador{
 
 	int posicion;
 	String nombre;
