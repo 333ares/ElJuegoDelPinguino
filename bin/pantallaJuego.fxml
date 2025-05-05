@@ -150,7 +150,7 @@
                </BorderPane.margin></HBox>
          </bottom>
          <center>
-            <GridPane fx:id="tablero" gridLinesVisible="true" prefHeight="500.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="tablero" gridLinesVisible="true" prefHeight="500.0" prefWidth="500.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -183,19 +183,19 @@
                   </Text>
                   <Circle fx:id="P1" fill="BLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE">
                      <GridPane.margin>
-                        <Insets />
+                        <Insets left="80.0" />
                      </GridPane.margin></Circle>
                   <Circle fx:id="P2" fill="RED" radius="15.0" stroke="BLACK" strokeType="INSIDE">
                      <GridPane.margin>
-                        <Insets left="40.0" />
+                        <Insets left="120.0" />
                      </GridPane.margin></Circle>
                   <Circle fx:id="P3" fill="GREEN" radius="15.0" stroke="BLACK" strokeType="INSIDE">
                      <GridPane.margin>
-                        <Insets left="80.0" />
+                        <Insets left="160.0" />
                      </GridPane.margin></Circle>
                   <Circle fx:id="P4" fill="YELLOW" radius="15.0" stroke="BLACK" strokeType="INSIDE">
                      <GridPane.margin>
-                        <Insets left="120.0" />
+                        <Insets left="200.0" />
                      </GridPane.margin></Circle>
                </children>
             </GridPane>
