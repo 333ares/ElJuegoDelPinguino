@@ -9,85 +9,132 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import bbdd.bbdd;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 
 public class pantallaPrincipalController {
 
-    @FXML private MenuItem newGame;
-    @FXML private MenuItem saveGame;
-    @FXML private MenuItem loadGame;
-    @FXML private MenuItem quitGame;
+	private Connection con;
+	@FXML
+	private MenuItem newGame;
+	@FXML
+	private MenuItem saveGame;
+	@FXML
+	private MenuItem loadGame;
+	@FXML
+	private MenuItem quitGame;
 
-    @FXML private TextField userField;
-    @FXML private PasswordField passField;
+	@FXML
+	private TextField userField;
+	@FXML
+	private PasswordField passField;
 
-    @FXML private Button loginButton;
-    @FXML private Button registerButton;
+	@FXML
+	private Button loginButton;
+	@FXML
+	private Button registerButton;
 
-    @FXML
-    private void initialize() {
-        // This method is called automatically after the FXML is loaded
-        // You can set initial values or add listeners here
-        System.out.println("pantallaPrincipalController initialized");
-    }
+	@FXML
+	private void initialize() {
+		// Establecer la conexión a la base de datos al inicializar el controlador
+		con = bbdd.conectarBaseDatos();
+	}
 
-    @FXML
-    private void handleNewGame() {
-        System.out.println("New Game clicked");
-        // TODO
-    }
+	@FXML
+	private void handleNewGame() {
+		System.out.println("New Game clicked");
+		// TODO
+	}
 
-    @FXML
-    private void handleSaveGame() {
-        System.out.println("Save Game clicked");
-        // TODO
-    }
+	@FXML
+	private void handleSaveGame() {
+		System.out.println("Save Game clicked");
+		// TODO
+	}
 
-    @FXML
-    private void handleLoadGame() {
-        System.out.println("Load Game clicked");
-        // TODO
-    }
+	@FXML
+	private void handleLoadGame() {
+		System.out.println("Load Game clicked");
+		// TODO
+	}
 
-    @FXML
-    private void handleQuitGame() {
-        System.out.println("Quit Game clicked");
-        // TODO
-        System.exit(0);
-    }
-    
-    @FXML
-    private void handleLogin(ActionEvent event) {
-        String username = userField.getText();
-        String password = passField.getText();
+	@FXML
+	private void handleQuitGame() {
+		System.out.println("Quit Game clicked");
+		// TODO
+		System.exit(0);
+	}
 
-        System.out.println("Login pressed: " + username + " / " + password);
+	@FXML
+	private void handleLogin(ActionEvent event) {
+		String username = userField.getText();
+		String password = passField.getText();
 
-        // Basic check (just for demo, replace with real login logic)
-        if (!username.isEmpty() && !password.isEmpty()) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-                Parent pantallaJuegoRoot = loader.load();
+		if (!username.isEmpty() && !password.isEmpty()) {
+			// Consulta SQL para verificar el usuario y la contraseña
+			String sql = "SELECT * FROM jugadores WHERE nickname = '" + username + "' AND contraseña = '" + password + "'";
 
-                Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
+			ResultSet rs = bbdd.select(con, sql);
 
-                // Get the current stage using the event
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(pantallaJuegoScene);
-                stage.setTitle("Pantalla de Juego");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Please. Enter user and password.");
-        }
-    }
+			try {
+				if (rs.next()) {
+					// Usuario y contraseña válidos
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+					Parent pantallaJuegoRoot = loader.load();
 
+					Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
 
-    @FXML
-    private void handleRegister() {
-        System.out.println("Register pressed");
-        // TODO
-    }
+					Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					stage.setScene(pantallaJuegoScene);
+					stage.setTitle("Pantalla de Juego");
+				} else {
+					// Usuario o contraseña incorrectos
+					System.out.println("Usuario o contraseña incorrectos");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Por favor, ingrese usuario y contraseña.");
+		}
+	}
+
+	@FXML
+	private void handleRegister() {
+		 String username = userField.getText();
+		    String password = passField.getText();
+		    int partidas_jugadas = 0;
+
+		    if (!username.isEmpty() && !password.isEmpty()) {
+		        // Consulta SQL para verificar si el usuario ya existe
+		        String sqlCheck = "SELECT * FROM jugadores WHERE nickname = '" + username + "'";
+
+		        ResultSet rs = bbdd.select(con, sqlCheck);
+
+		        try {
+		            if (!rs.next()) {
+		                // Usuario no existe, se puede registrar
+		                String sqlInsert = "INSERT INTO jugadores (nickname, contraseña, partidas_jugadas) VALUES ('" + username + "', '" + password + "', '" + partidas_jugadas + "')";
+		                bbdd.insert(con, sqlInsert);
+		                System.out.println("Registro exitoso");
+		            } else {
+		                // Usuario ya existe
+		                System.out.println("El usuario ya existe");
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    } else {
+		        System.out.println("Por favor, ingrese usuario y contraseña.");
+		    }
+
+	}
 }
