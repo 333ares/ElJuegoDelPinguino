@@ -12,6 +12,7 @@ public class menu {
 		// Si veis escrito el simbolo \ se usa para poder escribir como String ciertos
 		// caracteres reservados como "" o /
 		con = bbdd.conectarBaseDatos();
+		/*
 		System.out.println("Print");
 		String[] a = { "NACTOR", "NOMBRE", "FECHAN" };
 		bbdd.print(con, "SELECT * FROM ACTOR", a);
@@ -30,7 +31,7 @@ public class menu {
 		bbdd.print(con, "SELECT * FROM ACTOR", a);
 		////////////////////////////////////////////////////////////////////////////////////
 		System.out.println("Select");
-		procesamientoSelect(con, "SELECT FROM ACTOR\n" + "WHERE \"NACTOR\" = 1");
+		procesamientoSelect(con, "SELECT FROM ACTOR\n" + "WHERE \"NACTOR\" = 1");*/
 	}
 
 	/**
