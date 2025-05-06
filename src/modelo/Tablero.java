@@ -15,8 +15,10 @@ public class Tablero {
 		this.casillas = new Casilla[50];
 		this.jugadores = jugadores;
 		this.turnos = turnos;
-		this.jugadorActual = jugadorActual;
+		this.jugadorActual = null ;
+		this.jugadores = new ArrayList<Jugador>();
 		inicializarCasillas();
+		initializeJugadores();
 	}
 
 	// GETTERS Y SETTERS
@@ -99,4 +101,13 @@ public class Tablero {
 		        
 		    }
 	}
+	
+    private void initializeJugadores() {
+        Jugador jugador1 = new Jugador(turnos, "Jugador 1", null, null);
+        Jugador jugador2 = new Jugador(turnos, "Jugador 2", null, null);
+
+        // Agregar jugadores al tablero
+        jugadores.add(jugador1);
+        jugadores.add(jugador2);
+    }
 }

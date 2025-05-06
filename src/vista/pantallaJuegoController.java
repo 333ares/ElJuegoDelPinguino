@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import modelo.Jugador;
+import controlador.GestorJugador;
 
 public class pantallaJuegoController {
 
@@ -140,7 +141,24 @@ public class pantallaJuegoController {
 
     @FXML
     private void handleNieve() {
-    	   // Lógica para usar una bola de nieve
-        gestorJugador.jugadorUsaItem(jugadorActual, "bola de nieve");
+    	  if (!otrosJugadores.isEmpty()) {
+    	        Jugador objetivo = null;
+    	        if (jugadorActual.getNombre().equals(otrosJugadores.get(0).getNombre())) {
+    	            objetivo = otrosJugadores.get(1); // El objetivo es el segundo jugador
+    	        } else {
+    	            objetivo = otrosJugadores.get(0); // El objetivo es el primer jugador
+    	        }
+
+    	        int nuevaPosicion = objetivo.getPosicion() - 3; // Retroceder 3 casillas
+    	        if (nuevaPosicion < 0) nuevaPosicion = 0;
+    	        objetivo.setPosicion(nuevaPosicion);
+    	        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    	        alert.setContentText(objetivo.getNombre() + " retrocede 3 casillas.");
+    	        alert.showAndWait();
+    	    } else {
+    	        Alert alert = new Alert(Alert.AlertType.WARNING);
+    	        alert.setContentText("No hay otros jugadores para afectar.");
+    	        alert.showAndWait();
+    	    }
     }
 }

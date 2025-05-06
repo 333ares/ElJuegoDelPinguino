@@ -10,6 +10,7 @@ public class GestorTablero {
 
 	public GestorTablero(Tablero tablero) {
 		this.tablero = tablero;
+	
 	}
 
 	public void actualizarMovimientoJugador(Jugador j, int movimientos) {
