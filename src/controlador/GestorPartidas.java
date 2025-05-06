@@ -34,3 +34,4 @@ public class GestorPartidas {
        //Logica para cargar la partida guardada con anterioridad
     }
     }
+
