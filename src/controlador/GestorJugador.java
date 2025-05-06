@@ -10,22 +10,24 @@ import modelo.Jugador;
 import modelo.Pinguino;
 
 public class GestorJugador {
-
+/*
+ * 
+ */
 	public void jugadorUsaItem(Jugador j, String nombreItem) {
-	    // Busca el ítem en el inventario del jugador
-	    for (Item item : j.getPinguino().getInv().getLista()) {
-	        if (item.getNombre().equals(nombreItem)) {
-	            // Implementa el efecto del ítem
+		//Este método permite al jugador usar un item 
+	    for (Item item : j.getPinguino().getInv().getLista()) {// Busca el ítem en el inventario del jugador
+	        if (item.getNombre().equals(nombreItem)) {// Implementa el efecto del ítem
 	            System.out.println("Usando " + nombreItem + "...");
-	            if ("pez".equals(nombreItem)) {
+	            if ("pez".equals(nombreItem)) {// Remueve el ítem del inventario y activa una protección contra el Oso.
 	                j.getPinguino().getInv().quitarItem(item);
 	                System.out.println("Has usado un pez. Estás protegido del Oso durante este turno.");
 	                j.setProtegidoDelOso(true);
-	            } else if ("bola de nieve".equals(nombreItem)) {
+	            } else if ("bola de nieve".equals(nombreItem)) {//Permite seleccionar otro jugador para hacerlo retroceder 3 casillas.
 	                System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
 	                // Lógica para seleccionar otro jugador y hacerle retroceder
+	                
 	                ArrayList<Jugador> otrosJugadores = new ArrayList<>();
-	                for (Jugador otroJugador : j.getTablero().getJugadores()) {
+	                for (Jugador otroJugador : j.getTablero().getJugadores()) {// Filtra otros jugadores excluyendo al actual (j.getTablero().getJugadores()).
 	                    if (!otroJugador.equals(j)) {
 	                        otrosJugadores.add(otroJugador);
 	                    }
@@ -50,13 +52,13 @@ public class GestorJugador {
 	                    System.out.println("No hay otros jugadores para afectar.");
 	                }
 	                j.getPinguino().getInv().quitarItem(item);
-	            } else if ("dado rápido".equals(nombreItem)) {
+	            } else if ("dado rápido".equals(nombreItem)) {// Avanza 5-10 casillas.
 	                System.out.println("Has usado un dado rápido. Avanzas entre 5-10 casillas.");
 	                Random random = new Random();
 	                int movimientos = random.nextInt(6) + 5; // 5-10
 	                j.moverPosicion(movimientos);
 	                j.getPinguino().getInv().quitarItem(item);
-	            } else if ("dado lento".equals(nombreItem)) {
+	            } else if ("dado lento".equals(nombreItem)) { //Avanza 1-3 casillas.
 	                System.out.println("Has usado un dado lento. Avanzas entre 1-3 casillas.");
 	                Random random = new Random();
 	                int movimientos = random.nextInt(3) + 1; // 1-3
@@ -69,13 +71,13 @@ public class GestorJugador {
 
 	}
 
-	public void jugadorSeMueve(Jugador j, int movimientos) {
-		// Define la lógica para mover un jugador por el tablero.
+	public void jugadorSeMueve(Jugador j, int movimientos) {// Mueve al jugador en el tablero.
 		int nuevaPosicion = j.getPosicion() + movimientos;
-		if (nuevaPosicion >= 0 && nuevaPosicion < 50) {
+		if (nuevaPosicion >= 0 && nuevaPosicion < 50) {// El tablero tiene 50 casillas (posiciones 0 a 49).
 			j.setPosicion(nuevaPosicion);
-			// Activa el efecto de la casilla en la nueva posición
+	
 			j.getTablero().getCasillas()[nuevaPosicion].realizarAccion(j);
+			// Al llegar a una casilla, se ejecuta su acción asociada (realizarAccion(j)).
 		} else {
 			System.out.println("El movimiento es inválido. El jugador no se moverá.");
 		}
@@ -84,6 +86,7 @@ public class GestorJugador {
 	
 	public void jugadorFinalizaTurno(Jugador j) {
 	    // Resetear la protección contra el Oso
+		// Reinicia estados temporales del jugador (como la protección contra el Oso).
 	    j.setProtegidoDelOso(false);
 	    System.out.println(j.getNombre() + " ha finalizado su turno.");
 	}
