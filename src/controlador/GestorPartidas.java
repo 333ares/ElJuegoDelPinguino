@@ -1,31 +1,36 @@
 package controlador;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import bbdd.bbdd;
 import modelo.Casilla;
+import modelo.Inventario;
+import modelo.Jugador;
+import modelo.Pinguino;
 import modelo.Tablero;
 
 public class GestorPartidas {
 
-	String urlBBDD;
-	String username;
-	String password;
-	
-	public void guardarPartida(Tablero t) {
-		 // Aquí iría la lógica para conectar con la base de datos y guardar el estado
-	    // del tablero, las posiciones de los jugadores, sus inventarios, etc.
-		// Lógica para guardar el estado del tablero en la base de datos
-		System.out.println("Partida guardada con éxito.");
-	}
-	
-	public Tablero cargarPartida(){
-		  // Lógica para cargar el estado del tablero desde la base de datos
-		   Tablero tableroCargado = new Tablero(new Casilla[50], new ArrayList<>(), 0, null);
-		    // Aquí iría la lógica para conectar con la base de datos y cargar el estado
-		    // del tablero, las posiciones de los jugadores, sus inventarios, etc.
-		    System.out.println("Cargando partida...");
-		    System.out.println("Partida cargada con éxito.");
-		    return tableroCargado;
-	}
+    String urlBDD;
+    String username;
+    String password;
 
-}
+    public GestorPartidas(String urlBDD, String username, String password) {
+        this.urlBDD = urlBDD;
+        this.username = username;
+        this.password = password;
+    }
+
+    public void guardarPartida(Tablero t) {
+        // Logica para guardar la Partida
+    }
+
+    public Tablero cargarPartida() {
+		return null;
+       //Logica para cargar la partida guardada con anterioridad
+    }
+    }
