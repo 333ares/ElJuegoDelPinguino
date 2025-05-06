@@ -24,7 +24,7 @@ public class Main extends Application {
 	    
 	 // Crear una matriz de casillas
         Casilla[] casillas = new Casilla[50];
-        // Inicializar el tablero
+       
         Tablero tablero = new Tablero(casillas, null, 0, null);
 
         // Crear jugadores y agregarlos al tablero (ya se hace en el constructor de Tablero)
@@ -32,7 +32,8 @@ public class Main extends Application {
 
         pantallaJuegoController controller = (pantallaJuegoController) loader.getController();
         GestorJugador gestorJugador = new GestorJugador(tablero.getJugadores().get(0), tablero);
-        controller.initializeController(gestorJugador, null, tablero.getJugadores().get(0));
+        GestorTablero gestorTablero = new GestorTablero(tablero); // Asegúrate de inicializar GestorTablero correctamente
+        controller.initializeController(gestorJugador, gestorTablero, tablero.getJugadores().get(0));
     }
 	
 

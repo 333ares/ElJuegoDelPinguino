@@ -1,5 +1,6 @@
 package vista;
 
+import java.util.List;
 import java.util.Random;
 
 import controlador.GestorJugador;
@@ -141,24 +142,20 @@ public class pantallaJuegoController {
 
     @FXML
     private void handleNieve() {
-    	  if (!otrosJugadores.isEmpty()) {
-    	        Jugador objetivo = null;
-    	        if (jugadorActual.getNombre().equals(otrosJugadores.get(0).getNombre())) {
-    	            objetivo = otrosJugadores.get(1); // El objetivo es el segundo jugador
-    	        } else {
-    	            objetivo = otrosJugadores.get(0); // El objetivo es el primer jugador
-    	        }
+        List<Jugador> otrosJugadores = gestorJugador.getOtrosJugadores();
+        if (!otrosJugadores.isEmpty()) {
+            Jugador objetivo = otrosJugadores.get(0); // Suponiendo solo dos jugadores
 
-    	        int nuevaPosicion = objetivo.getPosicion() - 3; // Retroceder 3 casillas
-    	        if (nuevaPosicion < 0) nuevaPosicion = 0;
-    	        objetivo.setPosicion(nuevaPosicion);
-    	        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	        alert.setContentText(objetivo.getNombre() + " retrocede 3 casillas.");
-    	        alert.showAndWait();
-    	    } else {
-    	        Alert alert = new Alert(Alert.AlertType.WARNING);
-    	        alert.setContentText("No hay otros jugadores para afectar.");
-    	        alert.showAndWait();
-    	    }
+            int nuevaPosicion = objetivo.getPosicion() - 3; // Retroceder 3 casillas
+            if (nuevaPosicion < 0) nuevaPosicion = 0;
+            objetivo.setPosicion(nuevaPosicion);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText(objetivo.getNombre() + " retrocede 3 casillas.");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("No hay otros jugadores para afectar.");
+            alert.showAndWait();
+        }
     }
 }

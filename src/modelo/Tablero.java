@@ -18,7 +18,7 @@ public class Tablero {
 		this.jugadorActual = null ;
 		this.jugadores = new ArrayList<Jugador>();
 		inicializarCasillas();
-		initializeJugadores();
+		initializarJugadores();
 	}
 
 	// GETTERS Y SETTERS
@@ -102,12 +102,13 @@ public class Tablero {
 		    }
 	}
 	
-    private void initializeJugadores() {
-        Jugador jugador1 = new Jugador(turnos, "Jugador 1", null, null);
-        Jugador jugador2 = new Jugador(turnos, "Jugador 2", null, null);
+    private void initializarJugadores() {
+    	 Jugador jugador1 = new Jugador(turnos, "Jugador 1", null, null);
+    	    Jugador jugador2 = new Jugador(turnos, "Jugador 2", null, null);
 
-        // Agregar jugadores al tablero
-        jugadores.add(jugador1);
-        jugadores.add(jugador2);
+    	    // Agregar jugadores al tablero
+    	    jugadores.add(jugador1);
+    	    jugadores.add(jugador2);
+    	    this.jugadorActual = jugador1; // Establecer el primer jugador como jugador actual
     }
 }

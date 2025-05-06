@@ -1,6 +1,7 @@
 package controlador;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -40,6 +41,16 @@ public class GestorJugador {
 	    this.tablero = tablero;
 	}
 
+	 public List<Jugador> getOtrosJugadores() {
+	        List<Jugador> otrosJugadores = new ArrayList<>();
+	        for (Jugador jugador : tablero.getJugadores()) {
+	            if (!jugador.equals(jugadorActual)) {
+	                otrosJugadores.add(jugador);
+	            }
+	        }
+	        return otrosJugadores;
+	    }
+	 
 	public void jugadorUsaItem(Jugador j, String nombreItem) {
 		// Este método permite al jugador usar un item
 		for (Item item : j.getPinguino().getInv().getLista()) {// Busca el ítem en el inventario del jugador
