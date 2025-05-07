@@ -18,7 +18,7 @@ public class pantallaPartida {
     public void iniciarPartida() {
         Tablero tablero = new Tablero(new Casilla[50], new ArrayList<>(), 0, null);
         GestorTablero gestorTablero = new GestorTablero(tablero);
-        GestorJugador gestorJugador = new GestorJugador();
+        GestorJugador gestorJugador = new GestorJugador(null, tablero);
 
        
         Jugador jugadorActual = tablero.getJugadores().get(0);

@@ -14,7 +14,6 @@ public class PantallaMenu {
         Scanner s = new Scanner(System.in);
         int opcion;
 
-
         do {
             System.out.println("1. Nueva Partida");
             System.out.println("2. Cargar Partida");
@@ -22,25 +21,22 @@ public class PantallaMenu {
             System.out.print("Seleccione una opción: ");
             opcion = s.nextInt();
 
-
             switch (opcion) {
                 case 1:
                     // Iniciar nueva partida
+                    System.out.println("Iniciando nueva partida...");
+
+                    // Crear tablero
                     Tablero tablero = new Tablero(new Casilla[50], new ArrayList<>(), 0, null);
-                    tablero.mostrarTablero(); // Aquí se muestra el tablero
+                    tablero.inicializarCasillas(); // Aquí se inicializan las casillas del tablero
 
+                    // Crear jugadores
+                    Jugador jugador1 = new Jugador(opcion, "Jugador 1", null, null);
+                    Jugador jugador2 = new Jugador(opcion, "Jugador 2", null, null);
+                    tablero.getJugadores().add(jugador1);
+                    tablero.getJugadores().add(jugador2);
 
-                    // Pedir número de jugadores
-                    System.out.print("Ingrese número de jugadores (2-4): ");
-                    int numJugadores = s.nextInt();
-                    if (numJugadores >= 2 && numJugadores <= 4) {
-                        for (int i = 0; i < numJugadores; i++) {
-                            
-                        }
-                        System.out.println("Partida iniciada con " + numJugadores + " jugadores.");
-                    } else {
-                        System.out.println("Número de jugadores debe ser entre 2 y 4.");
-                    }
+                    System.out.println("Partida iniciada con 2 jugadores.");
                     break;
                 case 2:
                     System.out.println("Cargando partida...");
@@ -53,5 +49,6 @@ public class PantallaMenu {
                     System.out.println("Opción no válida.");
             }
         } while (opcion != 3);
+
     }
 }

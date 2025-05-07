@@ -1,71 +1,60 @@
 package vista;
 
-import java.util.Random;
-
 import controlador.GestorJugador;
 import controlador.GestorTablero;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import modelo.Jugador;
+
+import java.awt.event.ActionEvent;
+import java.util.List;
+import java.util.Random;
 
 public class pantallaJuegoController {
 
-	
-	 private GestorJugador gestorJugador;
-	    private GestorTablero gestorTablero;
-	    private Jugador jugadorActual;
+    private GestorJugador gestorJugador;
+    private GestorTablero gestorTablero;
+    private Jugador jugadorActual;
 
-	    // Método para inicializar el controlador con las dependencias necesarias
-	    public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
-	        this.gestorJugador = gestorJugador;
-	        this.gestorTablero = gestorTablero;
-	        this.jugadorActual = jugadorActual;
-	    }
-	    
-    // Menu items
-    @FXML private MenuItem newGame;
-    @FXML private MenuItem saveGame;
-    @FXML private MenuItem loadGame;
-    @FXML private MenuItem quitGame;
+    @FXML
+    private MenuItem newGame;
+    private MenuItem saveGame;
+    private MenuItem loadGame;
+    private MenuItem quitGame;
 
-    // Buttons
-    @FXML private Button dado;
-    @FXML private Button rapido;
-    @FXML private Button lento;
-    @FXML private Button peces;
-    @FXML private Button nieve;
+    @FXML
+    private Button dado;
+    private Button rapido;
+    private Button lento;
+    private Button peces;
+    private Button nieve;
 
-    // Texts
-    @FXML private Text dadoResultText;
-    @FXML private Text rapido_t;
-    @FXML private Text lento_t;
-    @FXML private Text peces_t;
-    @FXML private Text nieve_t;
-    @FXML private Text eventos;
+    @FXML
+    private Text dadoResultText;
+    private Text rapido_t;
+    private Text lento_t;
+    private Text peces_t;
+    private Text nieve_t;
+    private Text eventos;
 
-    // Game board and player pieces
-    @FXML private GridPane tablero;
-    @FXML private Circle P1;
-    @FXML private Circle P2;
-    @FXML private Circle P3;
-    @FXML private Circle P4;
-    
-    //ONLY FOR TESTING!!!
+    @FXML
+    private GridPane tablero;
+    private Circle P1;
+    private Circle P2;
+    private Circle P3;
+    private Circle P4;
+
     private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
     private final int COLUMNS = 5;
 
     @FXML
     private void initialize() {
-        // This method is called automatically after the FXML is loaded
-        // You can set initial values or add listeners here
         eventos.setText("¡El juego ha comenzado!");
     }
-
-    // Button and menu actions
 
     @FXML
     private void handleNewGame() {
@@ -93,14 +82,17 @@ public class pantallaJuegoController {
 
     @FXML
     private void handleDado(ActionEvent event) {
-    	  Random rand = new Random();
+    	 Random rand = new Random();
     	    int diceResult = rand.nextInt(6) + 1;
 
     	    // Actualizar la posición del jugador usando el gestor de tablero
     	    gestorTablero.actualizarMovimientoJugador(jugadorActual, diceResult);
 
-    	   
+    	    // Actualizar el texto de resultado del dado
     	    dadoResultText.setText("Ha salido: " + diceResult);
+
+    	    // Finalizar el turno actual y cambiar al siguiente jugador
+    	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
     private void moveP1(int steps) {
@@ -122,25 +114,60 @@ public class pantallaJuegoController {
 
     @FXML
     private void handleRapido() {
-    	   // Lógica para usar un dado rápido
-        gestorJugador.jugadorUsaItem(jugadorActual, "dado rápido");
+        if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
+            jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
+            int movimiento = new Random().nextInt(6) + 5;
+            gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+            rapido_t.setText("Has avanzado " + movimiento + " casillas.");
+        } else {
+            rapido_t.setText("No tienes dado rápido.");
+        }
+        gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
     @FXML
     private void handleLento() {
-    	   // Lógica para usar un dado lento
-        gestorJugador.jugadorUsaItem(jugadorActual, "dado lento");
+        if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
+            jugadorActual.getPinguino().getInv().quitarItem("dado lento");
+            int movimiento = new Random().nextInt(3) + 1;
+            gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+            lento_t.setText("Has avanzado " + movimiento + " casillas.");
+        } else {
+            lento_t.setText("No tienes dado lento.");
+        }
+        gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
     @FXML
     private void handlePeces() {
-    	  // Lógica para usar un pez
-        gestorJugador.jugadorUsaItem(jugadorActual, "pez");
+        if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
+            jugadorActual.getPinguino().getInv().quitarItem("pez");
+            jugadorActual.setProtegidoDelOso(true);
+            peces_t.setText("Estás protegido contra los osos.");
+        } else {
+            peces_t.setText("No tienes peces.");
+        }
+        gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
-    @FXML
     private void handleNieve() {
-    	   // Lógica para usar una bola de nieve
-        gestorJugador.jugadorUsaItem(jugadorActual, "bola de nieve");
+        // Sabemos que hay exactamente un otro jugador
+        Jugador otroJugador = gestorJugador.getOtrosJugadores().get(0);
+        int nuevaPosicion = otroJugador.getPosicion() - 3;
+        if (nuevaPosicion < 0) {
+            nuevaPosicion = 0;
+        }
+        otroJugador.setPosicion(nuevaPosicion);
+        // Actualizar la interfaz gráfica para reflejar el cambio
+        actualizarInterfazJugador(otroJugador);
+        // Finalizar el turno
+        gestorJugador.jugadorFinalizaTurno(jugadorActual);
+    }
+    
+    
+    public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
+        this.gestorJugador = gestorJugador;
+        this.gestorTablero = gestorTablero;
+        this.jugadorActual = jugadorActual;
     }
 }

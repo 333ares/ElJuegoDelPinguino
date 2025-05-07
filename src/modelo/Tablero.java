@@ -15,8 +15,10 @@ public class Tablero {
 		this.casillas = new Casilla[50];
 		this.jugadores = jugadores;
 		this.turnos = turnos;
-		this.jugadorActual = jugadorActual;
+		this.jugadorActual = null ;
+		this.jugadores = new ArrayList<Jugador>();
 		inicializarCasillas();
+		initializarJugadores();
 	}
 
 	// GETTERS Y SETTERS
@@ -61,7 +63,7 @@ public class Tablero {
 
 	}
 	
-	private void inicializarCasillas() {
+	public void inicializarCasillas() {
 	    for (int i = 0; i < casillas.length; i++) {
 	        // Aumentamos el número de opciones para que haya más casillas normales
 	        int tipo = (int) (Math.random() * 10); // 10 opciones
@@ -99,4 +101,14 @@ public class Tablero {
 		        
 		    }
 	}
+	
+    private void initializarJugadores() {
+    	 Jugador jugador1 = new Jugador(turnos, "Jugador 1", null, null);
+    	    Jugador jugador2 = new Jugador(turnos, "Jugador 2", null, null);
+
+    	    // Agregar jugadores al tablero
+    	    jugadores.add(jugador1);
+    	    jugadores.add(jugador2);
+    	    this.jugadorActual = jugador1; // Establecer el primer jugador como jugador actual
+    }
 }
