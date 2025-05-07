@@ -36,10 +36,12 @@ public class GestorJugador {
 	private Jugador jugadorActual;
 	private Tablero tablero;
 
-	public GestorJugador(Jugador jugadorActual, Tablero tablero) {
-	    this.jugadorActual = jugadorActual;
-	    this.tablero = tablero;
-	}
+    public GestorJugador(Jugador jugador1, Jugador jugador2, Tablero tablero) {
+        this.tablero = tablero;
+        this.jugadorActual = jugador1;
+        tablero.getJugadores().add(jugador1);
+        tablero.getJugadores().add(jugador2);
+    }
 
 	 public List<Jugador> getOtrosJugadores() {
 	        List<Jugador> otrosJugadores = new ArrayList<>();
@@ -81,10 +83,11 @@ public class GestorJugador {
 						}
 						// Suponiendo que solo hay dos jugadores
 						Jugador objetivo = null;
-						if (jugadorActual.getNombre().equals(otrosJugadores.get(0).getNombre())) {
-							objetivo = otrosJugadores.get(1); // El objetivo es el segundo jugador
+						// Siempre hay dos jugadores, así que si el jugador actual es el primero, el objetivo es el segundo y viceversa
+						if (jugadorActual.equals(tablero.getJugadores().get(0))) {
+						    objetivo = tablero.getJugadores().get(1);
 						} else {
-							objetivo = otrosJugadores.get(0); // El objetivo es el primer jugador
+						    objetivo = tablero.getJugadores().get(0);
 						}
 
 						int nuevaPosicion = objetivo.getPosicion() - 3; // Retroceder 3 casillas
@@ -136,10 +139,10 @@ public class GestorJugador {
 	}
 
 	public void cambiarJugadorActual() {
-	    int indiceActual = tablero.getJugadores().indexOf(jugadorActual);
-	    int siguienteIndice = (indiceActual + 1) % tablero.getJugadores().size();
-	    jugadorActual = tablero.getJugadores().get(siguienteIndice);
-	    System.out.println("El jugador actual ahora es: " + jugadorActual.getNombre());
+		 int indiceActual = tablero.getJugadores().indexOf(jugadorActual);
+		    int siguienteIndice = (indiceActual + 1) % tablero.getJugadores().size();
+		    jugadorActual = tablero.getJugadores().get(siguienteIndice);
+		    System.out.println("El jugador actual ahora es: " + jugadorActual.getNombre());
 	}
 
 	public void pinguinoEvento(Pinguino p) {

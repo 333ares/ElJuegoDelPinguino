@@ -63,7 +63,7 @@ public class Tablero {
 
 	}
 	
-	private void inicializarCasillas() {
+	public void inicializarCasillas() {
 	    for (int i = 0; i < casillas.length; i++) {
 	        // Aumentamos el número de opciones para que haya más casillas normales
 	        int tipo = (int) (Math.random() * 10); // 10 opciones
