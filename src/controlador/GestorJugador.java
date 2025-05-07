@@ -130,10 +130,16 @@ public class GestorJugador {
 	}
 
 	public void jugadorFinalizaTurno(Jugador j) {
-		// Resetear la protección contra el Oso
-		// Reinicia estados temporales del jugador (como la protección contra el Oso).
-		j.setProtegidoDelOso(false);
-		System.out.println(j.getNombre() + " ha finalizado su turno.");
+	    j.setProtegidoDelOso(false);
+	    System.out.println(j.getNombre() + " ha finalizado su turno.");
+	    cambiarJugadorActual(); // Cambiar al siguiente jugador
+	}
+
+	public void cambiarJugadorActual() {
+	    int indiceActual = tablero.getJugadores().indexOf(jugadorActual);
+	    int siguienteIndice = (indiceActual + 1) % tablero.getJugadores().size();
+	    jugadorActual = tablero.getJugadores().get(siguienteIndice);
+	    System.out.println("El jugador actual ahora es: " + jugadorActual.getNombre());
 	}
 
 	public void pinguinoEvento(Pinguino p) {

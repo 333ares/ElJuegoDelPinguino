@@ -124,20 +124,60 @@ public class pantallaJuegoController {
 
     @FXML
     private void handleRapido() {
-    	   // Lógica para usar un dado rápido
-        gestorJugador.jugadorUsaItem(jugadorActual, "dado rápido");
+    	 // Asegurarse de que el jugador tenga un dado rápido en su inventario
+        if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
+            // Usar el item
+            jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
+            // Generar un número aleatorio entre 5 y 10 para el movimiento
+            int movimiento = new Random().nextInt(6) + 5;
+            // Actualizar la posición del jugador
+            gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+            // Indicar el resultado en la interfaz
+            rapido_t.setText("Has avanzado " + movimiento + " casillas.");
+        } else {
+            // Indicar que no hay dado rápido en el inventario
+            rapido_t.setText("No tienes dado rápido.");
+        }
+        // Finalizar el turno actual
+        gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
     @FXML
     private void handleLento() {
-    	   // Lógica para usar un dado lento
-        gestorJugador.jugadorUsaItem(jugadorActual, "dado lento");
+    	// Asegurarse de que el jugador tenga un dado lento en su inventario
+        if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
+            // Usar el item
+            jugadorActual.getPinguino().getInv().quitarItem("dado lento");
+            // Generar un número aleatorio entre 1 y 3 para el movimiento
+            int movimiento = new Random().nextInt(3) + 1;
+            // Actualizar la posición del jugador
+            gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+            // Indicar el resultado en la interfaz
+            lento_t.setText("Has avanzado " + movimiento + " casillas.");
+        } else {
+            // Indicar que no hay dado lento en el inventario
+            lento_t.setText("No tienes dado lento.");
+        }
+        // Finalizar el turno actual
+        gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
     @FXML
     private void handlePeces() {
-    	  // Lógica para usar un pez
-        gestorJugador.jugadorUsaItem(jugadorActual, "pez");
+    	 // Asegurarse de que el jugador tenga un pez en su inventario
+        if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
+            // Usar el item
+            jugadorActual.getPinguino().getInv().quitarItem("pez");
+            // Proteger al jugador de los osos
+            jugadorActual.setProtegidoDelOso(true);
+            // Indicar el resultado en la interfaz
+            peces_t.setText("Estás protegido contra los osos.");
+        } else {
+            // Indicar que no hay peces en el inventario
+            peces_t.setText("No tienes peces.");
+        }
+        // Finalizar el turno actual
+        gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
     @FXML
