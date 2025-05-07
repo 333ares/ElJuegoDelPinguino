@@ -54,6 +54,12 @@ public class Inventario {
 	        }
 	    }
 	}
+
+
+	public int getCantidad(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }

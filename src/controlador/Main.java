@@ -31,13 +31,9 @@ public class Main extends Application {
         // Inicializar el tablero
         Tablero tablero = new Tablero(casillas, null, 0, null);
 
-        Inventario inv1 = new Inventario(new ArrayList<Item>());
-        Pinguino ping1 = new Pinguino(inv1);
-        Jugador jugador1 = new Jugador(0, "Jugador 1", "Color1", ping1);
-
-        Inventario inv2 = new Inventario(new ArrayList<Item>());
-        Pinguino ping2 = new Pinguino(inv2);
-        Jugador jugador2 = new Jugador(0, "Jugador 2", "Color2", ping2);
+    
+        Jugador jugador1 = new Jugador(0, "Jugador 1", null, null);
+        Jugador jugador2 = new Jugador(0, "Jugador 2", null, null);
         tablero.getJugadores().add(jugador1);
         tablero.getJugadores().add(jugador2);
 

@@ -9,6 +9,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modelo.Jugador;
+import modelo.Item;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -164,6 +165,36 @@ public class pantallaJuegoController {
         gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
     
+    private void actualizarInterfazJugador(Jugador jugador) {
+        // Actualizar posición del jugador en el tablero
+        int row = jugador.getPosicion() / COLUMNS;
+        int col = jugador.getPosicion() % COLUMNS;
+
+        // Suponiendo que tienes un Circle para cada jugador
+        if (jugador.equals(jugadorActual)) {
+            GridPane.setRowIndex(P1, row);
+            GridPane.setColumnIndex(P1, col);
+        } else {
+            GridPane.setRowIndex(P2, row);
+            GridPane.setColumnIndex(P2, col);
+        }
+
+        // Actualizar los contadores de items
+        actualizarContadoresItems(jugador);
+    }
+
+    private void actualizarContadoresItems(Jugador jugador) {
+        // Actualizar los textos que muestran la cantidad de items
+        int peces = jugador.getPinguino().getInv().getCantidad("pez");
+        int bolasNieve = jugador.getPinguino().getInv().getCantidad("bola de nieve");
+        int dadosRapidos = jugador.getPinguino().getInv().getCantidad("dado rápido");
+        int dadosLentos = jugador.getPinguino().getInv().getCantidad("dado lento");
+
+        peces_t.setText("Peces: " + peces);
+        nieve_t.setText("Bolas de nieve: " + bolasNieve);
+        rapido_t.setText("Dados rápidos: " + dadosRapidos);
+        lento_t.setText("Dados lentos: " + dadosLentos);
+    }
     
     public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
         this.gestorJugador = gestorJugador;
