@@ -37,6 +37,7 @@ public class Main extends Application {
         tablero.getJugadores().add(jugador1);
         tablero.getJugadores().add(jugador2);
 
+        
         pantallaJuegoController controller = (pantallaJuegoController) loader.getController();
         GestorJugador gestorJugador = new GestorJugador(jugador1, jugador2, tablero);
         GestorTablero gestorTablero = new GestorTablero(tablero);
