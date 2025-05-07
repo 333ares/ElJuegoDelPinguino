@@ -7,47 +7,39 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import modelo.Jugador;
-import modelo.Item;
-
-import java.awt.event.ActionEvent;
-import java.util.List;
+import javafx.event.ActionEvent;
 import java.util.Random;
 
 public class pantallaJuegoController {
 
-    private GestorJugador gestorJugador;
-    private GestorTablero gestorTablero;
-    private Jugador jugadorActual;
+	@FXML private GestorJugador gestorJugador;
+	@FXML private GestorTablero gestorTablero;
+	@FXML private Jugador jugadorActual;
 
-    @FXML
-    private MenuItem newGame;
-    private MenuItem saveGame;
-    private MenuItem loadGame;
-    private MenuItem quitGame;
+	@FXML private MenuItem newGame;
+	@FXML private MenuItem saveGame;
+	@FXML private MenuItem loadGame;
+	@FXML private MenuItem quitGame;
 
-    @FXML
-    private Button dado;
-    private Button rapido;
-    private Button lento;
-    private Button peces;
-    private Button nieve;
+    @FXML private Button dado;
+    @FXML private Button rapido;
+    @FXML private Button lento;
+    @FXML private Button peces;
+    @FXML private Button nieve;
 
-    @FXML
-    private Text dadoResultText;
-    private Text rapido_t;
-    private Text lento_t;
-    private Text peces_t;
-    private Text nieve_t;
-    private Text eventos;
+    @FXML private Text dadoResultText;
+    @FXML private Text rapido_t;
+    @FXML private Text lento_t;
+    @FXML private Text peces_t;
+    @FXML private Text nieve_t;
+    @FXML private Text eventos;
 
-    @FXML
-    private GridPane tablero;
-    private Circle P1;
-    private Circle P2;
-    private Circle P3;
-    private Circle P4;
+    @FXML private GridPane tablero;
+    @FXML private Circle P1;
+    @FXML private Circle P2;
+    @FXML private Circle P3;
+    @FXML private Circle P4;
 
     private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
     private final int COLUMNS = 5;
@@ -82,7 +74,7 @@ public class pantallaJuegoController {
     }
 
     @FXML
-    private void handleDado(ActionEvent event) {
+    public void handleDado(ActionEvent event) {
     	 Random rand = new Random();
     	    int diceResult = rand.nextInt(6) + 1;
 
@@ -114,7 +106,7 @@ public class pantallaJuegoController {
     }
 
     @FXML
-    private void handleRapido() {
+    public void handleRapido() {
         if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
             jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
             int movimiento = new Random().nextInt(6) + 5;
@@ -127,7 +119,7 @@ public class pantallaJuegoController {
     }
 
     @FXML
-    private void handleLento() {
+    public void handleLento() {
         if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
             jugadorActual.getPinguino().getInv().quitarItem("dado lento");
             int movimiento = new Random().nextInt(3) + 1;
@@ -140,7 +132,7 @@ public class pantallaJuegoController {
     }
 
     @FXML
-    private void handlePeces() {
+    public void handlePeces() {
         if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
             jugadorActual.getPinguino().getInv().quitarItem("pez");
             jugadorActual.setProtegidoDelOso(true);
@@ -151,7 +143,8 @@ public class pantallaJuegoController {
         gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
-    private void handleNieve() {
+    @FXML
+    public void handleNieve() {
         // Sabemos que hay exactamente un otro jugador
         Jugador otroJugador = gestorJugador.getOtrosJugadores().get(0);
         int nuevaPosicion = otroJugador.getPosicion() - 3;
