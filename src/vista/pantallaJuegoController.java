@@ -29,17 +29,20 @@ public class pantallaJuegoController {
     @FXML private Button nieve;
 
     @FXML private Text dadoResultText;
-    @FXML private Text rapido_t;
-    @FXML private Text lento_t;
-    @FXML private Text peces_t;
-    @FXML private Text nieve_t;
+    @FXML private Text rapido_tP1;
+    @FXML private Text rapido_tP2;
+    @FXML private Text lento_tP1;
+    @FXML private Text lento_tP2;
+    @FXML private Text peces_tP1;
+    @FXML private Text peces_tP2;
+    @FXML private Text nieve_tP1;
+    @FXML private Text nieve_tP2;
     @FXML private Text eventos;
 
     @FXML private GridPane tablero;
     @FXML private Circle P1;
     @FXML private Circle P2;
-    @FXML private Circle P3;
-    @FXML private Circle P4;
+
 
     private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
     private final int COLUMNS = 5;
