@@ -13,9 +13,9 @@ import java.util.Random;
 
 public class pantallaJuegoController {
 
-	@FXML private GestorJugador gestorJugador;
-	@FXML private GestorTablero gestorTablero;
-	@FXML private Jugador jugadorActual;
+	private GestorJugador gestorJugador;
+	private GestorTablero gestorTablero;
+	private Jugador jugadorActual;
 
 	@FXML private MenuItem newGame;
 	@FXML private MenuItem saveGame;

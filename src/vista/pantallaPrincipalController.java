@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -74,67 +75,59 @@ public class pantallaPrincipalController {
 	@FXML
 	private void handleLogin(ActionEvent event) {
 		String username = userField.getText();
+        String password = passField.getText();
+
+        System.out.println("Login pressed: " + username + " / " + password);
+
+        // Basic check (just for demo, replace with real login logic)
+        if (!username.isEmpty() && !password.isEmpty()) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+                Parent pantallaJuegoRoot = loader.load();
+
+                Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
+
+                // Get the current stage using the event
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(pantallaJuegoScene);
+                stage.setTitle("Pantalla de Juego");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Please. Enter user and password.");
+        }
+    }
+
+	@FXML
+	private void handleRegister() {
+		String username = userField.getText();
 		String password = passField.getText();
+		int partidas_jugadas = 0;
 
 		if (!username.isEmpty() && !password.isEmpty()) {
-			// Consulta SQL para verificar el usuario y la contraseña
-			String sql = "SELECT * FROM jugadores WHERE nickname = '" + username + "' AND contraseña = '" + password + "'";
+			// Consulta SQL para verificar si el usuario ya existe
+			String sqlCheck = "SELECT * FROM jugadores WHERE nickname = '" + username + "'";
 
-			ResultSet rs = bbdd.select(con, sql);
+			ResultSet rs = bbdd.select(con, sqlCheck);
 
 			try {
-				if (rs.next()) {
-					// Usuario y contraseña válidos
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-					Parent pantallaJuegoRoot = loader.load();
-
-					Scene pantallaJuegoScene = new Scene(pantallaJuegoRoot);
-
-					Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					stage.setScene(pantallaJuegoScene);
-					stage.setTitle("Pantalla de Juego");
+				if (!rs.next()) {
+					// Usuario no existe, se puede registrar
+					String sqlInsert = "INSERT INTO jugadores (nickname, contraseña, partidas_jugadas) VALUES ('"
+							+ username + "', '" + password + "', '" + partidas_jugadas + "')";
+					bbdd.insert(con, sqlInsert);
+					System.out.println("Registro exitoso");
 				} else {
-					// Usuario o contraseña incorrectos
-					System.out.println("Usuario o contraseña incorrectos");
+					// Usuario ya existe
+					System.out.println("El usuario ya existe");
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			System.out.println("Por favor, ingrese usuario y contraseña.");
 		}
-	}
-
-	@FXML
-	private void handleRegister() {
-		 String username = userField.getText();
-		    String password = passField.getText();
-		    int partidas_jugadas = 0;
-
-		    if (!username.isEmpty() && !password.isEmpty()) {
-		        // Consulta SQL para verificar si el usuario ya existe
-		        String sqlCheck = "SELECT * FROM jugadores WHERE nickname = '" + username + "'";
-
-		        ResultSet rs = bbdd.select(con, sqlCheck);
-
-		        try {
-		            if (!rs.next()) {
-		                // Usuario no existe, se puede registrar
-		                String sqlInsert = "INSERT INTO jugadores (nickname, contraseña, partidas_jugadas) VALUES ('" + username + "', '" + password + "', '" + partidas_jugadas + "')";
-		                bbdd.insert(con, sqlInsert);
-		                System.out.println("Registro exitoso");
-		            } else {
-		                // Usuario ya existe
-		                System.out.println("El usuario ya existe");
-		            }
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		    } else {
-		        System.out.println("Por favor, ingrese usuario y contraseña.");
-		    }
 
 	}
 }
