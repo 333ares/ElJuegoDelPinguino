@@ -75,4 +75,12 @@ public class GestorTablero {
 	public void actualizarPantalla() {
 
 	}
+
+	public Tablero getTablero() {
+		return tablero;
+	}
+
+	public void setTablero(Tablero tablero) {
+		this.tablero = tablero;
+	}
 }
