@@ -217,17 +217,14 @@ public class pantallaJuegoController {
 		int row = jugador.getPosicion() / COLUMNS;
 		int col = jugador.getPosicion() % COLUMNS;
 
-		// Suponiendo que tienes un Circle para cada jugador
-		if (jugador.equals(jugadorActual)) {
-			GridPane.setRowIndex(P1, row);
-			GridPane.setColumnIndex(P1, col);
-		} else {
-			GridPane.setRowIndex(P2, row);
-			GridPane.setColumnIndex(P2, col);
-		}
-
-		// Actualizar los contadores de items
-		actualizarContadoresItems(jugador);
+		if (esJugador1()) {
+	        GridPane.setRowIndex(P1, row);
+	        GridPane.setColumnIndex(P1, col);
+	    } else {
+	        GridPane.setRowIndex(P2, row);
+	        GridPane.setColumnIndex(P2, col);
+	    }
+	    actualizarContadoresItems(jugador);
 	}
 
 	private void actualizarContadoresItems(Jugador jugador) {
@@ -237,10 +234,12 @@ public class pantallaJuegoController {
 		int dadosRapidos = jugador.getPinguino().getInv().getCantidad("dado rápido");
 		int dadosLentos = jugador.getPinguino().getInv().getCantidad("dado lento");
 
-		peces_t.setText("Peces: " + peces);
-		nieve_t.setText("Bolas de nieve: " + bolasNieve);
-		rapido_t.setText("Dados rápidos: " + dadosRapidos);
-		lento_t.setText("Dados lentos: " + dadosLentos);
+		if (esJugador1()) {
+	        peces_tP1.setText("Peces: " + peces);
+	        nieve_tP1.setText("Bolas: " + bolasNieve);
+	        rapido_tP1.setText("Dado rápido: " + dadosRapidos);
+	        lento_tP1.setText("Dado lento: " + dadosLentos);
+		}
 	}
 
 	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
