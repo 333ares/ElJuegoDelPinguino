@@ -1,28 +1,128 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import controlador.GestorTablero;
 
 public class Tablero {
+    private Casilla[] casillas;
+    private ArrayList<Jugador> jugadores;
+    private int turnos;
+    private Jugador jugadorActual;
+    
+    // Registros de posiciones especiales
+    private List<Integer> posicionesAgujeros = new ArrayList<>();
+    private List<Integer> posicionesOsos = new ArrayList<>();
+    private List<Integer> posicionesTrineos = new ArrayList<>();
+    private List<Integer> posicionesEventos = new ArrayList<>();
 
-	static Casilla [] casillas;
-	ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-	int turnos;
-	Jugador jugadorActual;
+    public Tablero() {
+        this.casillas = new Casilla[50];
+        this.jugadores = new ArrayList<>();
+        this.turnos = 0;
+        inicializarCasillas();
+        inicializarJugadores();
+    }
 
-	// CONSTRUCTOR
-	public Tablero(Casilla[] casillas, ArrayList<Jugador> jugadores, int turnos, Jugador jugadorActual) {
-		super();
-		this.casillas = new Casilla[50];
-		this.jugadores = jugadores;
-		this.turnos = turnos;
-		this.jugadorActual = null ;
-		this.jugadores = new ArrayList<Jugador>();
-		inicializarCasillas();
-		initializarJugadores();
+    public void inicializarCasillas() {
+        for (int i = 0; i < casillas.length; i++) {
+            int tipo = (int) (Math.random() * 10);
+            switch (tipo) {
+                case 0:
+                    casillas[i] = new Oso(i);
+                    posicionesOsos.add(i);
+                    break;
+                case 1:
+                    casillas[i] = new Agujero(i, null); // public Agujero(int posicion, GestorTablero gestor)
+                    posicionesAgujeros.add(i);
+                    break;
+                case 2:
+                    casillas[i] = new Trineo(i);
+                    posicionesTrineos.add(i);
+                    break;
+                case 3:
+                    casillas[i] = new Evento(i);
+                    posicionesEventos.add(i);
+                    break;
+                default:
+                    casillas[i] = new CasillaNormal(i);
+                    break;
+            }
+        }
+    }
+
+    private void inicializarJugadores() {
+        Inventario inv1 = new Inventario(new ArrayList<>());
+        Inventario inv2 = new Inventario(new ArrayList<>());
+        
+        Pinguino pinguino1 = new Pinguino(inv1);
+        Pinguino pinguino2 = new Pinguino(inv2);
+        
+        Jugador jugador1 = new Jugador(0, "Jugador 1", "Azul", pinguino1);
+        Jugador jugador2 = new Jugador(0, "Jugador 2", "Rojo", pinguino2);
+        
+        jugadores.add(jugador1);
+        jugadores.add(jugador2);
+        this.jugadorActual = jugador1;
+    }
+
+    // getters y setters 
+
+    public void avanzarTurno() {
+        turnos++;
+        cambiarJugadorActual();
+    }
+
+    private void cambiarJugadorActual() {
+        int indiceActual = jugadores.indexOf(jugadorActual);
+        int siguienteIndice = (indiceActual + 1) % jugadores.size();
+        jugadorActual = jugadores.get(siguienteIndice);
+    }
+
+    public void mostrarTablero() {
+        System.out.println("=== ESTADO DEL TABLERO ===");
+        for (int i = 0; i < casillas.length; i++) {
+            String simbolo;
+            if (casillas[i] instanceof Oso) simbolo = "[O]";
+            else if (casillas[i] instanceof Agujero) simbolo = "[A]";
+            else if (casillas[i] instanceof Trineo) simbolo = "[T]";
+            else if (casillas[i] instanceof Evento) simbolo = "[?]";
+            else simbolo = "[ ]";
+            
+            // Mostrar jugadores en la casilla
+            for (Jugador j : jugadores) {
+                if (j.getPosicion() == i) {
+                    simbolo = simbolo.replace("]", j.getNombre().charAt(0) + "]");
+                }
+            }
+            
+            System.out.print(simbolo + " ");
+            if ((i + 1) % 10 == 0) System.out.println();
+        }
+    }
+    
+	public void actualizarTablero() {
+		
 	}
 
-	// GETTERS Y SETTERS
-	public static Casilla[] getCasillas() {
+	public void actualizarjugador(Jugador j) {
+
+	}
+
+    // Métodos para acceder a posiciones especiales
+    
+    public List<Integer> getPosicionesAgujeros() {
+        return Collections.unmodifiableList(posicionesAgujeros);
+    }
+    
+    public List<Integer> getPosicionesOsos() {
+        return Collections.unmodifiableList(posicionesOsos);
+    }
+
+    // getters y setters 
+	public Casilla[] getCasillas() {
 		return casillas;
 	}
 
@@ -54,61 +154,29 @@ public class Tablero {
 		this.jugadorActual = jugadorActual;
 	}
 
-	// FUNCIONES
-	public void actualizarTablero() {
-		
+	public List<Integer> getPosicionesTrineos() {
+		return posicionesTrineos;
 	}
 
-	public void actualizarjugador(Jugador j) {
-
+	public void setPosicionesTrineos(List<Integer> posicionesTrineos) {
+		this.posicionesTrineos = posicionesTrineos;
 	}
-	
-	public void inicializarCasillas() {
-	    for (int i = 0; i < casillas.length; i++) {
-	        // Aumentamos el número de opciones para que haya más casillas normales
-	        int tipo = (int) (Math.random() * 10); // 10 opciones
-	        switch (tipo) {
-	            case 0:
-	                casillas[i] = new Oso(i);
-	                break;
-	            case 1:
-	                casillas[i] = new Agujero(i);
-	                break;
-	            case 2:
-	                casillas[i] = new Trineo(i);
-	                break;
-	            case 3:
-	                casillas[i] = new Evento(i);
-	                break;
-	            default: // Casilla normal para los casos 4-9
-	                casillas[i] = new CasillaNormal(i);
-	                break;
-	        }
-	    }
-	}
-	
-	public void mostrarTablero () {
-		//Este método imprime en consola el tipo de cada casilla del tablero para verificar que se hayan creado correctamente.
-		  for (int i = 0; i < casillas.length; i++) {
-		        System.out.print(casillas[i].getClass().getSimpleName() + " ");
-		        // casillas[i] obtendra el nombre de la clase en la posicion i (Por ejemplo: Oso).
-		        if ((i + 1) % 10 == 0) 
-		        System.out.println();// Salto de línea cada 10 casillas
-		        // Este condicional verifica si la posición actual (i + 1) es divisible por 10.
-		        // Si es así, significa que hemos llegado al final de una fila.
-		        //  Y se imprimira un salto de línea para que la siguiente casilla aparezca en una nueva fila.
 
-		        
-		    }
+	public List<Integer> getPosicionesEventos() {
+		return posicionesEventos;
 	}
-	
-    private void initializarJugadores() {
-    	 Jugador jugador1 = new Jugador(turnos, "Jugador 1", null, null);
-    	    Jugador jugador2 = new Jugador(turnos, "Jugador 2", null, null);
 
-    	    // Agregar jugadores al tablero
-    	    jugadores.add(jugador1);
-    	    jugadores.add(jugador2);
-    	    this.jugadorActual = jugador1; // Establecer el primer jugador como jugador actual
-    }
+	public void setPosicionesEventos(List<Integer> posicionesEventos) {
+		this.posicionesEventos = posicionesEventos;
+	}
+
+	public void setPosicionesAgujeros(List<Integer> posicionesAgujeros) {
+		this.posicionesAgujeros = posicionesAgujeros;
+	}
+
+	public void setPosicionesOsos(List<Integer> posicionesOsos) {
+		this.posicionesOsos = posicionesOsos;
+	}
+    
+
 }

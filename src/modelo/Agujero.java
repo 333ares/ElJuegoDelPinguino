@@ -1,32 +1,32 @@
 package modelo;
 
-import java.util.ArrayList;
+import controlador.GestorTablero;
 
 public class Agujero extends Casilla {
 
-	public Agujero(int posicion) {
+	/*
+	 * Esta clase Agujero representa una casilla especial en un tablero de juego.
+	 * Cuando un jugador cae en esta casilla: Se imprime un mensaje de retroceso. Se
+	 * busca la posición del último agujero anterior a la posición actual del
+	 * jugador. El jugador se mueve a esa posición anterior. Esta implementación
+	 * utiliza herencia de la clase Casilla y depende del gestor del tablero
+	 * (GestorTablero) para obtener la posición del agujero anterior.
+	 * 
+	 */
+
+	private GestorTablero gestor;
+
+	public Agujero(int posicion, GestorTablero gestor) {
 		super(posicion);
-		
+		this.gestor = gestor;
 	}
 
 	public void realizarAccion(Jugador j) {
-		System.out.println("¡Has caído en un agujero! Retrocederas al agujero anterior.");
-	    int nuevaPosicion = buscarAgujeroAnterior(j.getPosicion());
-	    j.setPosicion(nuevaPosicion);
+		System.out.println("¡Agujero! Retrocedes al anterior.");
+		int nuevaPos = gestor.buscarAgujeroAnterior(j.getPosicion());
+		// Llama al método buscarAgujeroAnterior del gestor del tablero, pasándole la
+		// posición actual del jugador (j.getPosicion()). Este método busca la posición
+		// del último agujero anterior a la posición actual del jugador.
+		j.setPosicion(nuevaPos);// Asigna el resultado (la nueva posición) a la variable nuevaPos.
 	}
-
-
-	private int buscarAgujeroAnterior(int posicionActual) {
-	    ArrayList<Integer> posicionesAgujeros = new ArrayList<>();
-	    // Llena la lista con posiciones de agujeros
-
-	    for (int i = posicionActual - 1; i >= 0; i--) {
-	        if (posicionesAgujeros.contains(i)) {
-	            return i;
-	        }
-	    }
-	    return 0; // Si no hay agujeros antes, retorna al inicio
-	}
-
-
 }
