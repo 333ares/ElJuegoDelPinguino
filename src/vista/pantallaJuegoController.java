@@ -9,6 +9,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import modelo.Jugador;
 import javafx.event.ActionEvent;
+
+import java.awt.Color;
 import java.util.Random;
 
 public class pantallaJuegoController {
@@ -76,6 +78,52 @@ public class pantallaJuegoController {
         // TODO
     }
 
+    
+    @FXML
+    public void actualizarVistaTablero() {
+        Tablero.TableroInfo info = gestorTablero.getTablero().getTableroInfo();
+        
+        // Limpiar el tablero gráfico
+        tablero.getChildren().clear();
+        
+        // Dibujar casillas
+        for (int i = 0; i < info.casillas.length; i++) {
+            String tipo = info.getTipoCasilla(i);
+            Rectangle rect = new Rectangle(50, 50, getColorCasilla(tipo));
+            GridPane.setRowIndex(rect, i / 10);
+            GridPane.setColumnIndex(rect, i % 10);
+            tablero.getChildren().add(rect);
+            
+            // Dibujar jugadores
+            List<Integer> jugadoresEnCasilla = info.getJugadoresEnCasilla(i);
+            for (int j = 0; j < jugadoresEnCasilla.size(); j++) {
+                Circle jugador = new Circle(15, getColorJugador(jugadoresEnCasilla.get(j)));
+                GridPane.setRowIndex(jugador, i / 10);
+                GridPane.setColumnIndex(jugador, i % 10);
+                tablero.getChildren().add(jugador);
+            }
+        }
+        
+        // Actualizar información de turno
+        turnoText.setText("Turno: " + info.turnoActual + " - Jugador: " + info.jugadorActual.getNombre());
+    }
+
+    @FXML
+    public Color getColorCasilla(String tipo) {
+        switch (tipo) {
+            case "Oso": return Color.BROWN;
+            case "Agujero": return Color.BLACK;
+            case "Trineo": return Color.WHITE;
+            case "Evento": return Color.YELLOW;
+            default: return Color.LIGHTGRAY;
+        }
+    }
+
+    @FXML
+    public Color getColorJugador(int indiceJugador) {
+        // Usar los colores configurados en los jugadores
+        return Color.web(jugadores.get(indiceJugador).getColor());
+    }
     @FXML
     public void handleDado(ActionEvent event) {
     	 Random rand = new Random();

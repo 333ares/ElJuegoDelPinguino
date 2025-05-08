@@ -11,6 +11,7 @@ public class Tablero {
     private ArrayList<Jugador> jugadores;
     private int turnos;
     private Jugador jugadorActual;
+    private Jugador jugadorRival;
     
     // Registros de posiciones especiales
     private List<Integer> posicionesAgujeros = new ArrayList<>();
@@ -66,6 +67,7 @@ public class Tablero {
         jugadores.add(jugador1);
         jugadores.add(jugador2);
         this.jugadorActual = jugador1;
+        this.jugadorRival = jugador2;
     }
 
     // getters y setters 
@@ -81,27 +83,6 @@ public class Tablero {
         jugadorActual = jugadores.get(siguienteIndice);
     }
 
-    public void mostrarTablero() {
-        System.out.println("=== ESTADO DEL TABLERO ===");
-        for (int i = 0; i < casillas.length; i++) {
-            String simbolo;
-            if (casillas[i] instanceof Oso) simbolo = "[O]";
-            else if (casillas[i] instanceof Agujero) simbolo = "[A]";
-            else if (casillas[i] instanceof Trineo) simbolo = "[T]";
-            else if (casillas[i] instanceof Evento) simbolo = "[?]";
-            else simbolo = "[ ]";
-            
-            // Mostrar jugadores en la casilla
-            for (Jugador j : jugadores) {
-                if (j.getPosicion() == i) {
-                    simbolo = simbolo.replace("]", j.getNombre().charAt(0) + "]");
-                }
-            }
-            
-            System.out.print(simbolo + " ");
-            if ((i + 1) % 10 == 0) System.out.println();
-        }
-    }
     
 	public void actualizarTablero() {
 		
