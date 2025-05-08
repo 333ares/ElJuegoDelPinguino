@@ -199,17 +199,31 @@ public class pantallaJuegoController {
 
 	@FXML
 	public void handleNieve() {
-		// Sabemos que hay exactamente un otro jugador
-		Jugador otroJugador = gestorJugador.getOtrosJugadores().get(0);
-		int nuevaPosicion = otroJugador.getPosicion() - 3;
-		if (nuevaPosicion < 0) {
-			nuevaPosicion = 0;
-		}
-		otroJugador.setPosicion(nuevaPosicion);
-		// Actualizar la interfaz gráfica para reflejar el cambio
-		actualizarInterfazJugador(otroJugador);
-		// Finalizar el turno
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+	    if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
+	        jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
+	        
+	        Jugador otroJugador = gestorJugador.getOtrosJugadores().get(0);
+	        int nuevaPosicion = otroJugador.getPosicion() - 3;
+	        if (nuevaPosicion < 0) {
+	            nuevaPosicion = 0;
+	        }
+	        otroJugador.setPosicion(nuevaPosicion);
+	        
+	        actualizarInterfazJugador(otroJugador);
+	        
+	        if (esJugador1()) {
+	            nieve_tP1.setText(otroJugador.getNombre() + " retrocede 3 casillas.");
+	        } else {
+	            nieve_tP2.setText(otroJugador.getNombre() + " retrocede 3 casillas.");
+	        }
+	    } else {
+	        if (esJugador1()) {
+	            nieve_tP1.setText("No tienes bolas de nieve.");
+	        } else {
+	            nieve_tP2.setText("No tienes bolas de nieve.");
+	        }
+	    }
+	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
 
 	private void actualizarInterfazJugador(Jugador jugador) {
