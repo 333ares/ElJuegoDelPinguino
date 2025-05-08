@@ -169,6 +169,7 @@ public class pantallaJuegoController {
         gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
+<<<<<<< HEAD
     @FXML
     public void handleLento() {
         if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
@@ -181,6 +182,36 @@ public class pantallaJuegoController {
         }
         gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
+=======
+	@FXML
+	public void handleNieve() {
+	    if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
+	        jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
+	        
+	        Jugador otroJugador = gestorJugador.getOtrosJugadores().get(0);
+	        int nuevaPosicion = otroJugador.getPosicion() - 3;
+	        if (nuevaPosicion < 0) {
+	            nuevaPosicion = 0;
+	        }
+	        otroJugador.setPosicion(nuevaPosicion);
+	        
+	        actualizarInterfazJugador(otroJugador);
+	        
+	        if (esJugador1()) {
+	            nieve_tP1.setText(otroJugador.getNombre() + " retrocede 3 casillas.");
+	        } else {
+	            nieve_tP2.setText(otroJugador.getNombre() + " retrocede 3 casillas.");
+	        }
+	    } else {
+	        if (esJugador1()) {
+	            nieve_tP1.setText("No tienes bolas de nieve.");
+	        } else {
+	            nieve_tP2.setText("No tienes bolas de nieve.");
+	        }
+	    }
+	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
+	}
+>>>>>>> 33fbc7190f91a9d31d2dc56820f18f68348d9c44
 
     @FXML
     public void handlePeces() {
@@ -194,6 +225,7 @@ public class pantallaJuegoController {
         gestorJugador.jugadorFinalizaTurno(jugadorActual);
     }
 
+<<<<<<< HEAD
     @FXML
     public void handleNieve() {
         // Sabemos que hay exactamente un otro jugador
@@ -222,17 +254,38 @@ public class pantallaJuegoController {
             GridPane.setRowIndex(P2, row);
             GridPane.setColumnIndex(P2, col);
         }
+=======
+		if (esJugador1()) {
+	        GridPane.setRowIndex(P1, row);
+	        GridPane.setColumnIndex(P1, col);
+	    } else {
+	        GridPane.setRowIndex(P2, row);
+	        GridPane.setColumnIndex(P2, col);
+	    }
+	    actualizarContadoresItems(jugador);
+	}
+>>>>>>> 33fbc7190f91a9d31d2dc56820f18f68348d9c44
 
         // Actualizar los contadores de items
         actualizarContadoresItems(jugador);
     }
 
+<<<<<<< HEAD
     private void actualizarContadoresItems(Jugador jugador) {
         // Actualizar los textos que muestran la cantidad de items
         int peces = jugador.getPinguino().getInv().getCantidad("pez");
         int bolasNieve = jugador.getPinguino().getInv().getCantidad("bola de nieve");
         int dadosRapidos = jugador.getPinguino().getInv().getCantidad("dado rápido");
         int dadosLentos = jugador.getPinguino().getInv().getCantidad("dado lento");
+=======
+		if (esJugador1()) {
+	        peces_tP1.setText("Peces: " + peces);
+	        nieve_tP1.setText("Bolas: " + bolasNieve);
+	        rapido_tP1.setText("Dado rápido: " + dadosRapidos);
+	        lento_tP1.setText("Dado lento: " + dadosLentos);
+		}
+	}
+>>>>>>> 33fbc7190f91a9d31d2dc56820f18f68348d9c44
 
         peces_t.setText("Peces: " + peces);
         nieve_t.setText("Bolas de nieve: " + bolasNieve);
