@@ -232,8 +232,7 @@ public class pantallaJuegoController {
 	    
 	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
-
-	@FXML
+	
 	private void actualizarInterfazJugador(Jugador jugador) {
 		// Actualizar posición del jugador en el tablero
 		int row = jugador.getPosicion() / COLUMNS;
@@ -258,11 +257,6 @@ public class pantallaJuegoController {
 		actualizarContadoresItems(jugador);
 	}
 
-	// Actualizar los contadores de items
-	actualizarContadoresItems(); 
-    }
-
-	@FXML
 	private void actualizarContadoresItems(Jugador jugador) {
 		// Actualizar los textos que muestran la cantidad de items
 		int peces = jugador.getPinguino().getInv().getCantidad("pez");
@@ -283,7 +277,6 @@ public class pantallaJuegoController {
 		}
 	}
 
-	@FXML
 	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
 		this.gestorJugador = gestorJugador;
 		this.gestorTablero = gestorTablero;
