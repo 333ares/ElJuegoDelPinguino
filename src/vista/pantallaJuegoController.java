@@ -103,7 +103,9 @@ public class pantallaJuegoController {
 		// TODO
 	}
 
-	
+	public boolean esJugador1() {
+	    return jugadorActual.equals(gestorJugador.getOtrosJugadores().get(0));
+	}
 
 	@FXML
 	public void handleDado(ActionEvent event) {
