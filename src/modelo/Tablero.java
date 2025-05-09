@@ -79,8 +79,8 @@ public class Tablero {
 		Pinguino pinguino1 = new Pinguino(inv1);
 		Pinguino pinguino2 = new Pinguino(inv2);
 
-		Jugador jugador1 = new Jugador(0, "Jugador 1", "Azul", pinguino1);
-		Jugador jugador2 = new Jugador(0, "Jugador 2", "Rojo", pinguino2);
+		Jugador jugador1 = new Jugador(0, "Jugador 1", "Naranja", pinguino1);
+		Jugador jugador2 = new Jugador(0, "Jugador 2", "Azul", pinguino2);
 
 		jugadores.add(jugador1);
 		jugadores.add(jugador2);
