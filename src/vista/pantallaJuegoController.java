@@ -3,6 +3,7 @@ package vista;
 import controlador.GestorJugador;
 import controlador.GestorTablero;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
@@ -15,8 +16,6 @@ import javafx.scene.paint.Color;
 import java.awt.Rectangle;
 import java.util.List;
 import java.util.Random;
-
-import org.graalvm.compiler.graph.Node;
 
 public class pantallaJuegoController {
 
@@ -265,11 +264,12 @@ public class pantallaJuegoController {
 			nieve_tP1.setText("Bolas: " + bolasNieve);
 			rapido_tP1.setText("Dado rápido: " + dadosRapidos);
 			lento_tP1.setText("Dado lento: " + dadosLentos);
+		} else if (!esJugador1()) {
+			peces_tP2.setText("Peces: " + peces);
+			nieve_tP2.setText("Bolas: " + bolasNieve);
+			rapido_tP2.setText("Dado rápido: " + dadosRapidos);
+			lento_tP2.setText("Dado lento: " + dadosLentos);
 		}
-	}
-
-	peces_t.setText("Peces: "+peces);nieve_t.setText("Bolas de nieve: "+bolasNieve);rapido_t.setText("Dados rápidos: "+dadosRapidos);lento_t.setText("Dados lentos: "+dadosLentos);
-
 	}
 
 	@FXML
