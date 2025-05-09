@@ -4,13 +4,22 @@ import java.util.Random;
 
 import controlador.GestorJugador;
 
-public class Jugador{
+public class Jugador {
 
 	int posicion;
 	String nombre;
 	String color;
 	Pinguino pinguino;
 	Tablero tablero;
+
+	/*
+	 * Clase que representa un jugador con posición, nombre, color y un Pinguino
+	 * asociado. Contiene métodos para moverse por el tablero (0-49 posiciones) y
+	 * lanzar dados (1-6). Gestiona protección contra osos (protegidoDelOso) y usa
+	 * getters/setters para acceder a sus atributos. El constructor inicializa los
+	 * datos básicos y asocia un tablero (aunque la asignación actual tiene un bug).
+	 * 
+	 */
 
 	// CONSTRUCTOR
 	public Jugador(int posicion, String nombre, String color, Pinguino pinguino) {
@@ -67,7 +76,7 @@ public class Jugador{
 
 	// FUNCIONES
 
-	public void tirarDado(int maximoDado) {
+	public void tirarDado() {
 		Random random = new Random();
 		int resultado = random.nextInt(6) + 1; // Dado de 1 a 6
 		System.out.println("Has tirado el dado y ha salido: " + resultado);
@@ -83,17 +92,16 @@ public class Jugador{
 
 	}
 
-    // Método para proteger al jugador del Oso
-    private boolean protegidoDelOso = false;
+	// Método para proteger al jugador del Oso
+	private boolean protegidoDelOso = false;
+	// Controla si el jugador está protegido contra osos.
 
+	public void setProtegidoDelOso(boolean protegidoDelOso) {
+		this.protegidoDelOso = protegidoDelOso;
+	}
 
-    public void setProtegidoDelOso(boolean protegidoDelOso) {
-        this.protegidoDelOso = protegidoDelOso;
-    }
-
-
-    public boolean isProtegidoDelOso() {
-        return protegidoDelOso;
-    }
+	public boolean isProtegidoDelOso() {
+		return protegidoDelOso;
+	}
 
 }
