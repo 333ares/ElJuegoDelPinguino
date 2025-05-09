@@ -27,7 +27,7 @@ public class PantallaMenu {
                     System.out.println("Iniciando nueva partida...");
 
                     // Crear tablero
-                    Tablero tablero = new Tablero(new Casilla[50], new ArrayList<>(), 0, null);
+                    Tablero tablero = new Tablero();
                     tablero.inicializarCasillas(); // Aquí se inicializan las casillas del tablero
 
                     // Crear jugadores
