@@ -26,9 +26,9 @@ public class Foca {
 	public void golpearJugador(Pinguino p) {
 
 	}
-	
+
 	public void esSobornada() {
-		
+
 	}
 
 }

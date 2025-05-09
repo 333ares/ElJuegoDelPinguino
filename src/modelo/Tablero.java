@@ -7,102 +7,119 @@ import java.util.List;
 import controlador.GestorTablero;
 
 public class Tablero {
-    private Casilla[] casillas;
-    private ArrayList<Jugador> jugadores;
-    private int turnos;
-    private Jugador jugadorActual;
-    private Jugador jugadorRival;
-    
-    // Registros de posiciones especiales
-    private List<Integer> posicionesAgujeros = new ArrayList<>();
-    private List<Integer> posicionesOsos = new ArrayList<>();
-    private List<Integer> posicionesTrineos = new ArrayList<>();
-    private List<Integer> posicionesEventos = new ArrayList<>();
 
-    public Tablero() {
-        this.casillas = new Casilla[50];
-        this.jugadores = new ArrayList<>();
-        this.turnos = 0;
-        inicializarCasillas();
-        inicializarJugadores();
-    }
+	/*
+	 * Hereda de Casilla y representa un obstáculo en el tablero.
+	 * 
+	 * Constructor solo necesita posición (delega a clase padre).
+	 * 
+	 * Al activarse (realizarAccion):
+	 * 
+	 * Notifica: "El oso atrapó al pingüino"
+	 * 
+	 * Penaliza: envía jugador al inicio (posición 0)
+	 * 
+	 * Ejemplo de efecto negativo en casillas especiales
+	 * 
+	 * Usa herencia para personalizar comportamiento base de Casilla
+	 * 
+	 * 
+	 */
+	private Casilla[] casillas;
+	private ArrayList<Jugador> jugadores;
+	private int turnos;
+	private Jugador jugadorActual;
+	private Jugador jugadorRival;
 
-    public void inicializarCasillas() {
-        for (int i = 0; i < casillas.length; i++) {
-            int tipo = (int) (Math.random() * 10);
-            switch (tipo) {
-                case 0:
-                    casillas[i] = new Oso(i);
-                    posicionesOsos.add(i);
-                    break;
-                case 1:
-                    casillas[i] = new Agujero(i, null); // public Agujero(int posicion, GestorTablero gestor)
-                    posicionesAgujeros.add(i);
-                    break;
-                case 2:
-                    casillas[i] = new Trineo(i);
-                    posicionesTrineos.add(i);
-                    break;
-                case 3:
-                    casillas[i] = new Evento(i);
-                    posicionesEventos.add(i);
-                    break;
-                default:
-                    casillas[i] = new CasillaNormal(i);
-                    break;
-            }
-        }
-    }
+	// Registros de posiciones especiales
+	private List<Integer> posicionesAgujeros = new ArrayList<>();
+	private List<Integer> posicionesOsos = new ArrayList<>();
+	private List<Integer> posicionesTrineos = new ArrayList<>();
+	private List<Integer> posicionesEventos = new ArrayList<>();
 
-    private void inicializarJugadores() {
-        Inventario inv1 = new Inventario(new ArrayList<>());
-        Inventario inv2 = new Inventario(new ArrayList<>());
-        
-        Pinguino pinguino1 = new Pinguino(inv1);
-        Pinguino pinguino2 = new Pinguino(inv2);
-        
-        Jugador jugador1 = new Jugador(0, "Jugador 1", "Azul", pinguino1);
-        Jugador jugador2 = new Jugador(0, "Jugador 2", "Rojo", pinguino2);
-        
-        jugadores.add(jugador1);
-        jugadores.add(jugador2);
-        this.jugadorActual = jugador1;
-        this.jugadorRival = jugador2;
-    }
+	public Tablero() {
+		this.casillas = new Casilla[50];
+		this.jugadores = new ArrayList<>();
+		this.turnos = 0;
+		inicializarCasillas();
+		inicializarJugadores();
+	}
 
-    // getters y setters 
+	public void inicializarCasillas() {
+		for (int i = 0; i < casillas.length; i++) {
+			int tipo = (int) (Math.random() * 10);
+			switch (tipo) {
+			case 0:
+				casillas[i] = new Oso(i);
+				posicionesOsos.add(i);
+				break;
+			case 1:
+				casillas[i] = new Agujero(i, null); // public Agujero(int posicion, GestorTablero gestor)
+				posicionesAgujeros.add(i);
+				break;
+			case 2:
+				casillas[i] = new Trineo(i);
+				posicionesTrineos.add(i);
+				break;
+			case 3:
+				casillas[i] = new Evento(i);
+				posicionesEventos.add(i);
+				break;
+			default:
+				casillas[i] = new CasillaNormal(i);
+				break;
+			}
+		}
+	}
 
-    public void avanzarTurno() {
-        turnos++;
-        cambiarJugadorActual();
-    }
+	private void inicializarJugadores() {
+		Inventario inv1 = new Inventario(new ArrayList<>());
+		Inventario inv2 = new Inventario(new ArrayList<>());
 
-    private void cambiarJugadorActual() {
-        int indiceActual = jugadores.indexOf(jugadorActual);
-        int siguienteIndice = (indiceActual + 1) % jugadores.size();
-        jugadorActual = jugadores.get(siguienteIndice);
-    }
+		Pinguino pinguino1 = new Pinguino(inv1);
+		Pinguino pinguino2 = new Pinguino(inv2);
 
-    
+		Jugador jugador1 = new Jugador(0, "Jugador 1", "Azul", pinguino1);
+		Jugador jugador2 = new Jugador(0, "Jugador 2", "Rojo", pinguino2);
+
+		jugadores.add(jugador1);
+		jugadores.add(jugador2);
+		this.jugadorActual = jugador1;
+		this.jugadorRival = jugador2;
+	}
+
+	// getters y setters
+
+	public void avanzarTurno() {
+		turnos++;
+		cambiarJugadorActual();
+	}
+
+	private void cambiarJugadorActual() {
+		int indiceActual = jugadores.indexOf(jugadorActual);
+		int siguienteIndice = (indiceActual + 1) % jugadores.size();
+		jugadorActual = jugadores.get(siguienteIndice);
+	}
+
 	public void actualizarTablero() {
-		
+
 	}
 
 	public void actualizarjugador(Jugador j) {
 
 	}
 
-    // Métodos para acceder a posiciones especiales
-    
-    public List<Integer> getPosicionesAgujeros() {
-        return Collections.unmodifiableList(posicionesAgujeros);
-    }
-    
-    public List<Integer> getPosicionesOsos() {
-        return Collections.unmodifiableList(posicionesOsos);
-    }
+	// Métodos para acceder a posiciones especiales
 
-    // getters y setters 
+	public List<Integer> getPosicionesAgujeros() {
+		return Collections.unmodifiableList(posicionesAgujeros);
+	}
+
+	public List<Integer> getPosicionesOsos() {
+		return Collections.unmodifiableList(posicionesOsos);
+	}
+
+	// getters y setters
 	public Casilla[] getCasillas() {
 		return casillas;
 	}
@@ -158,6 +175,5 @@ public class Tablero {
 	public void setPosicionesOsos(List<Integer> posicionesOsos) {
 		this.posicionesOsos = posicionesOsos;
 	}
-    
 
 }

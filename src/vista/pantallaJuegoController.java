@@ -235,21 +235,32 @@ public class pantallaJuegoController {
 
 	@FXML
 	private void actualizarInterfazJugador(Jugador jugador) {
-	    int row = jugador.getPosicion() / COLUMNS;
-	    int col = jugador.getPosicion() % COLUMNS;
+		// Actualizar posición del jugador en el tablero
+		int row = jugador.getPosicion() / COLUMNS;
+		int col = jugador.getPosicion() % COLUMNS;
 
-	    Node figuraJugador;
-	    if (jugador.equals(jugadorActual)) {
-	        figuraJugador = P1;
-	    } else {
-	        figuraJugador = P2;
-	    }
+		// Suponiendo que tienes un Circle para cada jugador
+		if (jugador.equals(jugadorActual)) {
+			GridPane.setRowIndex(P1, row);
+			GridPane.setColumnIndex(P1, col);
+		} else {
+			GridPane.setRowIndex(P2, row);
+			GridPane.setColumnIndex(P2, col);
+		}
 
-	    GridPane.setRowIndex(figuraJugador, row);
-	    GridPane.setColumnIndex(figuraJugador, col);
-
-	    actualizarContadoresItems(jugador);
+		if (jugador.equals(jugadorRival)) {
+			GridPane.setRowIndex(P1, row);
+			GridPane.setColumnIndex(P1, col);
+		} else {
+			GridPane.setRowIndex(P2, row);
+			GridPane.setColumnIndex(P2, col);
+		}
+		actualizarContadoresItems(jugador);
 	}
+
+	// Actualizar los contadores de items
+	actualizarContadoresItems(); 
+    }
 
 	@FXML
 	private void actualizarContadoresItems(Jugador jugador) {
