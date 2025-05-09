@@ -104,7 +104,7 @@ public class pantallaJuegoController {
 	}
 
 	public boolean esJugador1() {
-	    return jugadorActual.equals(gestorJugador.getOtrosJugadores().get(0));
+	    return jugadorActual.equals(gestorJugador.getOtrosJugadores().get(0)); 
 	}
 
 	@FXML
@@ -136,55 +136,49 @@ public class pantallaJuegoController {
 	}
 
 	@FXML
-	public void handleRapido1() {
-		if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
-			jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
-			int movimiento = new Random().nextInt(6) + 5;
-			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-			rapido_tP1.setText("Has avanzado " + movimiento + " casillas.");
-		} else {
-			rapido_tP1.setText("No tienes dado rápido.");
-		}
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
-	}
-	
-	@FXML
-	public void handleRapido2() {
-		if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
-			jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
-			int movimiento = new Random().nextInt(6) + 5;
-			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-			rapido_tP2.setText("Has avanzado " + movimiento + " casillas.");
-		} else {
-			rapido_tP2.setText("No tienes dado rápido.");
-		}
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+	public void handleRapido() {
+	    if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
+	        jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
+	        int movimiento = new Random().nextInt(6) + 5;
+	        gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+	        
+	        if (esJugador1()) {
+	            rapido_tP1.setText("Has avanzado " + movimiento + " casillas.");
+	        } else {
+	            rapido_tP2.setText("Has avanzado " + movimiento + " casillas.");
+	        }
+	    } else {
+	        if (esJugador1()) {
+	            rapido_tP1.setText("No tienes dado rápido.");
+	        } else {
+	            rapido_tP2.setText("No tienes dado rápido.");
+	        }
+	    }
+	    
+	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
 
 	@FXML
-	public void handleLento1() {
-		if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
-			jugadorActual.getPinguino().getInv().quitarItem("dado lento");
-			int movimiento = new Random().nextInt(3) + 1;
-			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-			lento_tP1.setText("Has avanzado " + movimiento + " casillas.");
-		} else {
-			lento_tP1.setText("No tienes dado lento.");
-		}
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
-	}
-
-	@FXML
-	public void handleLento2() {
-		if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
-			jugadorActual.getPinguino().getInv().quitarItem("dado lento");
-			int movimiento = new Random().nextInt(3) + 1;
-			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-			lento_tP2.setText("Has avanzado " + movimiento + " casillas.");
-		} else {
-			lento_tP2.setText("No tienes dado lento.");
-		}
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+	public void handleLento() {
+	    if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
+	        jugadorActual.getPinguino().getInv().quitarItem("dado lento");
+	        int movimiento = new Random().nextInt(3) + 1;
+	        gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+	        
+	        if (esJugador1()) {
+	            lento_tP1.setText("Has avanzado " + movimiento + " casillas.");
+	        } else {
+	            lento_tP2.setText("Has avanzado " + movimiento + " casillas.");
+	        }
+	    } else {
+	        if (esJugador1()) {
+	            lento_tP1.setText("No tienes dado lento.");
+	        } else {
+	            lento_tP2.setText("No tienes dado lento.");
+	        }
+	    }
+	    
+	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
 	
 	@FXML
@@ -217,29 +211,26 @@ public class pantallaJuegoController {
 	}
 
 	@FXML
-	public void handlePeces1() {
-		if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
-			jugadorActual.getPinguino().getInv().quitarItem("pez");
-			jugadorActual.setProtegidoDelOso(true);
-			peces_tP1.setText("Estás protegido contra los osos.");
-		} else {
-			peces_tP1.setText("No tienes peces.");
-		}
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+	public void handlePeces() {
+	    if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
+	        jugadorActual.getPinguino().getInv().quitarItem("pez");
+	        jugadorActual.setProtegidoDelOso(true);
+	        
+	        if (esJugador1()) {
+	            peces_tP1.setText("Estás protegido contra los osos.");
+	        } else {
+	            peces_tP2.setText("Estás protegido contra los osos.");
+	        }
+	    } else {
+	        if (esJugador1()) {
+	            peces_tP1.setText("No tienes peces.");
+	        } else {
+	            peces_tP2.setText("No tienes peces.");
+	        }
+	    }
+	    
+	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
-	
-	@FXML
-	public void handlePeces2() {
-		if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
-			jugadorActual.getPinguino().getInv().quitarItem("pez");
-			jugadorActual.setProtegidoDelOso(true);
-			peces_tP2.setText("Estás protegido contra los osos.");
-		} else {
-			peces_tP2.setText("No tienes peces.");
-		}
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
-	}
-
 
 	@FXML
 	private void actualizarInterfazJugador(Jugador jugador) {
