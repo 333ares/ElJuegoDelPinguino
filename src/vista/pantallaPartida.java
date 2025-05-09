@@ -16,7 +16,7 @@ import modelo.Tablero;
 public class pantallaPartida {
 
     public void iniciarPartida() {
-        Tablero tablero = new Tablero(new Casilla[50], new ArrayList<>(), 0, null);
+        Tablero tablero = new Tablero();
         GestorTablero gestorTablero = new GestorTablero(tablero);
         GestorJugador gestorJugador = new GestorJugador(null, null, tablero);
 
