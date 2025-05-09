@@ -76,8 +76,8 @@ public class GestorTablero {
 
 	}
 
-	public Tablero getTablero() { 
-	    return this.tablero;
+	public Tablero getTablero() {
+		return this.tablero;
 	}
 
 	public void setTablero(Tablero tablero) {
