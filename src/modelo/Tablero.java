@@ -54,7 +54,7 @@ public class Tablero {
 				posicionesOsos.add(i);
 				break;
 			case 1:
-				casillas[i] = new Agujero(i, null); // public Agujero(int posicion, GestorTablero gestor)
+				casillas[i] = new Agujero(i, null); 
 				posicionesAgujeros.add(i);
 				break;
 			case 2:
@@ -88,7 +88,6 @@ public class Tablero {
 		this.jugadorRival = jugador2;
 	}
 
-	// getters y setters
 
 	public void avanzarTurno() {
 		turnos++;

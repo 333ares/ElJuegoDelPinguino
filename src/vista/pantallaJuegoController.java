@@ -106,6 +106,7 @@ public class pantallaJuegoController {
 
 	public boolean esJugador1() {
 	    return jugadorActual.equals(gestorJugador.getOtrosJugadores().get(0)); 
+	    // Nos devuelve TRUE or FALSE en base si es jugador 1 o no
 	}
 
 	@FXML
@@ -238,22 +239,14 @@ public class pantallaJuegoController {
 		int row = jugador.getPosicion() / COLUMNS;
 		int col = jugador.getPosicion() % COLUMNS;
 
-		// Suponiendo que tienes un Circle para cada jugador
+		// Hay un Circle para cada jugador
 		if (jugador.equals(jugadorActual)) {
-			GridPane.setRowIndex(P1, row);
-			GridPane.setColumnIndex(P1, col);
-		} else {
-			GridPane.setRowIndex(P2, row);
-			GridPane.setColumnIndex(P2, col);
-		}
-
-		if (jugador.equals(jugadorRival)) {
-			GridPane.setRowIndex(P1, row);
-			GridPane.setColumnIndex(P1, col);
-		} else {
-			GridPane.setRowIndex(P2, row);
-			GridPane.setColumnIndex(P2, col);
-		}
+	        GridPane.setRowIndex(P1, row);
+	        GridPane.setColumnIndex(P1, col);
+	    } else if (jugador.equals(jugadorRival)) {
+	        GridPane.setRowIndex(P2, row);
+	        GridPane.setColumnIndex(P2, col);
+	    }
 		actualizarContadoresItems(jugador);
 	}
 

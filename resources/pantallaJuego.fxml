@@ -34,206 +34,172 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Text?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaJuegoController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints halignment="LEFT" prefWidth="200.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints />
-    <RowConstraints maxHeight="437.0" minHeight="10.0" prefHeight="437.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="163.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <VBox prefHeight="396.0" prefWidth="800.0" GridPane.rowIndex="1">
-         <children>
-            <GridPane gridLinesVisible="true"  fx:id="tablero" prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-grid-lines-visible: true;">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <VBox.margin>
-                  <Insets left="20.0" top="20.0" />
-               </VBox.margin>
+<VBox prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaJuegoController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem fx:id="newGame" mnemonicParsing="false" text="New" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="saveGame" mnemonicParsing="false" text="Save" />
+            <MenuItem fx:id="loadGame" mnemonicParsing="false" text="Load" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="quitGame" mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+      <BorderPane>
+         <bottom>
+            <HBox BorderPane.alignment="CENTER">
                <children>
-                  <Circle fx:id="P2" fill="#00a5ff" radius="13.0" stroke="#005583" strokeType="INSIDE">
+                  <AnchorPane minHeight="200.0" minWidth="300.0">
+                     <children>
+                        <Text fx:id="dadoResultText" strokeType="OUTSIDE" strokeWidth="0.0" text="Ha salido: " AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="dado" layoutY="58.0" mnemonicParsing="false" onAction="#handleDado" text="Dado" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <ScrollPane minHeight="200.0" minWidth="680.0" vbarPolicy="NEVER">
+                    <content>
+                      <AnchorPane>
+                           <children>
+                              <Text fx:id="rapido_t" strokeType="OUTSIDE" strokeWidth="0.0" text="Dado rápido: 0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="lento_t" strokeType="OUTSIDE" strokeWidth="0.0" text="Dado lento: 0" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="30.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="peces_t" strokeType="OUTSIDE" strokeWidth="0.0" text="Peces: 0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="30.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="nieve_t" strokeType="OUTSIDE" strokeWidth="0.0" text="Bolas de nieve: 0" AnchorPane.leftAnchor="750.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="rapido" mnemonicParsing="false" text="Usar" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="90.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="lento" layoutX="65.0" layoutY="100.0" mnemonicParsing="false" text="Usar" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="90.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="peces" layoutX="75.0" layoutY="110.0" mnemonicParsing="false" text="Usar" AnchorPane.leftAnchor="505.0" AnchorPane.topAnchor="90.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="nieve" layoutX="85.0" layoutY="120.0" mnemonicParsing="false" text="Usar" AnchorPane.leftAnchor="810.0" AnchorPane.topAnchor="90.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ScrollPane>
+                  <AnchorPane minHeight="200.0" minWidth="300.0">
+                     <children>
+                        <Text fx:id="eventos" strokeType="OUTSIDE" strokeWidth="0.0" text="Evento ocurrido" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin></HBox>
+         </bottom>
+         <center>
+            <GridPane fx:id="tablero" gridLinesVisible="true" prefHeight="500.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Finish" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Text>
+                  <Circle fx:id="P1" fill="BLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE">
                      <GridPane.margin>
-                        <Insets left="60.0" />
-                     </GridPane.margin>
-                  </Circle>
-                  <Circle fx:id="P1" fill="#ffaa00" radius="13.0" stroke="#7c5300" strokeType="INSIDE">
+                        <Insets />
+                     </GridPane.margin></Circle>
+                  <Circle fx:id="P2" fill="RED" radius="15.0" stroke="BLACK" strokeType="INSIDE">
                      <GridPane.margin>
-                        <Insets left="30.0" />
-                     </GridPane.margin>
-                  </Circle>
-                  <ImageView fitHeight="40.0" fitWidth="156.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@oso.png" />
-                     </image>
-                  </ImageView>
+                        <Insets left="40.0" />
+                     </GridPane.margin></Circle>
+                  <Circle fx:id="P3" fill="GREEN" radius="15.0" stroke="BLACK" strokeType="INSIDE">
+                     <GridPane.margin>
+                        <Insets left="80.0" />
+                     </GridPane.margin></Circle>
+                  <Circle fx:id="P4" fill="YELLOW" radius="15.0" stroke="BLACK" strokeType="INSIDE">
+                     <GridPane.margin>
+                        <Insets left="120.0" />
+                     </GridPane.margin></Circle>
                </children>
             </GridPane>
-         </children>
-      </VBox>
-      <GridPane alignment="TOP_CENTER" prefHeight="420.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="376.0" minHeight="10.0" prefHeight="376.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Text layoutX="65.0" layoutY="21.0" text="Eventos" textAlignment="CENTER">
-                     <font>
-                        <Font name="Calibri Bold" size="20.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="323.0" prefWidth="200.0" GridPane.rowIndex="1">
-               <children>
-                  <Text fx:id="eventos" layoutX="13.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Los eventos apareceran aqui..." wrappingWidth="174.0">
-                     <font>
-                        <Font name="Calibri Italic" size="14.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-         </children>
-      </GridPane>
-      <AnchorPane prefHeight="164.0" prefWidth="800.0" GridPane.rowIndex="2">
-         <children>
-            <Button fx:id="rapido" layoutX="108.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleRapido" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Text layoutX="84.0" layoutY="25.0" text="Dado rápido">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Text>
-            <Text fx:id="rapido_tP1" layoutX="97.0" layoutY="52.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-            <Text fx:id="rapido_tP2" layoutX="97.0" layoutY="72.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-            <Button fx:id="lento" layoutX="266.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleLento" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Text layoutX="256.0" layoutY="25.0" text="Dado lento">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Text>
-            <Text fx:id="lento_tP1" layoutX="256.0" layoutY="51.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-            <Text fx:id="lento_tP2" layoutX="256.0" layoutY="71.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-            <Button fx:id="peces" layoutX="428.0" layoutY="103.0" mnemonicParsing="false" onAction="#handlePeces" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Text layoutX="429.0" layoutY="25.0" text="Peces">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Text>
-            <Text fx:id="peces_tP1" layoutX="418.0" layoutY="51.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-            <Text fx:id="peces_tP2" layoutX="418.0" layoutY="71.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-            <Button fx:id="nieve" layoutX="597.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleNieve" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Text layoutX="566.0" layoutY="25.0" text="Bolas de nieve">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Text>
-            <Text fx:id="nieve_tP1" layoutX="587.0" layoutY="52.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-            <Text fx:id="nieve_tP2" layoutX="587.0" layoutY="72.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-      <Text GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <font>
-            <Font name="Calibri Italic" size="14.0" />
-         </font>
-      </Text>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
-            <Text layoutX="25.0" layoutY="22.0" text="¡Haz clic en el dado!">
-               <font>
-                  <Font name="Calibri Italic" size="18.0" />
-               </font>
-            </Text>
-            <Button fx:id="dado" layoutX="74.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleDado" prefHeight="50.0" prefWidth="50.0" text="🎲">
-               <font>
-                  <Font name="Calibri" size="21.0" />
-               </font>
-            </Button>
-            <Text fx:id="dadoResultText" layoutX="60.0" layoutY="126.0" text="Ha salido: 0">
-               <font>
-                  <Font name="Calibri Italic" size="16.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-   </children>
-</GridPane>
+         </center>
+      </BorderPane>
+  </children>
+</VBox>
