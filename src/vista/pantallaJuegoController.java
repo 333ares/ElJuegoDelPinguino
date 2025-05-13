@@ -47,21 +47,13 @@ public class pantallaJuegoController {
 	@FXML
 	private Text dadoResultText;
 	@FXML
-	private Text rapido_tP1;
+	private Text rapido_t;
 	@FXML
-	private Text rapido_tP2;
+	private Text lento_t;
 	@FXML
-	private Text lento_tP1;
+	private Text peces_t;
 	@FXML
-	private Text lento_tP2;
-	@FXML
-	private Text peces_tP1;
-	@FXML
-	private Text peces_tP2;
-	@FXML
-	private Text nieve_tP1;
-	@FXML
-	private Text nieve_tP2;
+	private Text nieve_t;
 	@FXML
 	private Text eventos;
 
@@ -69,8 +61,7 @@ public class pantallaJuegoController {
 	private GridPane tablero;
 	@FXML
 	private Circle P1;
-	@FXML
-	private Circle P2;
+
 
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
@@ -82,25 +73,25 @@ public class pantallaJuegoController {
 
 	@FXML
 	private void handleNewGame() {
-		System.out.println("New game.");
+		eventos.setText("New game.");
 		// TODO
 	}
 
 	@FXML
 	private void handleSaveGame() {
-		System.out.println("Saved game.");
+		eventos.setText("Saved game.");
 		// TODO
 	}
 
 	@FXML
 	private void handleLoadGame() {
-		System.out.println("Loaded game.");
+		eventos.setText("Loaded game.");
 		// TODO
 	}
 
 	@FXML
 	private void handleQuitGame() {
-		System.out.println("Exit...");
+		eventos.setText("Exit...");
 		// TODO
 	}
 
@@ -144,18 +135,10 @@ public class pantallaJuegoController {
 	        jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
 	        int movimiento = new Random().nextInt(6) + 5;
 	        gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-	        
-	        if (esJugador1()) {
-	            rapido_tP1.setText("Has avanzado " + movimiento + " casillas.");
-	        } else {
-	            rapido_tP2.setText("Has avanzado " + movimiento + " casillas.");
-	        }
-	    } else {
-	        if (esJugador1()) {
-	            rapido_tP1.setText("No tienes dado rápido.");
-	        } else {
-	            rapido_tP2.setText("No tienes dado rápido.");
-	        }
+	       
+	        rapido_t.setText("Has avanzado " + movimiento + " casillas.");
+	        } else { 
+	            rapido_t.setText("No tienes dado rápido.");
 	    }
 	    
 	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
@@ -168,17 +151,10 @@ public class pantallaJuegoController {
 	        int movimiento = new Random().nextInt(3) + 1;
 	        gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
 	        
-	        if (esJugador1()) {
-	            lento_tP1.setText("Has avanzado " + movimiento + " casillas.");
+	       lento_t.setText("Has avanzado " + movimiento + " casillas.");
 	        } else {
-	            lento_tP2.setText("Has avanzado " + movimiento + " casillas.");
-	        }
-	    } else {
-	        if (esJugador1()) {
-	            lento_tP1.setText("No tienes dado lento.");
-	        } else {
-	            lento_tP2.setText("No tienes dado lento.");
-	        }
+	    lento_t.setText("No tienes dado lento.");
+	       
 	    }
 	    
 	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
@@ -189,27 +165,11 @@ public class pantallaJuegoController {
 		if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
 			jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
 
-			Jugador otroJugador = gestorJugador.getOtrosJugadores().get(0);
-			int nuevaPosicion = otroJugador.getPosicion() - 3;
-			if (nuevaPosicion < 0) {
-				nuevaPosicion = 0;
-			}
-			otroJugador.setPosicion(nuevaPosicion);
-
-			actualizarInterfazJugador(otroJugador);
-
-			if (esJugador1()) {
-				nieve_tP1.setText(otroJugador.getNombre() + " retrocede 3 casillas.");
+		nieve_t.setText("No hay un segundo jugador para afectar.");
 			} else {
-				nieve_tP2.setText(otroJugador.getNombre() + " retrocede 3 casillas.");
+				nieve_t.setText("No tienes bolas de nieve.");
 			}
-		} else {
-			if (esJugador1()) {
-				nieve_tP1.setText("No tienes bolas de nieve.");
-			} else {
-				nieve_tP2.setText("No tienes bolas de nieve.");
-			}
-		}
+	
 		gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
 
@@ -219,17 +179,9 @@ public class pantallaJuegoController {
 	        jugadorActual.getPinguino().getInv().quitarItem("pez");
 	        jugadorActual.setProtegidoDelOso(true);
 	        
-	        if (esJugador1()) {
-	            peces_tP1.setText("Estás protegido contra los osos.");
+	    peces_t.setText("Estás protegido contra los osos.");
 	        } else {
-	            peces_tP2.setText("Estás protegido contra los osos.");
-	        }
-	    } else {
-	        if (esJugador1()) {
-	            peces_tP1.setText("No tienes peces.");
-	        } else {
-	            peces_tP2.setText("No tienes peces.");
-	        }
+	            peces_t.setText("No tienes peces.");
 	    }
 	    
 	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
@@ -241,13 +193,9 @@ public class pantallaJuegoController {
 		int col = jugador.getPosicion() % COLUMNS;
 
 		// Hay un Circle para cada jugador
-		if (jugador.equals(jugadorActual)) {
-	        GridPane.setRowIndex(P1, row);
-	        GridPane.setColumnIndex(P1, col);
-	    } else if (jugador.equals(jugadorRival)) {
-	        GridPane.setRowIndex(P2, row);
-	        GridPane.setColumnIndex(P2, col);
-	    }
+        GridPane.setRowIndex(P1, row);
+        GridPane.setColumnIndex(P1, col);
+
 		actualizarContadoresItems(jugador);
 	}
 
@@ -258,17 +206,11 @@ public class pantallaJuegoController {
 		int dadosRapidos = jugador.getPinguino().getInv().getCantidad("dado rápido");
 		int dadosLentos = jugador.getPinguino().getInv().getCantidad("dado lento");
 
-		if (esJugador1()) {
-			peces_tP1.setText("Peces: " + peces);
-			nieve_tP1.setText("Bolas: " + bolasNieve);
-			rapido_tP1.setText("Dado rápido: " + dadosRapidos);
-			lento_tP1.setText("Dado lento: " + dadosLentos);
-		} else if (!esJugador1()) {
-			peces_tP2.setText("Peces: " + peces);
-			nieve_tP2.setText("Bolas: " + bolasNieve);
-			rapido_tP2.setText("Dado rápido: " + dadosRapidos);
-			lento_tP2.setText("Dado lento: " + dadosLentos);
-		}
+			peces_t.setText("Peces: " + peces);
+			nieve_t.setText("Bolas: " + bolasNieve);
+			rapido_t.setText("Dado rápido: " + dadosRapidos);
+			lento_t.setText("Dado lento: " + dadosLentos);
+	
 	}
 
 	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
