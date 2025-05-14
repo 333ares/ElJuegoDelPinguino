@@ -71,6 +71,7 @@ public class pantallaJuegoController {
 	@FXML
 	private void initialize() {
 		eventos.setText("¡El juego ha comenzado!");
+		actualizarTablero();
 	}
 
 	@FXML
