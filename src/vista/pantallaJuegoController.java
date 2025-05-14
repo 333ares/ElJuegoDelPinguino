@@ -97,16 +97,17 @@ public class pantallaJuegoController {
 
 
 	@FXML
-	public void handleDado(ActionEvent event) {
-		Random rand = new Random();
-		int diceResult = rand.nextInt(6) + 1;
+	private void handleDado(ActionEvent event) {
+        Random rand = new Random();
+        int diceResult = rand.nextInt(6) + 1;
 
-		gestorTablero.actualizarMovimientoJugador(jugadorActual, diceResult);
+        // Update the Text 
+        dadoResultText.setText("Ha salido: " + diceResult);
 
-		dadoResultText.setText("Ha salido: " + diceResult);
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
-	}
-
+        // Update the position
+        moveP1(diceResult);
+    }
+	
 	private void moveP1(int steps) {
 		p1Position += steps;
 
