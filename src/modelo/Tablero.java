@@ -69,6 +69,24 @@ public class Tablero {
 		}
 	}
 
+	// Método que devuelve el tipo de casilla en una posición específica
+	public String getCasillaTipo(int posicion) {
+		if (posicion < 0 || posicion >= casillas.length) {
+			return "Invalid";
+		}
+		if (casillas[posicion] instanceof Oso) {
+			return "Oso";
+		} else if (casillas[posicion] instanceof Agujero) {
+			return "Agujero";
+		} else if (casillas[posicion] instanceof Trineo) {
+			return "Trineo";
+		} else if (casillas[posicion] instanceof Evento) {
+			return "Evento";
+		} else {
+			return "Normal";
+		}
+	}
+
 	private Jugador inicializarJugador() {
 		Inventario inv = new Inventario(new ArrayList<>());
 		Pinguino pinguino = new Pinguino(inv);
@@ -83,7 +101,7 @@ public class Tablero {
 
 	}
 
-	public void actualizarjugador(Jugador j) {
+	public void actualizarJugador(Jugador j) {
 		jugadorActual = j;
 	}
 
@@ -118,8 +136,8 @@ public class Tablero {
 		return jugadorActual;
 	}
 
-	public void setjugadorActual (Jugador jugadorActual) {
-		this.jugadorActual =jugadorActual;
+	public void setJugadorActual(Jugador jugadorActual) {
+		this.jugadorActual = jugadorActual;
 	}
 
 	public int getTurnos() {
@@ -133,12 +151,15 @@ public class Tablero {
 	public void setPosicionesTrineos(List<Integer> posicionesTrineos) {
 		this.posicionesTrineos = posicionesTrineos;
 	}
+
 	public void setPosicionesEventos(List<Integer> posicionesEventos) {
 		this.posicionesEventos = posicionesEventos;
 	}
+
 	public void setPosicionesAgujeros(List<Integer> posicionesAgujeros) {
 		this.posicionesAgujeros = posicionesAgujeros;
 	}
+
 	public void setPosicionesOsos(List<Integer> posicionesOsos) {
 		this.posicionesOsos = posicionesOsos;
 	}
