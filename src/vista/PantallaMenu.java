@@ -30,13 +30,12 @@ public class PantallaMenu {
 				Tablero tablero = new Tablero();
 				tablero.inicializarCasillas(); // Aquí se inicializan las casillas del tablero
 
-				// Crear jugadores
-				Jugador jugador1 = new Jugador(opcion, "Jugador 1", null, null);
-				Jugador jugador2 = new Jugador(opcion, "Jugador 2", null, null);
-				tablero.getJugadores().add(jugador1);
-				tablero.getJugadores().add(jugador2);
 
-				System.out.println("Partida iniciada con 2 jugadores.");
+                // Crear jugador
+                Jugador jugador1 = new Jugador(0, "Jugador 1", "Azul", new Pinguino(new Inventario(new ArrayList<>())));
+                tablero.setJugadorActual(jugador1); // Establece el jugador actual
+
+                System.out.println("Partida iniciada con 1 jugador.");
 				break;
 			case 2:
 				System.out.println("Cargando partida...");

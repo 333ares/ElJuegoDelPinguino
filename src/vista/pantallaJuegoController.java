@@ -164,7 +164,7 @@ public class pantallaJuegoController {
 			rapido_t.setText("No tienes dado rápido.");
 		}
 
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+		gestorJugador.jugadorFinalizaTurno();
 	}
 
 	@FXML
@@ -180,7 +180,7 @@ public class pantallaJuegoController {
 
 		}
 
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+		gestorJugador.jugadorFinalizaTurno();
 	}
 
 	@FXML
@@ -193,7 +193,7 @@ public class pantallaJuegoController {
 			nieve_t.setText("No tienes bolas de nieve.");
 		}
 
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+		gestorJugador.jugadorFinalizaTurno();
 	}
 
 	@FXML
@@ -207,7 +207,7 @@ public class pantallaJuegoController {
 			peces_t.setText("No tienes peces.");
 		}
 
-		gestorJugador.jugadorFinalizaTurno(jugadorActual);
+		gestorJugador.jugadorFinalizaTurno();
 	}
 
 	private void actualizarInterfazJugador() {

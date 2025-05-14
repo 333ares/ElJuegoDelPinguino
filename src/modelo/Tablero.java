@@ -87,7 +87,7 @@ public class Tablero {
 		}
 	}
 
-	private Jugador inicializarJugador() {
+	public Jugador inicializarJugador() {
 		Inventario inv = new Inventario(new ArrayList<>());
 		Pinguino pinguino = new Pinguino(inv);
 		return new Jugador(0, "Jugador 1", "Azul", pinguino);

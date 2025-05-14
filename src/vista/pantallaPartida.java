@@ -16,19 +16,17 @@ import modelo.Tablero;
 public class pantallaPartida {
 
 	public void iniciarPartida() {
-		Tablero tablero = new Tablero();
-		GestorTablero gestorTablero = new GestorTablero(tablero);
-		GestorJugador gestorJugador = new GestorJugador(null, null, tablero);
-
-		Jugador jugadorActual = tablero.getJugadores().get(0);
+		  Tablero tablero = new Tablero();
+	        GestorTablero gestorTablero = new GestorTablero(tablero);
+	        Jugador jugadorActual = tablero.inicializarJugador(); 
 
 		// Cargar la pantalla de juego y pasar las dependencias al controlador
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
 		Parent root;
 		try {
-			root = loader.load();
-			pantallaJuegoController controller = loader.getController();
-			controller.initializeController(gestorJugador, gestorTablero, jugadorActual);
+			 root = loader.load();
+             pantallaJuegoController controller = loader.getController();
+            controller.initializeController(new GestorJugador(jugadorActual, tablero), gestorTablero, jugadorActual);
 
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
