@@ -24,7 +24,6 @@ public class pantallaJuegoController {
 	private GestorJugador gestorJugador;
 	private GestorTablero gestorTablero;
 	private Jugador jugadorActual;
- 
 
 	@FXML
 	private MenuItem newGame;
@@ -64,7 +63,6 @@ public class pantallaJuegoController {
 	@FXML
 	private Circle P1;
 
-
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
 
@@ -98,19 +96,18 @@ public class pantallaJuegoController {
 		// TODO
 	}
 
-
 	@FXML
 	private void handleDado(ActionEvent event) {
-        Random rand = new Random();
-        int diceResult = rand.nextInt(6) + 1;
+		Random rand = new Random();
+		int diceResult = rand.nextInt(6) + 1;
 
-        // Update the Text 
-        dadoResultText.setText("Ha salido: " + diceResult);
+		// Update the Text
+		dadoResultText.setText("Ha salido: " + diceResult);
 
-        // Update the position
-        moveP1(diceResult);
-    }
-	
+		// Update the position
+		moveP1(diceResult);
+	}
+
 	private void moveP1(int steps) {
 		p1Position += steps;
 
@@ -127,6 +124,7 @@ public class pantallaJuegoController {
 		GridPane.setRowIndex(P1, row);
 		GridPane.setColumnIndex(P1, col);
 	}
+
 	private void actualizarTablero() {
 		for (int i = 0; i < 50; i++) {
 			String tipoCasilla = gestorTablero.getTablero().getCasillaTipo(i);
@@ -154,73 +152,72 @@ public class pantallaJuegoController {
 		}
 	}
 
-
 	@FXML
 	public void handleRapido() {
-	    if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
-	        jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
-	        int movimiento = new Random().nextInt(6) + 5;
-	        gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-	       
-	        rapido_t.setText("Has avanzado " + movimiento + " casillas.");
-	        } else { 
-	            rapido_t.setText("No tienes dado rápido.");
-	    }
-	    
-	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
+		if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
+			jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
+			int movimiento = new Random().nextInt(6) + 5;
+			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+
+			rapido_t.setText("Has avanzado " + movimiento + " casillas.");
+		} else {
+			rapido_t.setText("No tienes dado rápido.");
+		}
+
+		gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
 
 	@FXML
 	public void handleLento() {
-	    if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
-	        jugadorActual.getPinguino().getInv().quitarItem("dado lento");
-	        int movimiento = new Random().nextInt(3) + 1;
-	        gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-	        
-	       lento_t.setText("Has avanzado " + movimiento + " casillas.");
-	        } else {
-	    lento_t.setText("No tienes dado lento.");
-	       
-	    }
-	    
-	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
+		if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
+			jugadorActual.getPinguino().getInv().quitarItem("dado lento");
+			int movimiento = new Random().nextInt(3) + 1;
+			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+
+			lento_t.setText("Has avanzado " + movimiento + " casillas.");
+		} else {
+			lento_t.setText("No tienes dado lento.");
+
+		}
+
+		gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
-	
+
 	@FXML
 	public void handleNieve() {
 		if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
 			jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
 
-		nieve_t.setText("No hay un segundo jugador para afectar.");
-			} else {
-				nieve_t.setText("No tienes bolas de nieve.");
-			}
-	
+			nieve_t.setText("No hay un segundo jugador para afectar.");
+		} else {
+			nieve_t.setText("No tienes bolas de nieve.");
+		}
+
 		gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
 
 	@FXML
 	public void handlePeces() {
-	    if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
-	        jugadorActual.getPinguino().getInv().quitarItem("pez");
-	        jugadorActual.setProtegidoDelOso(true);
-	        
-	    peces_t.setText("Estás protegido contra los osos.");
-	        } else {
-	            peces_t.setText("No tienes peces.");
-	    }
-	    
-	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
+		if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
+			jugadorActual.getPinguino().getInv().quitarItem("pez");
+			jugadorActual.setProtegidoDelOso(true);
+
+			peces_t.setText("Estás protegido contra los osos.");
+		} else {
+			peces_t.setText("No tienes peces.");
+		}
+
+		gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
-	
+
 	private void actualizarInterfazJugador() {
 		// Actualizar posición del jugador en el tablero
 		int row = jugadorActual.getPosicion() / COLUMNS;
 		int col = jugadorActual.getPosicion() % COLUMNS;
 
 		// Hay un Circle para cada jugador
-        GridPane.setRowIndex(P1, row);
-        GridPane.setColumnIndex(P1, col);
+		GridPane.setRowIndex(P1, row);
+		GridPane.setColumnIndex(P1, col);
 
 		actualizarContadoresItems();
 	}
@@ -232,11 +229,11 @@ public class pantallaJuegoController {
 		int dadosRapidos = jugadorActual.getPinguino().getInv().getCantidad("dado rápido");
 		int dadosLentos = jugadorActual.getPinguino().getInv().getCantidad("dado lento");
 
-			peces_t.setText("Peces: " + peces);
-			nieve_t.setText("Bolas: " + bolasNieve);
-			rapido_t.setText("Dado rápido: " + dadosRapidos);
-			lento_t.setText("Dado lento: " + dadosLentos);
-	
+		peces_t.setText("Peces: " + peces);
+		nieve_t.setText("Bolas: " + bolasNieve);
+		rapido_t.setText("Dado rápido: " + dadosRapidos);
+		lento_t.setText("Dado lento: " + dadosLentos);
+
 	}
 
 	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {

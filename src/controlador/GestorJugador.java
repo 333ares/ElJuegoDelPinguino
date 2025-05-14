@@ -41,69 +41,73 @@ public class GestorJugador {
 		this.jugadorActual = jugador;
 	}
 
+	public void jugadorUsaItem(String nombreItem) {
+		// Este método permite al jugador usar un item
+		for (Item item : jugadorActual.getPinguino().getInv().getLista()) { // Busca el ítem en el inventario del
+																			// jugador
+			if (item.getNombre().equals(nombreItem)) { // Implementa el efecto del ítem
+				System.out.println("Usando " + nombreItem + "...");
+				if ("pez".equals(nombreItem)) { // Remueve el ítem del inventario y activa una protección contra el Oso.
+					jugadorActual.getPinguino().getInv().quitarItem(item);
+					System.out.println("Has usado un pez. Estás protegido del Oso durante este turno.");
+					jugadorActual.setProtegidoDelOso(true);
 
-	 public void jugadorUsaItem(String nombreItem) {
-	       // Este método permite al jugador usar un item
-	       for (Item item : jugadorActual.getPinguino().getInv().getLista()) { // Busca el ítem en el inventario del jugador
-	           if (item.getNombre().equals(nombreItem)) { // Implementa el efecto del ítem
-	                System.out.println("Usando " + nombreItem + "...");
-	                if ("pez".equals(nombreItem)) { // Remueve el ítem del inventario y activa una protección contra el Oso.
-	                    jugadorActual.getPinguino().getInv().quitarItem(item);
-	                    System.out.println("Has usado un pez. Estás protegido del Oso durante este turno.");
-	                    jugadorActual.setProtegidoDelOso(true);
-	                } else if ("bola de nieve".equals(nombreItem)) { // Permite seleccionar otro jugador para hacerlo retroceder 3 casillas.
-	                    System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
-	                    // Lógica para seleccionar otro jugador y hacerle retroceder
-	                    // (Implementar lógica si hay más de un jugador, en este caso no es necesario)
-	                } else if ("dado rápido".equals(nombreItem)) { // Avanza 5-10 casillas.
-	                    System.out.println("Has usado un dado rápido. Avanzas entre 5-10 casillas.");
-	                    Random random = new Random();
-	                    int movimientos = random.nextInt(6) + 5; // 5-10
-	                    actualizarMovimientoJugador(jugadorActual, movimientos);
-	                    jugadorActual.getPinguino().getInv().quitarItem(item);
-	                } else if ("dado lento".equals(nombreItem)) { // Avanza 1-3 casillas.
-	                    System.out.println("Has usado un dado lento. Avanzas entre 1-3 casillas.");
-	                    Random random = new Random();
-	                    int movimientos = random.nextInt(3) + 1; // 1-3
-	                    actualizarMovimientoJugador(jugadorActual, movimientos);
-	                    jugadorActual.getPinguino().getInv().quitarItem(item);
-	                }
-	                break;
-	            }
-	        }
+				} else if ("bola de nieve".equals(nombreItem)) { // Permite seleccionar otro jugador para hacerlo
+																	// retroceder 3 casillas.
+					System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
+					// Lógica para seleccionar otro jugador y hacerle retroceder
+					// (Implementar lógica si hay más de un jugador, en este caso no es necesario)
 
-	    }
+				} else if ("dado rápido".equals(nombreItem)) { // Avanza 5-10 casillas.
+					System.out.println("Has usado un dado rápido. Avanzas entre 5-10 casillas.");
+					Random random = new Random();
+					int movimientos = random.nextInt(6) + 5; // 5-10
+					actualizarMovimientoJugador(jugadorActual, movimientos);
+					jugadorActual.getPinguino().getInv().quitarItem(item);
 
-	    public void actualizarMovimientoJugador(Jugador j, int movimientos) { // Mueve al jugador en el tablero.
-	        int nuevaPosicion = j.getPosicion() + movimientos;
-	        if (nuevaPosicion >= 0 && nuevaPosicion < 50) { // El tablero tiene 50 casillas (posiciones 0 a 49).
-	            j.setPosicion(nuevaPosicion);
+				} else if ("dado lento".equals(nombreItem)) { // Avanza 1-3 casillas.
+					System.out.println("Has usado un dado lento. Avanzas entre 1-3 casillas.");
+					Random random = new Random();
+					int movimientos = random.nextInt(3) + 1; // 1-3
+					actualizarMovimientoJugador(jugadorActual, movimientos);
+					jugadorActual.getPinguino().getInv().quitarItem(item);
+				}
+				break;
+			}
+		}
 
-	            tablero.getCasillas()[nuevaPosicion].realizarAccion(j);
-	            // Al llegar a una casilla, se ejecuta su acción asociada (realizarAccion(j)).
-	        } else {
-	            System.out.println("El movimiento es inválido. El jugador no se moverá.");
-	        }
-	    }
-
-	    public void jugadorFinalizaTurno() {
-	        jugadorActual.setProtegidoDelOso(false);
-	        System.out.println(jugadorActual.getNombre() + " ha finalizado su turno.");
-	    }
-
-	    public void cambiarJugadorActual() {
-	        // No es necesario si solo hay un jugador
-	    }
-
-	    public void pinguinoEvento(Pinguino p) {
-
-	    }
-
-	    public void pinguinoGuerra(Pinguino p) {
-
-	    }
-
-	    public void focaInteractua(Pinguino p, Foca f) {
-
-	    }
 	}
+
+	public void actualizarMovimientoJugador(Jugador j, int movimientos) { // Mueve al jugador en el tablero.
+		int nuevaPosicion = j.getPosicion() + movimientos;
+		if (nuevaPosicion >= 0 && nuevaPosicion < 50) { // El tablero tiene 50 casillas (posiciones 0 a 49).
+			j.setPosicion(nuevaPosicion);
+
+			tablero.getCasillas()[nuevaPosicion].realizarAccion(j);
+			// Al llegar a una casilla, se ejecuta su acción asociada (realizarAccion(j)).
+		} else {
+			System.out.println("El movimiento es inválido. El jugador no se moverá.");
+		}
+	}
+
+	public void jugadorFinalizaTurno() {
+		jugadorActual.setProtegidoDelOso(false);
+		System.out.println(jugadorActual.getNombre() + " ha finalizado su turno.");
+	}
+
+	public void cambiarJugadorActual() {
+		// No es necesario si solo hay un jugador
+	}
+
+	public void pinguinoEvento(Pinguino p) {
+
+	}
+
+	public void pinguinoGuerra(Pinguino p) {
+
+	}
+
+	public void focaInteractua(Pinguino p, Foca f) {
+
+	}
+}
