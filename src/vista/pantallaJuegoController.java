@@ -5,6 +5,8 @@ import controlador.GestorTablero;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -124,6 +126,33 @@ public class pantallaJuegoController {
 		GridPane.setRowIndex(P1, row);
 		GridPane.setColumnIndex(P1, col);
 	}
+	private void actualizarTablero() {
+		for (int i = 0; i < 50; i++) {
+			String tipoCasilla = gestorTablero.getTablero().getCasillaTipo(i);
+			ImageView imageView = new ImageView();
+			switch (tipoCasilla) {
+			case "Oso":
+				imageView.setImage(new Image("resources/oso"));
+				break;
+			case "Agujero":
+				imageView.setImage(new Image("resources/agujero"));
+				break;
+			case "Trineo":
+				imageView.setImage(new Image("resources/trineo"));
+				break;
+			case "Evento":
+				imageView.setImage(new Image("resources/evento"));
+				break;
+			default:
+				imageView.setImage(new Image("resources/casillanormal"));
+				break;
+			}
+			imageView.setFitWidth(50);
+			imageView.setFitHeight(50);
+			tablero.add(imageView, i % 5, i / 5); // Añade la imagen al GridPane
+		}
+	}
+
 
 	@FXML
 	public void handleRapido() {
