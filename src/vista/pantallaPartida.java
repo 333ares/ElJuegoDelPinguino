@@ -21,7 +21,7 @@ public class pantallaPartida {
         GestorJugador gestorJugador = new GestorJugador(null, null, tablero);
 
        
-        Jugador jugadorActual = tablero.getJugadores().get(0);
+		Jugador jugadorActual = tablero.getJugadores().get(0);
 
         // Cargar la pantalla de juego y pasar las dependencias al controlador
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
