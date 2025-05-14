@@ -26,10 +26,8 @@ public class Tablero {
 	 * 
 	 */
 	private Casilla[] casillas;
-	private ArrayList<Jugador> jugadores;
-	private int turnos;
 	private Jugador jugadorActual;
-	private Jugador jugadorRival;
+	private int turnos;
 
 	// Registros de posiciones especiales
 	private List<Integer> posicionesAgujeros = new ArrayList<>();
@@ -39,10 +37,9 @@ public class Tablero {
 
 	public Tablero() {
 		this.casillas = new Casilla[50];
-		this.jugadores = new ArrayList<>();
+		this.jugadorActual = inicializarJugador();
 		this.turnos = 0;
 		inicializarCasillas();
-		inicializarJugadores();
 	}
 
 	public void inicializarCasillas() {
@@ -54,7 +51,7 @@ public class Tablero {
 				posicionesOsos.add(i);
 				break;
 			case 1:
-				casillas[i] = new Agujero(i, null); 
+				casillas[i] = new Agujero(i, null);
 				posicionesAgujeros.add(i);
 				break;
 			case 2:
@@ -72,32 +69,14 @@ public class Tablero {
 		}
 	}
 
-	private void inicializarJugadores() {
-		Inventario inv1 = new Inventario(new ArrayList<>());
-		Inventario inv2 = new Inventario(new ArrayList<>());
-
-		Pinguino pinguino1 = new Pinguino(inv1);
-		Pinguino pinguino2 = new Pinguino(inv2);
-
-		Jugador jugador1 = new Jugador(0, "Jugador 1", "Naranja", pinguino1);
-		Jugador jugador2 = new Jugador(0, "Jugador 2", "Azul", pinguino2);
-
-		jugadores.add(jugador1);
-		jugadores.add(jugador2);
-		this.jugadorActual = jugador1;
-		this.jugadorRival = jugador2;
+	private Jugador inicializarJugador() {
+		Inventario inv = new Inventario(new ArrayList<>());
+		Pinguino pinguino = new Pinguino(inv);
+		return new Jugador(0, "Jugador 1", "Azul", pinguino);
 	}
-
 
 	public void avanzarTurno() {
 		turnos++;
-		cambiarJugadorActual();
-	}
-
-	private void cambiarJugadorActual() {
-		int indiceActual = jugadores.indexOf(jugadorActual);
-		int siguienteIndice = (indiceActual + 1) % jugadores.size();
-		jugadorActual = jugadores.get(siguienteIndice);
 	}
 
 	public void actualizarTablero() {
@@ -105,7 +84,7 @@ public class Tablero {
 	}
 
 	public void actualizarjugador(Jugador j) {
-
+		jugadorActual = j;
 	}
 
 	// Métodos para acceder a posiciones especiales
@@ -118,6 +97,14 @@ public class Tablero {
 		return Collections.unmodifiableList(posicionesOsos);
 	}
 
+	public List<Integer> getPosicionesTrineos() {
+		return posicionesTrineos;
+	}
+
+	public List<Integer> getPosicionesEventos() {
+		return posicionesEventos;
+	}
+
 	// getters y setters
 	public Casilla[] getCasillas() {
 		return casillas;
@@ -127,12 +114,12 @@ public class Tablero {
 		this.casillas = casillas;
 	}
 
-	public ArrayList<Jugador> getJugadores() {
-		return jugadores;
+	public Jugador getJugadorActual() {
+		return jugadorActual;
 	}
 
-	public void setJugadores(ArrayList<Jugador> jugadores) {
-		this.jugadores = jugadores;
+	public void setjugadorActual (Jugador jugadorActual) {
+		this.jugadorActual =jugadorActual;
 	}
 
 	public int getTurnos() {
@@ -143,34 +130,15 @@ public class Tablero {
 		this.turnos = turnos;
 	}
 
-	public Jugador getJugadorActual() {
-		return jugadorActual;
-	}
-
-	public void setJugadorActual(Jugador jugadorActual) {
-		this.jugadorActual = jugadorActual;
-	}
-
-	public List<Integer> getPosicionesTrineos() {
-		return posicionesTrineos;
-	}
-
 	public void setPosicionesTrineos(List<Integer> posicionesTrineos) {
 		this.posicionesTrineos = posicionesTrineos;
 	}
-
-	public List<Integer> getPosicionesEventos() {
-		return posicionesEventos;
-	}
-
 	public void setPosicionesEventos(List<Integer> posicionesEventos) {
 		this.posicionesEventos = posicionesEventos;
 	}
-
 	public void setPosicionesAgujeros(List<Integer> posicionesAgujeros) {
 		this.posicionesAgujeros = posicionesAgujeros;
 	}
-
 	public void setPosicionesOsos(List<Integer> posicionesOsos) {
 		this.posicionesOsos = posicionesOsos;
 	}

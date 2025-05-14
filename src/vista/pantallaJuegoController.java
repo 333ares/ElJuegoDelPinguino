@@ -22,7 +22,7 @@ public class pantallaJuegoController {
 	private GestorJugador gestorJugador;
 	private GestorTablero gestorTablero;
 	private Jugador jugadorActual;
-	private Jugador jugadorRival;
+ 
 
 	@FXML
 	private MenuItem newGame;
@@ -95,10 +95,6 @@ public class pantallaJuegoController {
 		// TODO
 	}
 
-	public boolean esJugador1() {
-	    return jugadorActual.equals(gestorJugador.getOtrosJugadores().get(0)); 
-	    // Nos devuelve TRUE or FALSE en base si es jugador 1 o no
-	}
 
 	@FXML
 	public void handleDado(ActionEvent event) {
@@ -186,24 +182,24 @@ public class pantallaJuegoController {
 	    gestorJugador.jugadorFinalizaTurno(jugadorActual);
 	}
 	
-	private void actualizarInterfazJugador(Jugador jugador) {
+	private void actualizarInterfazJugador() {
 		// Actualizar posición del jugador en el tablero
-		int row = jugador.getPosicion() / COLUMNS;
-		int col = jugador.getPosicion() % COLUMNS;
+		int row = jugadorActual.getPosicion() / COLUMNS;
+		int col = jugadorActual.getPosicion() % COLUMNS;
 
 		// Hay un Circle para cada jugador
         GridPane.setRowIndex(P1, row);
         GridPane.setColumnIndex(P1, col);
 
-		actualizarContadoresItems(jugador);
+		actualizarContadoresItems();
 	}
 
-	private void actualizarContadoresItems(Jugador jugador) {
+	private void actualizarContadoresItems() {
 		// Actualizar los textos que muestran la cantidad de items
-		int peces = jugador.getPinguino().getInv().getCantidad("pez");
-		int bolasNieve = jugador.getPinguino().getInv().getCantidad("bola de nieve");
-		int dadosRapidos = jugador.getPinguino().getInv().getCantidad("dado rápido");
-		int dadosLentos = jugador.getPinguino().getInv().getCantidad("dado lento");
+		int peces = jugadorActual.getPinguino().getInv().getCantidad("pez");
+		int bolasNieve = jugadorActual.getPinguino().getInv().getCantidad("bola de nieve");
+		int dadosRapidos = jugadorActual.getPinguino().getInv().getCantidad("dado rápido");
+		int dadosLentos = jugadorActual.getPinguino().getInv().getCantidad("dado lento");
 
 			peces_t.setText("Peces: " + peces);
 			nieve_t.setText("Bolas: " + bolasNieve);
