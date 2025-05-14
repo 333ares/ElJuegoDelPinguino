@@ -36,10 +36,9 @@ public class GestorJugador {
 	private Jugador jugadorActual;
 	private Tablero tablero;
 
-	public GestorJugador(Jugador jugador1, Jugador jugador2, Tablero tablero) {
+	public GestorJugador(Jugador jugador, Tablero tablero) {
 		this.tablero = tablero;
-		this.jugadorActual = jugador1;
-		tablero.getJugadores().add(jugador); // Añade el jugador al tablero
+		this.jugadorActual = jugador;
 	}
 
 
