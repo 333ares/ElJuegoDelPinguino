@@ -75,24 +75,24 @@ public class pantallaPrincipalController {
 	@FXML
 	private void handleLogin(ActionEvent event) {
 		String username = userField.getText();
-        String password = passField.getText();
+		String password = passField.getText();
 
-        System.out.println("Login pressed: " + username + " / " + password);
+		System.out.println("Login pressed: " + username + " / " + password);
 
-        // Basic check (just for demo, replace with real login logic)
-        if (!username.isEmpty() && !password.isEmpty()) {
-            try {
-            	 FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-         	    Parent root = loader.load();
-         	    Stage stage = (Stage) loginButton.getScene().getWindow();
-         	    stage.setScene(new Scene(root));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Please. Enter user and password.");
-        }
-    }
+		// Basic check (just for demo, replace with real login logic)
+		if (!username.isEmpty() && !password.isEmpty()) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+				Parent root = loader.load();
+				Stage stage = (Stage) loginButton.getScene().getWindow();
+				stage.setScene(new Scene(root));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Please. Enter user and password.");
+		}
+	}
 
 	@FXML
 	private void handleRegister() {
