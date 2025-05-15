@@ -3,6 +3,7 @@ package vista;
 import controlador.GestorJugador;
 import controlador.GestorTablero;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,17 +16,14 @@ import modelo.Jugador;
 import modelo.Pinguino;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class pantallaJuegoController {
 
-	private GestorJugador gestorJugador;
 	private GestorTablero gestorTablero;
 	private Jugador jugadorActual;
 
@@ -99,6 +97,7 @@ public class pantallaJuegoController {
 		eventos.setText("Exit...");
 		// TODO
 	}
+
 	@FXML
 	private void handleRankingPlayers() {
 		eventos.setText("Players ranking.");
@@ -135,87 +134,93 @@ public class pantallaJuegoController {
 	}
 
 	private void actualizarTablero() {
-	    if (gestorTablero == null || gestorTablero.getTablero() == null || tablero == null) {
-	        System.err.println("Error: Componentes no inicializados para actualizar tablero");
-	        return;
-	    }
+		if (gestorTablero == null || gestorTablero.getTablero() == null || tablero == null) {
+			System.err.println("Error: Componentes no inicializados para actualizar tablero");
+			return;
+		}
 
-	    // Limpiar solo las imágenes dinámicas
-	    List<Node> toRemove = new ArrayList<>();
-	    for (Node node : tablero.getChildren()) {
-	        if (node instanceof ImageView && node.getId() == null) {
-	            toRemove.add(node);
-	        }
-	    }
-	    tablero.getChildren().removeAll(toRemove);
+		// Limpiar solo las imágenes dinámicas
+		List<Node> toRemove = new ArrayList<>();
+		for (Node node : tablero.getChildren()) {
+			if (node instanceof ImageView && node.getId() == null) {
+				toRemove.add(node);
+			}
+		}
+		tablero.getChildren().removeAll(toRemove);
 
-	    // Añadir imágenes con verificación de recursos
-	    for (int i = 1; i < 49; i++) {
-	        ImageView imageView = new ImageView();
-	        try {
-	            String imagePath = obtenerRutaImagenCasilla(i);
-	            InputStream is = getClass().getResourceAsStream(imagePath);
-	            if (is == null) {
-	                throw new IOException("Recurso no encontrado: " + imagePath);
-	            }
-	            imageView.setImage(new Image(is));
-	            imageView.setFitWidth(40);
-	            imageView.setFitHeight(40);
-	            // Añadir en la posición correcta (fila, columna)
-	            GridPane.setRowIndex(imageView, i / 5);
-	            GridPane.setColumnIndex(imageView, i % 5);
-	            tablero.getChildren().add(imageView);
-	        } catch (Exception e) {
-	            System.err.println("Error cargando imagen para casilla " + i + ": " + e.getMessage());
-	            // Imagen por defecto
-	            imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
-	            imageView.setFitWidth(40);
-	            imageView.setFitHeight(40);
-	            GridPane.setRowIndex(imageView, i / 5);
-	            GridPane.setColumnIndex(imageView, i % 5);
-	            tablero.getChildren().add(imageView);
-	        }
-	    }
+		// Añadir imágenes con verificación de recursos
+		for (int i = 1; i < 49; i++) {
+			ImageView imageView = new ImageView();
+			try {
+				String imagePath = obtenerRutaImagenCasilla(i);
+				InputStream is = getClass().getResourceAsStream(imagePath);
+				if (is == null) {
+					throw new IOException("Recurso no encontrado: " + imagePath);
+				}
+				imageView.setImage(new Image(is));
+				imageView.setFitWidth(40);
+				imageView.setFitHeight(40);
+				GridPane.setHalignment(imageView, HPos.RIGHT); // Alinear a la derecha las casillas
+				// Añadir en la posición correcta (fila, columna)
+				GridPane.setRowIndex(imageView, i / 5);
+				GridPane.setColumnIndex(imageView, i % 5);
+				tablero.getChildren().add(imageView);
+			} catch (Exception e) {
+				System.err.println("Error cargando imagen para casilla " + i + ": " + e.getMessage());
+				// Imagen por defecto
+				imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
+				imageView.setFitWidth(40);
+				imageView.setFitHeight(40);
+				GridPane.setHalignment(imageView, HPos.RIGHT);
+				GridPane.setRowIndex(imageView, i / 5);
+				GridPane.setColumnIndex(imageView, i % 5);
+				tablero.getChildren().add(imageView);
+			}
+		}
 	}
 
 	private String obtenerRutaImagenCasilla(int posicion) {
-	    if (gestorTablero == null || gestorTablero.getTablero() == null) {
-	        return "/casillanormal.png";
-	    }
-	    
-	    String tipo = gestorTablero.getTablero().getCasillaTipo(posicion);
-	    switch (tipo) {
-	        case "Oso": return "/oso.png";
-	        case "Agujero": return "/agujero.png";
-	        case "Trineo": return "/trineo.png";
-	        case "Evento": return "/evento.png";
-	        default: return "/casillanormal.png";
-	    }
-	}
+		if (gestorTablero == null || gestorTablero.getTablero() == null) {
+			return "/casillanormal.png";
+		}
 
+		String tipo = gestorTablero.getTablero().getCasillaTipo(posicion);
+		switch (tipo) {
+		case "Oso":
+			return "/oso.png";
+		case "Agujero":
+			return "/agujero.png";
+		case "Trineo":
+			return "/trineo.png";
+		case "Evento":
+			return "/evento.png";
+		default:
+			return "/casillanormal.png";
+		}
+	}
 
 	@FXML
 	public void handleRapido() {
-		 try {
-		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
-		            jugadorActual.getPinguino().getInv() == null) {
-		            eventos.setText("Error: Jugador no inicializado");
-		            return;
-		        }
+		try {
+			if (jugadorActual == null || jugadorActual.getPinguino() == null
+					|| jugadorActual.getPinguino().getInv() == null) {
+				eventos.setText("Error: Jugador no inicializado");
+				return;
+			}
 
-		        if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
-		            jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
-		            int movimiento = new Random().nextInt(6) + 5;
-		            gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-		            eventos.setText(eventos.getText() + "\nHas avanzado " + movimiento + " casillas (dado rápido).");
-		            actualizarInterfazJugador();
-		        } else {
-		            eventos.setText(eventos.getText() + "\nNo tienes dados rápidos disponibles.");
-		        }
-		        actualizarContadoresItems();
-		    } catch (Exception e) {
-		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
-		    }
+			if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
+				jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
+				int movimiento = new Random().nextInt(6) + 5;
+				gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+				eventos.setText(eventos.getText() + "\nHas avanzado " + movimiento + " casillas (dado rápido).");
+				actualizarInterfazJugador();
+			} else {
+				eventos.setText(eventos.getText() + "\nNo tienes dados rápidos disponibles.");
+			}
+			actualizarContadoresItems();
+		} catch (Exception e) {
+			eventos.setText("Error al usar dado rápido: " + e.getMessage());
+		}
 	}
 
 	@FXML
@@ -315,24 +320,24 @@ public class pantallaJuegoController {
 	}
 
 	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
-	    if (gestorJugador == null || gestorTablero == null || jugadorActual == null) {
-	        throw new IllegalArgumentException("Los parámetros no pueden ser nulos");
-	    }
-	    
-	    this.gestorJugador = gestorJugador;
-	    this.gestorTablero = gestorTablero;
-	    this.jugadorActual = jugadorActual;
-	    
-	    // Inicializar inventario del jugador si es necesario
-	    if (this.jugadorActual.getPinguino() == null || this.jugadorActual.getPinguino().getInv() == null) {
-	        this.jugadorActual.setPinguino(new Pinguino(new Inventario(new ArrayList<>())));
-	    }
-	    
-	    Platform.runLater(() -> {
-	        actualizarTablero();
-	        actualizarInterfazJugador();
-	    });
-	
+		if (gestorJugador == null || gestorTablero == null || jugadorActual == null) {
+			throw new IllegalArgumentException("Los parámetros no pueden ser nulos");
+		}
+
+		this.gestorJugador = gestorJugador;
+		this.gestorTablero = gestorTablero;
+		this.jugadorActual = jugadorActual;
+
+		// Inicializar inventario del jugador si es necesario
+		if (this.jugadorActual.getPinguino() == null || this.jugadorActual.getPinguino().getInv() == null) {
+			this.jugadorActual.setPinguino(new Pinguino(new Inventario(new ArrayList<>())));
+		}
+
+		Platform.runLater(() -> {
+			actualizarTablero();
+			actualizarInterfazJugador();
+		});
+
 	}
 
 }
