@@ -1,11 +1,13 @@
 package modelo;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class Inventario {
 	 
 	ArrayList<Item> lista = new ArrayList<Item>();
+	  private Map<String, Integer> items;
 
 	/*
 	 * Almacena ítems en un ArrayList. Permite añadir/eliminar ítems (por objeto o
@@ -19,6 +21,7 @@ public class Inventario {
 	public Inventario(ArrayList<Item> lista) {
 		super();
 		this.lista = lista;
+		this.items = new HashMap<>();
 	}
 
 	// GETTERS Y SETTERS
@@ -74,6 +77,11 @@ public class Inventario {
 	public int getCantidad(String string) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void añadirItem(String nombre, int cantidad) {
+		// TODO Auto-generated method stub
+		 items.put(nombre, items.getOrDefault(nombre, 0) + cantidad);
 	}
 
 }

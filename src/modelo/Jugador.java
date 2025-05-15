@@ -27,7 +27,7 @@ public class Jugador {
 		this.posicion = posicion;
 		this.nombre = nombre;
 		this.color = color;
-		this.pinguino = pinguino != null ? pinguino : new Pinguino(new Inventario());
+		this.pinguino = pinguino != null ? pinguino : new Pinguino(new Inventario(null));
 		this.tablero = tablero;
 		
 		   // Inicializar con algunos items básicos
