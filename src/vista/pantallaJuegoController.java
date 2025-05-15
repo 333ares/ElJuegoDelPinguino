@@ -3,12 +3,19 @@ package vista;
 import controlador.GestorJugador;
 import controlador.GestorTablero;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import modelo.Jugador;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class pantallaJuegoController {
@@ -117,32 +124,61 @@ public class pantallaJuegoController {
 		GridPane.setColumnIndex(P1, col);
 	}
 
-	/*private void actualizarTablero() {
-		for (int i = 0; i < 50; i++) {
-			String tipoCasilla = gestorTablero.getTablero().getCasillaTipo(i);
-			ImageView imageView = new ImageView();
-			switch (tipoCasilla) {
-			case "Oso":
-				imageView.setImage(new Image("/oso.png"));
-				break;
-			case "Agujero":
-				imageView.setImage(new Image("/agujero.png"));
-				break;
-			case "Trineo":
-				imageView.setImage(new Image("/trineo.png"));
-				break;
-			case "Evento":
-				imageView.setImage(new Image("/evento.png"));
-				break;
-			default:
-				imageView.setImage(new Image("/casillanormal.png"));
-				break;
-			}
-			imageView.setFitWidth(50);
-			imageView.setFitHeight(50);
-			tablero.add(imageView, i % 5, i / 5); // Añade la imagen al GridPane
-		}
-	}*/
+	private void actualizarTablero() {
+	    // Verificar que los componentes estén inicializados
+	    if (gestorTablero == null || gestorTablero.getTablero() == null || tablero == null) {
+	        System.err.println("Error: Componentes no inicializados para actualizar tablero");
+	        return;
+	    }
+
+	    // Limpiar solo las imágenes que hemos añadido dinámicamente (no las del FXML)
+	    // Buscamos solo los ImageView que no tienen ID (los que añadimos dinámicamente)
+	    List<Node> toRemove = new ArrayList<>();
+	    for (Node node : tablero.getChildren()) {
+	        if (node instanceof ImageView && node.getId() == null) {
+	            toRemove.add(node);
+	        }
+	    }
+	    tablero.getChildren().removeAll(toRemove);
+
+	    // Añadir las imágenes correspondientes a cada casilla
+	    for (int i = 0; i < 50; i++) {
+	        String tipoCasilla = gestorTablero.getTablero().getCasillaTipo(i);
+	        ImageView imageView = new ImageView();
+	        
+	        try {
+	            switch (tipoCasilla) {
+	                case "Oso":
+	                    imageView.setImage(new Image(getClass().getResourceAsStream("/oso.png")));
+	                    break;
+	                case "Agujero":
+	                    imageView.setImage(new Image(getClass().getResourceAsStream("/agujero.png")));
+	                    break;
+	                case "Trineo":
+	                    imageView.setImage(new Image(getClass().getResourceAsStream("/trineo.png")));
+	                    break;
+	                case "Evento":
+	                    imageView.setImage(new Image(getClass().getResourceAsStream("/evento.png")));
+	                    break;
+	                default:
+	                    imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
+	                    break;
+	            }
+	            imageView.setFitWidth(50);
+	            imageView.setFitHeight(50);
+	            
+	            // Añadir detrás de los círculos (índice 0 para que queden detrás)
+	            tablero.add(imageView, i % 5, i / 5);
+	            
+	        } catch (Exception e) {
+	            System.err.println("Error cargando imagen para casilla " + i + ": " + e.getMessage());
+	            // Colocar una imagen por defecto si hay error
+	            imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
+	            tablero.add(imageView, i % 5, i / 5);
+	        }
+	    }
+	}
+
 
 	@FXML
 	public void handleRapido() {
@@ -232,5 +268,12 @@ public class pantallaJuegoController {
 		this.gestorJugador = gestorJugador;
 		this.gestorTablero = gestorTablero;
 		this.jugadorActual = jugadorActual;
+		
+		 // Inicializar el tablero después de que todo esté listo
+	    Platform.runLater(() -> {
+	        actualizarTablero();
+	        actualizarInterfazJugador();
+	    });
+
 	}
 }
