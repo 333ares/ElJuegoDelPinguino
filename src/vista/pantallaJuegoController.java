@@ -227,6 +227,12 @@ public class pantallaJuegoController {
 
 	@FXML
 	public void handleLento() {
+		 try {
+		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
+		            jugadorActual.getPinguino().getInv() == null) {
+		            eventos.setText("Error: Jugador no inicializado");
+		            return;
+		        }
 		if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
 			jugadorActual.getPinguino().getInv().quitarItem("dado lento");
 			int movimiento = new Random().nextInt(3) + 1;
@@ -239,10 +245,19 @@ public class pantallaJuegoController {
 		}
 
 		actualizarContadoresItems();
+		    } catch (Exception e) {
+		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
+		    }
 	}
 
 	@FXML
 	public void handleNieve() {
+		 try {
+		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
+		            jugadorActual.getPinguino().getInv() == null) {
+		            eventos.setText("Error: Jugador no inicializado");
+		            return;
+		        }
 		if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
 			jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
 
@@ -252,10 +267,19 @@ public class pantallaJuegoController {
 		}
 
 		actualizarContadoresItems();
+		    } catch (Exception e) {
+		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
+		    }
 	}
 
 	@FXML
 	public void handlePeces() {
+		 try {
+		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
+		            jugadorActual.getPinguino().getInv() == null) {
+		            eventos.setText("Error: Jugador no inicializado");
+		            return;
+		        }
 		if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
 			jugadorActual.getPinguino().getInv().quitarItem("pez");
 			jugadorActual.setProtegidoDelOso(true);
@@ -266,6 +290,9 @@ public class pantallaJuegoController {
 		}
 
 		actualizarContadoresItems();
+		    } catch (Exception e) {
+		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
+		    }
 	}
 
 	private void actualizarInterfazJugador() {
