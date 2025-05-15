@@ -159,9 +159,9 @@ public class pantallaJuegoController {
 			int movimiento = new Random().nextInt(6) + 5;
 			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
 
-			rapido_t.setText("Has avanzado " + movimiento + " casillas.");
+			eventos.setText("Has avanzado " + movimiento + " casillas.");
 		} else {
-			rapido_t.setText("No tienes dado rápido.");
+			eventos.setText("No tienes dado rápido.");
 		}
 
 		gestorJugador.jugadorFinalizaTurno();
@@ -174,9 +174,9 @@ public class pantallaJuegoController {
 			int movimiento = new Random().nextInt(3) + 1;
 			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
 
-			lento_t.setText("Has avanzado " + movimiento + " casillas.");
+			eventos.setText("Has avanzado " + movimiento + " casillas.");
 		} else {
-			lento_t.setText("No tienes dado lento.");
+			eventos.setText("No tienes dado lento.");
 
 		}
 
@@ -188,9 +188,9 @@ public class pantallaJuegoController {
 		if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
 			jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
 
-			nieve_t.setText("No hay un segundo jugador para afectar.");
+			eventos.setText("No hay un segundo jugador para afectar.");
 		} else {
-			nieve_t.setText("No tienes bolas de nieve.");
+			eventos.setText("No tienes bolas de nieve.");
 		}
 
 		gestorJugador.jugadorFinalizaTurno();
@@ -202,9 +202,9 @@ public class pantallaJuegoController {
 			jugadorActual.getPinguino().getInv().quitarItem("pez");
 			jugadorActual.setProtegidoDelOso(true);
 
-			peces_t.setText("Estás protegido contra los osos.");
+			eventos.setText("Estás protegido contra los osos.");
 		} else {
-			peces_t.setText("No tienes peces.");
+			eventos.setText("No tienes peces.");
 		}
 
 		gestorJugador.jugadorFinalizaTurno();
