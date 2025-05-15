@@ -69,7 +69,7 @@ public class pantallaJuegoController {
 	@FXML
 	private void initialize() {
 		eventos.setText("¡El juego ha comenzado!");
-		actualizarTablero();
+		//actualizarTablero();
 	}
 
 	@FXML
@@ -125,7 +125,7 @@ public class pantallaJuegoController {
 		GridPane.setColumnIndex(P1, col);
 	}
 
-	private void actualizarTablero() {
+	/*private void actualizarTablero() {
 		for (int i = 0; i < 50; i++) {
 			String tipoCasilla = gestorTablero.getTablero().getCasillaTipo(i);
 			ImageView imageView = new ImageView();
@@ -150,7 +150,7 @@ public class pantallaJuegoController {
 			imageView.setFitHeight(50);
 			tablero.add(imageView, i % 5, i / 5); // Añade la imagen al GridPane
 		}
-	}
+	}*/
 
 	@FXML
 	public void handleRapido() {
