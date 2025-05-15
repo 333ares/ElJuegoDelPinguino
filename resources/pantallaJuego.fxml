@@ -1,36 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
-
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
+<!-- Copyright (c) 2015, 2019, Gluon and/or its affiliates. All rights reserved. 
+	Use is subject to license terms. This file is available and licensed under 
+	the following license: Redistribution and use in source and binary forms, 
+	with or without modification, are permitted provided that the following conditions 
+	are met: - Redistributions of source code must retain the above copyright 
+	notice, this list of conditions and the following disclaimer. - Redistributions 
+	in binary form must reproduce the above copyright notice, this list of conditions 
+	and the following disclaimer in the documentation and/or other materials 
+	provided with the distribution. - Neither the name of Oracle Corporation 
+	nor the names of its contributors may be used to endorse or promote products 
+	derived from this software without specific prior written permission. THIS 
+	SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+	IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+	INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+	BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
+	USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
+	THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
+	EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -46,240 +36,376 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaJuegoController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints halignment="LEFT" prefWidth="200.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints />
-    <RowConstraints maxHeight="437.0" minHeight="10.0" prefHeight="437.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="163.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <VBox prefHeight="396.0" prefWidth="800.0" GridPane.rowIndex="1">
-         <children>
-            <GridPane fx:id="tablero" prefHeight="487.0" prefWidth="780.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-grid-lines-visible: true;">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="20.0" />
-               </VBox.margin>
-               <children>
-                  <Circle fx:id="P2" fill="#00a5ff" radius="13.0" stroke="#005583" strokeType="INSIDE">
-                     <GridPane.margin>
-                        <Insets left="80.0" />
-                     </GridPane.margin>
-                  </Circle>
-                  <Circle fx:id="P1" fill="#ffaa00" radius="13.0" stroke="#7c5300" strokeType="INSIDE">
-                     <GridPane.margin>
-                        <Insets left="50.0" />
-                     </GridPane.margin>
-                  </Circle>
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="8" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="9" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-                  <ImageView fitHeight="42.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-               </children>
-            </GridPane>
-         </children>
-      </VBox>
-      <GridPane alignment="TOP_CENTER" prefHeight="420.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="376.0" minHeight="10.0" prefHeight="376.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Text layoutX="58.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eventos">
-                     <font>
-                        <Font name="Calibri Bold" size="20.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="165.0">
-                     <children>
-                        <Text fx:id="eventos" layoutX="3.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Los eventos apareceran aqui..." wrappingWidth="162.13671875">
-                           <font>
-                              <Font name="Calibri Italic" size="14.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-              </content>
-               <GridPane.margin>
-                  <Insets right="20.0" />
-               </GridPane.margin>
-            </ScrollPane>
-         </children>
-      </GridPane>
-      <AnchorPane prefHeight="164.0" prefWidth="800.0" GridPane.rowIndex="2">
-         <children>
-            <Button fx:id="rapido" layoutX="146.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleRapido" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Label layoutX="123.0" layoutY="25.0" text="Dado rápido">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="rapido_tP1" layoutX="135.0" layoutY="49.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="rapido_tP2" layoutX="135.0" layoutY="69.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-            <Button fx:id="lento" layoutX="296.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleLento" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Label layoutX="279.0" layoutY="25.0" text="Dado lento">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="lento_tP1" layoutX="286.0" layoutY="52.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="lento_tP2" layoutX="286.0" layoutY="72.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-            <Button fx:id="peces" layoutX="451.0" layoutY="104.0" mnemonicParsing="false" onAction="#handlePeces" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Label layoutX="452.0" layoutY="26.0" text="Peces">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="peces_tP1" layoutX="441.0" layoutY="52.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="peces_tP2" layoutX="441.0" layoutY="72.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-            <Button fx:id="nieve" layoutX="601.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleNieve" text="Usar">
-               <font>
-                  <Font name="Calibri" size="17.0" />
-               </font></Button>
-            <Label layoutX="570.0" layoutY="23.0" text="Bolas de nieve">
-               <font>
-                  <Font name="Calibri Bold" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="nieve_tP1" layoutX="591.0" layoutY="50.0" text="Jugador 1: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="nieve_tP2" layoutX="591.0" layoutY="70.0" text="Jugador 2: 0">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <Label GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <font>
-            <Font name="Calibri Italic" size="14.0" />
-         </font>
-      </Label>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
-            <Button fx:id="dado" layoutX="74.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleDado" prefHeight="50.0" prefWidth="50.0" text="🎲">
-               <font>
-                  <Font name="Calibri" size="21.0" />
-               </font>
-            </Button>
-            <Text layoutX="25.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¡Haz clic en el dado!">
-               <font>
-                  <Font name="Calibri Italic" size="18.0" />
-               </font>
-            </Text>
-            <Text fx:id="dadoResultText" layoutX="62.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ha salido: 0">
-               <font>
-                  <Font name="Calibri Italic" size="16.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-   </children>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+	prefWidth="1000.0" style="-fx-background-color: white;"
+	xmlns="http://javafx.com/javafx/17.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="vista.pantallaJuegoController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+			prefWidth="100.0" />
+		<ColumnConstraints halignment="LEFT"
+			prefWidth="200.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints maxHeight="437.0" minHeight="10.0"
+			prefHeight="437.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="220.0" minHeight="10.0"
+			prefHeight="163.0" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<VBox prefHeight="396.0" prefWidth="800.0" GridPane.rowIndex="1">
+			<children>
+				<GridPane fx:id="tablero" prefHeight="487.0"
+					prefWidth="780.0"
+					style="-fx-border-color: black; -fx-border-radius: 5; -fx-grid-lines-visible: true;">
+					<columnConstraints>
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
+					</rowConstraints>
+					<VBox.margin>
+						<Insets left="20.0" right="20.0" top="20.0" />
+					</VBox.margin>
+					<children>
+						<Circle fx:id="P2" fill="#00a5ff" radius="13.0"
+							stroke="#005583" strokeType="INSIDE">
+							<GridPane.margin>
+								<Insets left="80.0" />
+							</GridPane.margin>
+						</Circle>
+						<Circle fx:id="P1" fill="#ffaa00" radius="13.0"
+							stroke="#7c5300" strokeType="INSIDE">
+							<GridPane.margin>
+								<Insets left="50.0" />
+							</GridPane.margin>
+						</Circle>
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="1" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="1" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="1" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="1" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="2" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="2" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="2" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="2" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="4" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="4" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="4" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="4" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="5" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="5" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="5" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="5" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="6" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="6" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="6" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="6" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="7" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="7" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="7" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="7" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="8" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="9" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="8" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"
+							GridPane.rowIndex="9" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="8" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"
+							GridPane.rowIndex="9" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="8" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3"
+							GridPane.rowIndex="9" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="8" />
+						<ImageView fitHeight="42.0" fitWidth="151.0"
+							pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4"
+							GridPane.rowIndex="9" />
+					</children>
+				</GridPane>
+			</children>
+		</VBox>
+		<GridPane alignment="TOP_CENTER" prefHeight="420.0"
+			prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES"
+					minWidth="10.0" prefWidth="100.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints maxHeight="204.0" minHeight="10.0"
+					prefHeight="61.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="376.0" minHeight="10.0"
+					prefHeight="376.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<AnchorPane prefHeight="200.0" prefWidth="200.0">
+					<children>
+						<Text layoutX="58.0" layoutY="42.0" strokeType="OUTSIDE"
+							strokeWidth="0.0" text="Eventos">
+							<font>
+								<Font name="Calibri Bold" size="20.0" />
+							</font>
+						</Text>
+					</children>
+				</AnchorPane>
+				<ScrollPane prefHeight="200.0" prefWidth="200.0"
+					GridPane.rowIndex="1">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0"
+							prefHeight="700.0" prefWidth="165.0">
+							<children>
+								<Text fx:id="eventos" layoutX="3.0" layoutY="13.0"
+									strokeType="OUTSIDE" strokeWidth="0.0"
+									text="Los eventos apareceran aqui..."
+									wrappingWidth="162.13671875">
+									<font>
+										<Font name="Calibri Italic" size="14.0" />
+									</font>
+								</Text>
+							</children>
+						</AnchorPane>
+					</content>
+					<GridPane.margin>
+						<Insets right="20.0" />
+					</GridPane.margin>
+				</ScrollPane>
+			</children>
+		</GridPane>
+		<AnchorPane prefHeight="164.0" prefWidth="800.0"
+			GridPane.rowIndex="2">
+			<children>
+				<Button fx:id="rapido" layoutX="146.0" layoutY="99.0"
+					mnemonicParsing="false" onAction="#handleRapido" text="Usar">
+					<font>
+						<Font name="Calibri" size="17.0" />
+					</font>
+				</Button>
+				<Label layoutX="123.0" layoutY="25.0" text="Dado rápido">
+					<font>
+						<Font name="Calibri Bold" size="19.0" />
+					</font>
+				</Label>
+				<Label fx:id="rapido_tP1" layoutX="135.0" layoutY="49.0"
+					text="Jugador 1: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+				<Label fx:id="rapido_tP2" layoutX="135.0" layoutY="69.0"
+					text="Jugador 2: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+				<Button fx:id="lento" layoutX="296.0" layoutY="104.0"
+					mnemonicParsing="false" onAction="#handleLento" text="Usar">
+					<font>
+						<Font name="Calibri" size="17.0" />
+					</font>
+				</Button>
+				<Label layoutX="279.0" layoutY="25.0" text="Dado lento">
+					<font>
+						<Font name="Calibri Bold" size="19.0" />
+					</font>
+				</Label>
+				<Label fx:id="lento_tP1" layoutX="286.0" layoutY="52.0"
+					text="Jugador 1: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+				<Label fx:id="lento_tP2" layoutX="286.0" layoutY="72.0"
+					text="Jugador 2: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+				<Button fx:id="peces" layoutX="451.0" layoutY="104.0"
+					mnemonicParsing="false" onAction="#handlePeces" text="Usar">
+					<font>
+						<Font name="Calibri" size="17.0" />
+					</font>
+				</Button>
+				<Label layoutX="452.0" layoutY="26.0" text="Peces">
+					<font>
+						<Font name="Calibri Bold" size="19.0" />
+					</font>
+				</Label>
+				<Label fx:id="peces_tP1" layoutX="441.0" layoutY="52.0"
+					text="Jugador 1: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+				<Label fx:id="peces_tP2" layoutX="441.0" layoutY="72.0"
+					text="Jugador 2: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+				<Button fx:id="nieve" layoutX="601.0" layoutY="102.0"
+					mnemonicParsing="false" onAction="#handleNieve" text="Usar">
+					<font>
+						<Font name="Calibri" size="17.0" />
+					</font>
+				</Button>
+				<Label layoutX="570.0" layoutY="23.0" text="Bolas de nieve">
+					<font>
+						<Font name="Calibri Bold" size="19.0" />
+					</font>
+				</Label>
+				<Label fx:id="nieve_tP1" layoutX="591.0" layoutY="50.0"
+					text="Jugador 1: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+				<Label fx:id="nieve_tP2" layoutX="591.0" layoutY="70.0"
+					text="Jugador 2: 0">
+					<font>
+						<Font name="Calibri" size="15.0" />
+					</font>
+				</Label>
+			</children>
+		</AnchorPane>
+		<Label GridPane.columnIndex="1" GridPane.rowIndex="2">
+			<font>
+				<Font name="Calibri Italic" size="14.0" />
+			</font>
+		</Label>
+		<AnchorPane prefHeight="200.0" prefWidth="200.0"
+			GridPane.columnIndex="1" GridPane.rowIndex="2">
+			<children>
+				<Button fx:id="dado" layoutX="74.0" layoutY="60.0"
+					mnemonicParsing="false" onAction="#handleDado" prefHeight="50.0"
+					prefWidth="50.0" text="🎲">
+					<font>
+						<Font name="Calibri" size="21.0" />
+					</font>
+				</Button>
+				<Text layoutX="25.0" layoutY="44.0" strokeType="OUTSIDE"
+					strokeWidth="0.0" text="¡Haz clic en el dado!">
+					<font>
+						<Font name="Calibri Italic" size="18.0" />
+					</font>
+				</Text>
+				<Text fx:id="dadoResultText" layoutX="62.0" layoutY="135.0"
+					strokeType="OUTSIDE" strokeWidth="0.0" text="Ha salido: 0">
+					<font>
+						<Font name="Calibri Italic" size="16.0" />
+					</font>
+				</Text>
+			</children>
+		</AnchorPane>
+	</children>
 </GridPane>
