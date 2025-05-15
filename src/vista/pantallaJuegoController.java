@@ -67,6 +67,7 @@ public class pantallaJuegoController {
 
 	private int p1Position = 0; // Tracks current position (from 0 to 49 in a 5x10 grid)
 	private final int COLUMNS = 5;
+	private GestorJugador gestorJugador;
 
 	@FXML
 	private void initialize() {
@@ -106,8 +107,9 @@ public class pantallaJuegoController {
 
 	@FXML
 	private void handleDado(ActionEvent event) {
+		// Generamos un número random del 0 al 5
 		Random rand = new Random();
-		int diceResult = rand.nextInt(6) + 1;
+		int diceResult = rand.nextInt(6) + 1; // Sumamos +1 para que los números sean del 1-6
 
 		// Update the Text
 		dadoResultText.setText("Ha salido: " + diceResult);
