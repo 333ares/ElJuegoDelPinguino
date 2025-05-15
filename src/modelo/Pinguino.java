@@ -6,7 +6,7 @@ public class Pinguino {
 
 	// CONSTRUCTOR
 	public Pinguino(Inventario inv) {
-		this.inv = inv;
+		this.inv = inv != null ? inv : new Inventario(null);
 	}
 
 	// GETTERS Y SETTERS
