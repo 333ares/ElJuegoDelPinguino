@@ -2,10 +2,15 @@ package controlador;
 
 import java.util.ArrayList;
 
+import javafx.application.Platform;
+import modelo.Agujero;
 import modelo.Casilla;
+import modelo.Evento;
 import modelo.Jugador;
+import modelo.Oso;
 import modelo.Pinguino;
 import modelo.Tablero;
+import modelo.Trineo;
 
 public class GestorTablero {
 	private Tablero tablero; // Declara un campo privado tablero de tipo Tablero, que almacenará la
@@ -30,22 +35,34 @@ public class GestorTablero {
 	 * 
 	 */
 	public void actualizarMovimientoJugador(Jugador j, int movimientos) {
-		// Este método actualiza la posición del jugador en el tablero y activa el
-		// efecto de la casilla correspondiente.
-		int nuevaPosicion = j.getPosicion() + movimientos;// Calcula la nueva posición sumando los movimientos a la
-															// posición actual del jugador.
-		if (nuevaPosicion >= 0 && nuevaPosicion < tablero.getCasillas().length) {
-			// Verifica si la nueva posición es válida (dentro de los límites del tablero).
-			j.setPosicion(nuevaPosicion);// Si la posición es válida, actualiza la posición del jugador.
-			tablero.getCasillas()[nuevaPosicion].realizarAccion(j); // Obtiene la casilla correspondiente a la nueva
-																	// posición y ejecuta su acción sobre el jugador.
-		} else {
-			// Si el movimiento no es válido, muestra un mensaje de error y no realiza
-			// ningún cambio.
-			System.out.println("Movimiento inválido. El jugador no se mueve.");
-		}
-
-	}
+	    int nuevaPosicion = j.getPosicion() + movimientos;
+	    
+	    // Verificar límites del tablero
+	    if (nuevaPosicion < 0) nuevaPosicion = 0;
+	    if (nuevaPosicion >= tablero.getCasillas().length) {
+	        nuevaPosicion = tablero.getCasillas().length - 1;
+	    }
+	    
+	    j.setPosicion(nuevaPosicion);
+	    
+	    // Ejecutar acción de la casilla
+	    Casilla casillaActual = tablero.getCasillas()[nuevaPosicion];
+	    casillaActual.realizarAccion(j);
+	    
+	    // Mostrar mensaje en eventos
+	    String mensaje = "";
+	    if (casillaActual instanceof Oso) {
+	        mensaje = "¡Un oso te ha atrapado! Vuelves al inicio.";
+	    } else if (casillaActual instanceof Agujero) {
+	        mensaje = "¡Caíste en un agujero! Retrocedes al agujero anterior.";
+	    } else if (casillaActual instanceof Trineo) {
+	        mensaje = "¡Un trineo te lleva más adelante!";
+	    } else if (casillaActual instanceof Evento) {
+	        mensaje = "¡Evento especial! Ganas un item.";
+	    }
+	
+	    }
+	
 
 	public int buscarAgujeroAnterior(int posicionActual) {
 		/*
