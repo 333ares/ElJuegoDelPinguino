@@ -28,13 +28,13 @@ public class pantallaJuegoController {
 	private Jugador jugadorActual;
 
 	@FXML
-	private MenuItem newGame;
+	private Button newGame;
 	@FXML
-	private MenuItem saveGame;
+	private Button saveGame;
 	@FXML
-	private MenuItem loadGame;
+	private Button loadGame;
 	@FXML
-	private MenuItem quitGame;
+	private Button quitGame;
 
 	@FXML
 	private Button dado;
@@ -95,6 +95,11 @@ public class pantallaJuegoController {
 	@FXML
 	private void handleQuitGame() {
 		eventos.setText("Exit...");
+		// TODO
+	}
+	@FXML
+	private void handleRankingPlayers() {
+		eventos.setText("Players ranking.");
 		// TODO
 	}
 
