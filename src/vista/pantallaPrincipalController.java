@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import modelo.Inventario;
+import modelo.Item;
 import modelo.Jugador;
 import modelo.Pinguino;
 import modelo.Tablero;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import bbdd.bbdd;
 import controlador.GestorJugador;
@@ -96,20 +98,23 @@ public class pantallaPrincipalController {
 		        // Configurar controlador del juego
 		        pantallaJuegoController juegoController = loader.getController();
 		        
-		        // Inicializar componentes del juego
+		     // En tu método que inicializa el juego:
 		        Tablero tablero = new Tablero();
 		        GestorTablero gestorTablero = new GestorTablero(tablero);
-		        GestorJugador gestorJugador = new GestorJugador(null, tablero);
-		        Inventario inventario = new Inventario(null);
-		     /*   // Crear jugador con inventario básico
-		        Inventario inventario = new Inventario(null);
-		        inventario.añadirItem("dado rápido", 1);
-		        inventario.añadirItem("dado lento", 1);
-		        inventario.añadirItem("bola de nieve", 2);
-		        inventario.añadirItem("pez", 3);
-		        */
-		        
-		        Jugador jugador = new Jugador(0, "Jugador1", "Azul", new Pinguino(inventario));
+		        tablero.setGestorTablero(gestorTablero);  // Esto es crucial para los agujeros
+
+		        // Crear jugador con inventario
+		        ArrayList<Item> itemsIniciales = new ArrayList<>();
+		        itemsIniciales.add(new Item("dado rápido", 1));
+		        itemsIniciales.add(new Item("dado lento", 1));
+		        itemsIniciales.add(new Item("bola de nieve", 2));
+		        itemsIniciales.add(new Item("pez", 3));
+
+		        Inventario inventario = new Inventario(itemsIniciales);
+		        Pinguino pinguino = new Pinguino(inventario);
+		        Jugador jugador = new Jugador(0, "Jugador1", "Azul", pinguino);
+
+		        GestorJugador gestorJugador = new GestorJugador(jugador, tablero);
 		        
 		        // Inicializar controlador
 		        juegoController.initializeController(gestorJugador, gestorTablero, jugador);

@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import modelo.Foca;
+import modelo.Inventario;
 import modelo.Item;
 import modelo.Jugador;
 import modelo.Pinguino;
@@ -42,40 +43,63 @@ public class GestorJugador {
 	}
 
 	public void jugadorUsaItem(String nombreItem) {
-		// Este método permite al jugador usar un item
-		for (Item item : jugadorActual.getPinguino().getInv().getLista()) { // Busca el ítem en el inventario del
-																			// jugador
-			if (item.getNombre().equals(nombreItem)) { // Implementa el efecto del ítem
-				System.out.println("Usando " + nombreItem + "...");
-				if ("pez".equals(nombreItem)) { // Remueve el ítem del inventario y activa una protección contra el Oso.
-					jugadorActual.getPinguino().getInv().quitarItem(item);
-					System.out.println("Has usado un pez. Estás protegido del Oso durante este turno.");
-					jugadorActual.setProtegidoDelOso(true);
+	    if (jugadorActual == null || jugadorActual.getPinguino() == null || 
+	        jugadorActual.getPinguino().getInv() == null) {
+	        System.out.println("Error: Jugador o inventario no inicializado");
+	        return;
+	    }
 
-				} else if ("bola de nieve".equals(nombreItem)) { // Permite seleccionar otro jugador para hacerlo
-																	// retroceder 3 casillas.
-					System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
-					// Lógica para seleccionar otro jugador y hacerle retroceder
-					// (Implementar lógica si hay más de un jugador, en este caso no es necesario)
+	    Inventario inventario = jugadorActual.getPinguino().getInv();
+	    String item = buscarItemEnInventario(inventario, nombreItem);
 
-				} else if ("dado rápido".equals(nombreItem)) { // Avanza 5-10 casillas.
-					System.out.println("Has usado un dado rápido. Avanzas entre 5-10 casillas.");
-					Random random = new Random();
-					int movimientos = random.nextInt(6) + 5; // 5-10
-					actualizarMovimientoJugador(jugadorActual, movimientos);
-					jugadorActual.getPinguino().getInv().quitarItem(item);
+	    if (item == null) {
+	        System.out.println("No tienes el item: " + nombreItem);
+	        return;
+	    }
 
-				} else if ("dado lento".equals(nombreItem)) { // Avanza 1-3 casillas.
-					System.out.println("Has usado un dado lento. Avanzas entre 1-3 casillas.");
-					Random random = new Random();
-					int movimientos = random.nextInt(3) + 1; // 1-3
-					actualizarMovimientoJugador(jugadorActual, movimientos);
-					jugadorActual.getPinguino().getInv().quitarItem(item);
-				}
-				break;
-			}
-		}
+	    System.out.println("Usando " + nombreItem + "...");
+	    
+	    switch (nombreItem) {
+	        case "pez":
+	            inventario.quitarItem(item);
+	            jugadorActual.setProtegidoDelOso(true);
+	            System.out.println("Has usado un pez. Estás protegido del Oso durante este turno.");
+	            break;
+	            
+	        case "bola de nieve":
+	            inventario.quitarItem(item);
+	            System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
+	            // Lógica para seleccionar otro jugador
+	            break;
+	            
+	        case "dado rápido":
+	            Random random = new Random();
+	            int movRapido = random.nextInt(6) + 5; // 5-10
+	            inventario.quitarItem(item);
+	            actualizarMovimientoJugador(jugadorActual, movRapido);
+	            System.out.println("Has usado un dado rápido. Avanzas " + movRapido + " casillas.");
+	            break;
+	            
+	        case "dado lento":
+	            Random rand = new Random();
+	            int movLento = rand.nextInt(3) + 1; // 1-3
+	            inventario.quitarItem(item);
+	            actualizarMovimientoJugador(jugadorActual, movLento);
+	            System.out.println("Has usado un dado lento. Avanzas " + movLento + " casillas.");
+	            break;
+	            
+	        default:
+	            System.out.println("Item no reconocido: " + nombreItem);
+	    }
+	}
 
+	private Item buscarItemEnInventario(Inventario inventario, String nombreItem) {
+	    for (Item item : inventario.getLista()) {
+	        if (item.getNombre().equals(nombreItem) && item.getCantidad() > 0) {
+	            return item;
+	        }
+	    }
+	    return null;
 	}
 
 	public void actualizarMovimientoJugador(Jugador j, int movimientos) { // Mueve al jugador en el tablero.

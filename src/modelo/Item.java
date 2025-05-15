@@ -1,37 +1,28 @@
 package modelo;
 
 public class Item {
+    private String nombre;
+    private int cantidad;
 
-	String nombre;
-	int cantidad;
+    public Item(String nombre, int cantidad) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+    }
 
-	/*
-	 * Clase simple que representa un ítem con nombre y cantidad. Tiene constructor
-	 * para inicializar estos valores y getters/setters para acceder/modificarlos.
-	 * Es la unidad básica gestionada por la clase Inventario.
-	 */
+    // Getters y setters
+    public String getNombre() {
+        return nombre;
+    }
 
-	// CONSTRUCTOR
-	public Item(String nombre, int cantidad) {
-		this.nombre = nombre;
-		this.cantidad = cantidad;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	// GETTERS Y SETTERS
-	public String getNombre() {
-		return nombre;
-	}
+    public int getCantidad() {
+        return cantidad;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 }

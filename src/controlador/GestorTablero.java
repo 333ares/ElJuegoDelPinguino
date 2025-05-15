@@ -50,19 +50,25 @@ public class GestorTablero {
 	    casillaActual.realizarAccion(j);
 	    
 	    // Mostrar mensaje en eventos
+	    String tipo = tablero.getCasillaTipo(nuevaPosicion);
 	    String mensaje = "";
-	    if (casillaActual instanceof Oso) {
-	        mensaje = "¡Un oso te ha atrapado! Vuelves al inicio.";
-	    } else if (casillaActual instanceof Agujero) {
-	        mensaje = "¡Caíste en un agujero! Retrocedes al agujero anterior.";
-	    } else if (casillaActual instanceof Trineo) {
-	        mensaje = "¡Un trineo te lleva más adelante!";
-	    } else if (casillaActual instanceof Evento) {
-	        mensaje = "¡Evento especial! Ganas un item.";
+	    
+	    switch (tipo) {
+	        case "Oso":
+	            mensaje = "¡Un oso te ha atrapado! Vuelves al inicio.";
+	            break;
+	        case "Agujero":
+	            mensaje = "¡Caíste en un agujero! Retrocedes al agujero anterior.";
+	            break;
+	        case "Trineo":
+	            mensaje = "¡Un trineo te lleva más adelante!";
+	            break;
+	        case "Evento":
+	            mensaje = "¡Evento especial! Ganas un item.";
+	            break;
 	    }
-	
-	    }
-	
+	    
+	}
 
 	public int buscarAgujeroAnterior(int posicionActual) {
 		/*

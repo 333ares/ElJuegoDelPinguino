@@ -30,13 +30,7 @@ public class Jugador {
 		this.pinguino = pinguino != null ? pinguino : new Pinguino(new Inventario(null));
 		this.tablero = tablero;
 		
-		   // Inicializar con algunos items básicos
-        if (this.pinguino.getInv() != null) {
-            this.pinguino.getInv().añadirItem("dado rápido", 1);
-            this.pinguino.getInv().añadirItem("dado lento", 1);
-            this.pinguino.getInv().añadirItem("bola de nieve", 2);
-            this.pinguino.getInv().añadirItem("pez", 3);
-        }
+
 	}
 
 	// GETTERS Y SETTERS
