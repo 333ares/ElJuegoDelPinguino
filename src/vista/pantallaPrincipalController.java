@@ -9,13 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import modelo.Inventario;
+import modelo.Jugador;
+import modelo.Pinguino;
+import modelo.Tablero;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import bbdd.bbdd;
+import controlador.GestorJugador;
+import controlador.GestorTablero;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 
@@ -82,15 +89,39 @@ public class pantallaPrincipalController {
 		// Basic check (just for demo, replace with real login logic)
 		if (!username.isEmpty() && !password.isEmpty()) {
 			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-				Parent root = loader.load();
-				Stage stage = (Stage) loginButton.getScene().getWindow();
-				stage.setScene(new Scene(root));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("Please. Enter user and password.");
+		        // Cargar pantalla de juego
+		        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+		        Parent root = loader.load();
+		        
+		        // Configurar controlador del juego
+		        pantallaJuegoController juegoController = loader.getController();
+		        
+		        // Inicializar componentes del juego
+		        Tablero tablero = new Tablero();
+		        GestorTablero gestorTablero = new GestorTablero(tablero);
+		        GestorJugador gestorJugador = new GestorJugador(null, tablero);
+		        Inventario inventario = new Inventario(null);
+		     /*   // Crear jugador con inventario básico
+		        Inventario inventario = new Inventario(null);
+		        inventario.añadirItem("dado rápido", 1);
+		        inventario.añadirItem("dado lento", 1);
+		        inventario.añadirItem("bola de nieve", 2);
+		        inventario.añadirItem("pez", 3);
+		        */
+		        
+		        Jugador jugador = new Jugador(0, "Jugador1", "Azul", new Pinguino(inventario));
+		        
+		        // Inicializar controlador
+		        juegoController.initializeController(gestorJugador, gestorTablero, jugador);
+		        
+		        // Mostrar pantalla de juego
+		        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		        stage.setScene(new Scene(root));
+		        stage.setTitle("El Juego del Pingüino");
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        // Mostrar mensaje de error
+		    }
 		}
 	}
 

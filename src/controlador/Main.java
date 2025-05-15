@@ -5,6 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import modelo.Inventario;
+import modelo.Jugador;
+import modelo.Pinguino;
+import modelo.Tablero;
+import vista.pantallaJuegoController;
 
 /*
  * Application: Clase base para aplicaciones JavaFX
@@ -23,21 +28,20 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// Sobrescribe el método start() de Application, que es el punto de entrada de
-		// toda aplicación JavaFX. Recibe un Stage (ventana principal) como parámetro.
-
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaPrincipal.fxml"));
-		// Crea un FXMLLoader para cargar el archivo FXML que define la interfaz gráfica
-		// principal.
-		Parent root = loader.load();
-		// Carga la jerarquía de componentes gráficos definidos en el FXML y los asigna
-		// a un nodo raíz (Parent).
-
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("El Juego del Pingüino");
-		primaryStage.show();
+	    // Cargar primero la pantalla principal (login)
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaPrincipal.fxml"));
+	    Parent root = loader.load();
+	    
+	    Scene scene = new Scene(root);
+	    primaryStage.setScene(scene);
+	    primaryStage.setTitle("El Juego del Pingüino - Login");
+	    primaryStage.show();
 	}
+		
+
+		
+	
+
 
 	public static void main(String[] args) {
 		launch(args);

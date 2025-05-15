@@ -46,7 +46,7 @@ public class Jugador {
 		return pinguino;
 	}
 
-	public Pinguino setPinguino() {
+	public Pinguino setPinguino(Pinguino pinguino) {
 		return pinguino;
 	}
 

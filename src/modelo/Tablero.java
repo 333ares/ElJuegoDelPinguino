@@ -43,30 +43,38 @@ public class Tablero {
 	}
 
 	public void inicializarCasillas() {
-		for (int i = 0; i < casillas.length; i++) {
-			int tipo = (int) (Math.random() * 10);
-			switch (tipo) {
-			case 0:
-				casillas[i] = new Oso(i);
-				posicionesOsos.add(i);
-				break;
-			case 1:
-				casillas[i] = new Agujero(i, null);
-				posicionesAgujeros.add(i);
-				break;
-			case 2:
-				casillas[i] = new Trineo(i);
-				posicionesTrineos.add(i);
-				break;
-			case 3:
-				casillas[i] = new Evento(i);
-				posicionesEventos.add(i);
-				break;
-			default:
-				casillas[i] = new CasillaNormal(i);
-				break;
-			}
-		}
+		 // Limpiar listas de posiciones especiales
+	    posicionesOsos.clear();
+	    posicionesAgujeros.clear();
+	    posicionesTrineos.clear();
+	    posicionesEventos.clear();
+
+	    for (int i = 0; i < casillas.length; i++) {
+	        // Ajustar probabilidades para asegurar casillas especiales
+	        int tipo = (int) (Math.random() * 20); // Rango más amplio
+	        if (tipo == 0) { // 5% Oso
+	            casillas[i] = new Oso(i);
+	            posicionesOsos.add(i);
+	        } else if (tipo == 1 || tipo == 2) { // 10% Agujero
+	            casillas[i] = new Agujero(i, null);
+	            posicionesAgujeros.add(i);
+	        } else if (tipo == 3 || tipo == 4) { // 10% Trineo
+	            casillas[i] = new Trineo(i);
+	            posicionesTrineos.add(i);
+	        } else if (tipo == 5 || tipo == 6) { // 10% Evento
+	            casillas[i] = new Evento(i);
+	            posicionesEventos.add(i);
+	        } else { // 65% Normal
+	            casillas[i] = new CasillaNormal(i);
+	        }
+	    }
+	    
+	    // Asegurar al menos algunas casillas especiales
+	    if (posicionesOsos.isEmpty()) {
+	        int pos = (int) (Math.random() * casillas.length);
+	        casillas[pos] = new Oso(pos);
+	        posicionesOsos.add(pos);
+	    }
 	}
 
 	// Método que devuelve el tipo de casilla en una posición específica
