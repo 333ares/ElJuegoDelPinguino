@@ -14,9 +14,12 @@ import modelo.Jugador;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class pantallaJuegoController {
 
@@ -68,7 +71,7 @@ public class pantallaJuegoController {
 	@FXML
 	private void initialize() {
 		eventos.setText("¡El juego ha comenzado!");
-		//actualizarTablero();
+		// actualizarTablero();
 	}
 
 	@FXML
@@ -125,60 +128,53 @@ public class pantallaJuegoController {
 	}
 
 	private void actualizarTablero() {
-	    // Verificar que los componentes estén inicializados
-	    if (gestorTablero == null || gestorTablero.getTablero() == null || tablero == null) {
-	        System.err.println("Error: Componentes no inicializados para actualizar tablero");
-	        return;
-	    }
+		if (gestorTablero == null || gestorTablero.getTablero() == null || tablero == null) {
+			System.err.println("Error: Componentes no inicializados para actualizar tablero");
+			return;
+		}
 
-	    // Limpiar solo las imágenes que hemos añadido dinámicamente (no las del FXML)
-	    // Buscamos solo los ImageView que no tienen ID (los que añadimos dinámicamente)
-	    List<Node> toRemove = new ArrayList<>();
-	    for (Node node : tablero.getChildren()) {
-	        if (node instanceof ImageView && node.getId() == null) {
-	            toRemove.add(node);
-	        }
-	    }
-	    tablero.getChildren().removeAll(toRemove);
+		// Limpiar solo las imágenes dinámicas
+		List<Node> toRemove = tablero.getChildren().stream()
+				.filter(node -> node instanceof ImageView && node.getId() == null).collect(Collectors.toList());
+		tablero.getChildren().removeAll(toRemove);
 
-	    // Añadir las imágenes correspondientes a cada casilla
-	    for (int i = 0; i < 50; i++) {
-	        String tipoCasilla = gestorTablero.getTablero().getCasillaTipo(i);
-	        ImageView imageView = new ImageView();
-	        
-	        try {
-	            switch (tipoCasilla) {
-	                case "Oso":
-	                    imageView.setImage(new Image(getClass().getResourceAsStream("/oso.png")));
-	                    break;
-	                case "Agujero":
-	                    imageView.setImage(new Image(getClass().getResourceAsStream("/agujero.png")));
-	                    break;
-	                case "Trineo":
-	                    imageView.setImage(new Image(getClass().getResourceAsStream("/trineo.png")));
-	                    break;
-	                case "Evento":
-	                    imageView.setImage(new Image(getClass().getResourceAsStream("/evento.png")));
-	                    break;
-	                default:
-	                    imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
-	                    break;
-	            }
-	            imageView.setFitWidth(50);
-	            imageView.setFitHeight(50);
-	            
-	            // Añadir detrás de los círculos (índice 0 para que queden detrás)
-	            tablero.add(imageView, i % 5, i / 5);
-	            
-	        } catch (Exception e) {
-	            System.err.println("Error cargando imagen para casilla " + i + ": " + e.getMessage());
-	            // Colocar una imagen por defecto si hay error
-	            imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
-	            tablero.add(imageView, i % 5, i / 5);
-	        }
-	    }
+		// Añadir imágenes con verificación de recursos
+		for (int i = 0; i < 50; i++) {
+			ImageView imageView = new ImageView();
+			try {
+				String imagePath = obtenerRutaImagenCasilla(i);
+				InputStream is = getClass().getResourceAsStream(imagePath);
+				if (is == null) {
+					throw new IOException("Recurso no encontrado: " + imagePath);
+				}
+				imageView.setImage(new Image(is));
+				imageView.setFitWidth(50);
+				imageView.setFitHeight(50);
+				tablero.add(imageView, i % 5, i / 5);
+			} catch (Exception e) {
+				System.err.println("Error cargando imagen para casilla " + i + ": " + e.getMessage());
+				// Imagen por defecto
+				imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
+				tablero.add(imageView, i % 5, i / 5);
+			}
+		}
 	}
 
+	private String obtenerRutaImagenCasilla(int posicion) {
+		String tipo = gestorTablero.getTablero().getCasillaTipo(posicion);
+		switch (tipo) {
+		case "Oso":
+			return "/oso.png";
+		case "Agujero":
+			return "/agujero.png";
+		case "Trineo":
+			return "/trineo.png";
+		case "Evento":
+			return "/evento.png";
+		default:
+			return "/casillanormal.png";
+		}
+	}
 
 	@FXML
 	public void handleRapido() {
@@ -187,12 +183,12 @@ public class pantallaJuegoController {
 			int movimiento = new Random().nextInt(6) + 5;
 			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
 
-			eventos.setText("Has avanzado " + movimiento + " casillas.");
+			eventos.setText(eventos.getText() + "\nHas avanzado " + movimiento + " casillas.");
 		} else {
-			eventos.setText("No tienes dado rápido.");
+			eventos.setText(eventos.getText() + "\nNo tienes dado rápido.");
 		}
 
-		gestorJugador.jugadorFinalizaTurno();
+		actualizarContadoresItems();
 	}
 
 	@FXML
@@ -202,13 +198,13 @@ public class pantallaJuegoController {
 			int movimiento = new Random().nextInt(3) + 1;
 			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
 
-			eventos.setText("Has avanzado " + movimiento + " casillas.");
+			eventos.setText(eventos.getText() + "\nHas avanzado " + movimiento + " casillas.");
 		} else {
-			eventos.setText("No tienes dado lento.");
+			eventos.setText(eventos.getText() + "\nNo tienes dado lento.");
 
 		}
 
-		gestorJugador.jugadorFinalizaTurno();
+		actualizarContadoresItems();
 	}
 
 	@FXML
@@ -216,12 +212,12 @@ public class pantallaJuegoController {
 		if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
 			jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
 
-			eventos.setText("No hay un segundo jugador para afectar.");
+			eventos.setText(eventos.getText() + "\nNo hay un segundo jugador para afectar.");
 		} else {
-			eventos.setText("No tienes bolas de nieve.");
+			eventos.setText(eventos.getText() + "\nNo tienes bolas de nieve.");
 		}
 
-		gestorJugador.jugadorFinalizaTurno();
+		actualizarContadoresItems();
 	}
 
 	@FXML
@@ -230,12 +226,12 @@ public class pantallaJuegoController {
 			jugadorActual.getPinguino().getInv().quitarItem("pez");
 			jugadorActual.setProtegidoDelOso(true);
 
-			eventos.setText("Estás protegido contra los osos.");
+			eventos.setText(eventos.getText() + "\nEstás protegido contra los osos.");
 		} else {
-			eventos.setText("No tienes peces.");
+			eventos.setText(eventos.getText() + "\nNo tienes peces.");
 		}
 
-		gestorJugador.jugadorFinalizaTurno();
+		actualizarContadoresItems();
 	}
 
 	private void actualizarInterfazJugador() {
@@ -268,12 +264,16 @@ public class pantallaJuegoController {
 		this.gestorJugador = gestorJugador;
 		this.gestorTablero = gestorTablero;
 		this.jugadorActual = jugadorActual;
-		
-		 // Inicializar el tablero después de que todo esté listo
-	    Platform.runLater(() -> {
-	        actualizarTablero();
-	        actualizarInterfazJugador();
-	    });
 
+		// Configuración inicial de la interfaz
+		eventos.setText("¡El juego ha comenzado!");
+		actualizarContadoresItems();
+
+		// Actualización diferida del tablero
+		Platform.runLater(() -> {
+			actualizarTablero();
+			actualizarInterfazJugador();
+		});
 	}
+
 }
