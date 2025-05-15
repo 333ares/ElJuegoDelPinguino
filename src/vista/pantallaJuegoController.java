@@ -131,19 +131,19 @@ public class pantallaJuegoController {
 			ImageView imageView = new ImageView();
 			switch (tipoCasilla) {
 			case "Oso":
-				imageView.setImage(new Image("resources/oso"));
+				imageView.setImage(new Image("/oso.png"));
 				break;
 			case "Agujero":
-				imageView.setImage(new Image("resources/agujero"));
+				imageView.setImage(new Image("/agujero.png"));
 				break;
 			case "Trineo":
-				imageView.setImage(new Image("resources/trineo"));
+				imageView.setImage(new Image("/trineo.png"));
 				break;
 			case "Evento":
-				imageView.setImage(new Image("resources/evento"));
+				imageView.setImage(new Image("/evento.png"));
 				break;
 			default:
-				imageView.setImage(new Image("resources/casillanormal"));
+				imageView.setImage(new Image("/casillanormal.png"));
 				break;
 			}
 			imageView.setFitWidth(50);
