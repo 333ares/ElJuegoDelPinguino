@@ -1,11 +1,11 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Inventario {
-	private Map<String, Integer> items;
+	 
+	ArrayList<Item> lista = new ArrayList<Item>();
 
 	/*
 	 * Almacena ítems en un ArrayList. Permite añadir/eliminar ítems (por objeto o
@@ -16,14 +16,36 @@ public class Inventario {
 	 */
 
 	// CONSTRUCTOR
-	public Inventario() {
+	public Inventario(ArrayList<Item> lista) {
 		super();
-		this.items = new HashMap<>();
+		this.lista = lista;
 	}
 
+	// GETTERS Y SETTERS
+	public ArrayList<Item> getLista() {
+		return lista;
+	}
 
-	public void añadirItem(String nombre, int cantidad) {
-		 items.put(nombre, items.getOrDefault(nombre, 0) + cantidad);
+	public void setLista(ArrayList<Item> lista) {
+		this.lista = lista;
+	}
+
+	public void añadirItem(Item item) {
+		lista.add(item);
+	}
+
+	public void quitarItem(Item item) {
+		lista.remove(item);
+	}
+
+	public boolean contieneItem(String nombre) {// Método que verifica si el inventario contiene un ítem con cierto
+												// nombre.
+		for (Item item : lista) {
+			if (item.getNombre().equals(nombre)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/*
@@ -35,34 +57,23 @@ public class Inventario {
 	 * 
 	 * break: Sale del bucle una vez que encuentra y procesa el ítem.
 	 */
+	public void quitarItem(String nombre) {
+		for (int i = 0; i < lista.size(); i++) {
+			Item item = lista.get(i);
+			if (item.getNombre().equals(nombre)) {
+				if (item.getCantidad() > 1) {
+					item.setCantidad(item.getCantidad() - 1);
+				} else {
+					lista.remove(i);
+				}
+				break;
+			}
+		}
+	}
 
-    public void quitarItem(String nombre) {
-        if (contieneItem(nombre)) {
-            int cantidad = items.get(nombre);
-            if (cantidad > 1) {
-                items.put(nombre, cantidad - 1);
-            } else {
-                items.remove(nombre);
-            }
-        }
-    }
-
-    public boolean contieneItem(String nombre) {
-        return items.containsKey(nombre) && items.get(nombre) > 0;
-    }
-
-
-    public int getCantidad(String nombre) {
-        return items.getOrDefault(nombre, 0);
-    }
-
-    public ArrayList<Item> getLista() {
-        ArrayList<Item> lista = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : items.entrySet()) {
-            lista.add(new Item(entry.getKey(), entry.getValue()));
-        }
-        return lista;
-    }
-    
+	public int getCantidad(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }
