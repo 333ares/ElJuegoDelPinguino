@@ -3,6 +3,7 @@ package vista;
 import controlador.GestorJugador;
 import controlador.GestorTablero;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -161,6 +162,7 @@ public class pantallaJuegoController {
 	            imageView.setImage(new Image(is));
 	            imageView.setFitWidth(40);
 	            imageView.setFitHeight(40);
+	            GridPane.setHalignment(imageView, HPos.RIGHT); // Alinear a la derecha las casillas
 	            // Añadir en la posición correcta (fila, columna)
 	            GridPane.setRowIndex(imageView, i / 5);
 	            GridPane.setColumnIndex(imageView, i % 5);
@@ -171,6 +173,7 @@ public class pantallaJuegoController {
 	            imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
 	            imageView.setFitWidth(40);
 	            imageView.setFitHeight(40);
+	            GridPane.setHalignment(imageView, HPos.RIGHT);
 	            GridPane.setRowIndex(imageView, i / 5);
 	            GridPane.setColumnIndex(imageView, i % 5);
 	            tablero.getChildren().add(imageView);
