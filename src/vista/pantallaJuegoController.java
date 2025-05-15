@@ -150,7 +150,7 @@ public class pantallaJuegoController {
 	    tablero.getChildren().removeAll(toRemove);
 
 	    // Añadir imágenes con verificación de recursos
-	    for (int i = 0; i < 50; i++) {
+	    for (int i = 1; i < 49; i++) {
 	        ImageView imageView = new ImageView();
 	        try {
 	            String imagePath = obtenerRutaImagenCasilla(i);
@@ -159,8 +159,8 @@ public class pantallaJuegoController {
 	                throw new IOException("Recurso no encontrado: " + imagePath);
 	            }
 	            imageView.setImage(new Image(is));
-	            imageView.setFitWidth(50);
-	            imageView.setFitHeight(50);
+	            imageView.setFitWidth(40);
+	            imageView.setFitHeight(40);
 	            // Añadir en la posición correcta (fila, columna)
 	            GridPane.setRowIndex(imageView, i / 5);
 	            GridPane.setColumnIndex(imageView, i % 5);
@@ -169,8 +169,8 @@ public class pantallaJuegoController {
 	            System.err.println("Error cargando imagen para casilla " + i + ": " + e.getMessage());
 	            // Imagen por defecto
 	            imageView.setImage(new Image(getClass().getResourceAsStream("/casillanormal.png")));
-	            imageView.setFitWidth(50);
-	            imageView.setFitHeight(50);
+	            imageView.setFitWidth(40);
+	            imageView.setFitHeight(40);
 	            GridPane.setRowIndex(imageView, i / 5);
 	            GridPane.setColumnIndex(imageView, i % 5);
 	            tablero.getChildren().add(imageView);
