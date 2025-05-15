@@ -3,20 +3,12 @@ package vista;
 import controlador.GestorJugador;
 import controlador.GestorTablero;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import modelo.Jugador;
-import modelo.Tablero;
 import javafx.event.ActionEvent;
-
-import javafx.scene.paint.Color;
-import java.awt.Rectangle;
-import java.util.List;
 import java.util.Random;
 
 public class pantallaJuegoController {
