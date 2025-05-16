@@ -31,14 +31,6 @@ import javafx.scene.Node;
 public class pantallaPrincipalController {
 
 	private Connection con;
-	@FXML
-	private MenuItem newGame;
-	@FXML
-	private MenuItem saveGame;
-	@FXML
-	private MenuItem loadGame;
-	@FXML
-	private MenuItem quitGame;
 
 	@FXML
 	private TextField userField;
@@ -54,31 +46,6 @@ public class pantallaPrincipalController {
 	private void initialize() {
 		// Establecer la conexión a la base de datos al inicializar el controlador
 		con = bbdd.conectarBaseDatos();
-	}
-
-	@FXML
-	private void handleNewGame() {
-		System.out.println("New Game clicked");
-		// TODO
-	}
-
-	@FXML
-	private void handleSaveGame() {
-		System.out.println("Save Game clicked");
-		// TODO
-	}
-
-	@FXML
-	private void handleLoadGame() {
-		System.out.println("Load Game clicked");
-		// TODO
-	}
-
-	@FXML
-	private void handleQuitGame() {
-		System.out.println("Quit Game clicked");
-		// TODO
-		System.exit(0);
 	}
 
 	@FXML
