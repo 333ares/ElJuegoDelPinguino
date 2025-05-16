@@ -15,6 +15,7 @@ import modelo.Inventario;
 import modelo.Item;
 import modelo.Jugador;
 import modelo.Pinguino;
+import modelo.Tablero;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class pantallaJuegoController {
 
 	private GestorTablero gestorTablero;
 	private Jugador jugadorActual;
+	private Tablero tableroActual;
 
 	@FXML
 	private Button saveGame;
@@ -56,7 +58,7 @@ public class pantallaJuegoController {
 	private Text eventos;
 
 	@FXML
-	private GridPane tablero;
+	private GridPane tableroGrid;
 	@FXML
 	private Circle P1;
 
@@ -69,7 +71,8 @@ public class pantallaJuegoController {
 		eventos.setText("¡El juego ha comenzado!");
 	}
 
-	private void handleSaveGame() {
+	@FXML
+	private void handleSaveGame(ActionEvent event) {
 		eventos.setText("Saved game.");
 		// TODO
 	}
@@ -106,19 +109,19 @@ public class pantallaJuegoController {
 	}
 
 	private void actualizarTablero() {
-		if (gestorTablero == null || gestorTablero.getTablero() == null || tablero == null) {
+		if (gestorTablero == null || gestorTablero.getTablero() == null || tableroGrid == null) {
 			System.err.println("Error: Componentes no inicializados para actualizar tablero");
 			return;
 		}
 
 		// Limpiar solo las imágenes dinámicas
 		List<Node> toRemove = new ArrayList<>();
-		for (Node node : tablero.getChildren()) {
+		for (Node node : tableroGrid.getChildren()) {
 			if (node instanceof ImageView && node.getId() == null) {
 				toRemove.add(node);
 			}
 		}
-		tablero.getChildren().removeAll(toRemove);
+		tableroGrid.getChildren().removeAll(toRemove);
 
 		// Añadir imágenes con verificación de recursos
 		for (int i = 1; i < 49; i++) {
@@ -136,7 +139,7 @@ public class pantallaJuegoController {
 				// Añadir en la posición correcta (fila, columna)
 				GridPane.setRowIndex(imageView, i / 5);
 				GridPane.setColumnIndex(imageView, i % 5);
-				tablero.getChildren().add(imageView);
+				tableroGrid.getChildren().add(imageView);
 			} catch (Exception e) {
 				System.err.println("Error cargando imagen para casilla " + i + ": " + e.getMessage());
 				// Imagen por defecto
@@ -146,7 +149,7 @@ public class pantallaJuegoController {
 				GridPane.setHalignment(imageView, HPos.RIGHT);
 				GridPane.setRowIndex(imageView, i / 5);
 				GridPane.setColumnIndex(imageView, i % 5);
-				tablero.getChildren().add(imageView);
+				tableroGrid.getChildren().add(imageView);
 			}
 		}
 	}
@@ -267,7 +270,7 @@ public class pantallaJuegoController {
 	}
 
 	private void actualizarInterfazJugador() {
-		if (jugadorActual == null || tablero == null)
+		if (jugadorActual == null || tableroGrid == null)
 			return;
 
 		// Actualizar posición del jugador en el tablero
@@ -304,7 +307,7 @@ public class pantallaJuegoController {
 
 	}
 
-	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
+	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual, Tablero tablero) {
 		if (gestorJugador == null || gestorTablero == null || jugadorActual == null) {
 			throw new IllegalArgumentException("Los parámetros no pueden ser nulos");
 		}
@@ -312,6 +315,7 @@ public class pantallaJuegoController {
 		this.gestorJugador = gestorJugador;
 		this.gestorTablero = gestorTablero;
 		this.jugadorActual = jugadorActual;
+		this.tableroActual = tablero;
 
 		// Inicializar inventario con items básicos si está vacío
 		if (this.jugadorActual.getPinguino() == null) {
