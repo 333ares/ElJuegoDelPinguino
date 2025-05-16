@@ -67,7 +67,6 @@ public class pantallaJuegoController {
 	@FXML
 	private void initialize() {
 		eventos.setText("¡El juego ha comenzado!");
-		// actualizarTablero();
 	}
 
 	private void handleSaveGame() {
@@ -173,123 +172,122 @@ public class pantallaJuegoController {
 
 	@FXML
 	public void handleRapido() {
-		 try {
-		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
-		            jugadorActual.getPinguino().getInv() == null) {
-		            eventos.setText("Error: Sistema no inicializado correctamente");
-		            return;
-		        }
+		try {
+			if (jugadorActual == null || jugadorActual.getPinguino() == null
+					|| jugadorActual.getPinguino().getInv() == null) {
+				eventos.setText("Error: Sistema no inicializado correctamente");
+				return;
+			}
 
-		        if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
-		            jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
-		            int movimiento = new Random().nextInt(6) + 5; // 5-10
-		            gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-		            eventos.setText(eventos.getText() + "\nUsaste dado rápido. Avanzas " + movimiento + " casillas.");
-		            actualizarInterfazJugador();
-		        } else {
-		            eventos.setText(eventos.getText() + "\nNo tienes dados rápidos disponibles.");
-		        }
-		        actualizarContadoresItems();
-		    } catch (Exception e) {
-		        eventos.setText("Error inesperado al usar dado rápido: " + e.getMessage());
-		        e.printStackTrace();
-		    }
+			if (jugadorActual.getPinguino().getInv().contieneItem("dado rápido")) {
+				jugadorActual.getPinguino().getInv().quitarItem("dado rápido");
+				int movimiento = new Random().nextInt(6) + 5; // 5-10
+				gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+				eventos.setText(eventos.getText() + "\nUsaste dado rápido. Avanzas " + movimiento + " casillas.");
+				actualizarInterfazJugador();
+			} else {
+				eventos.setText(eventos.getText() + "\nNo tienes dados rápidos disponibles.");
+			}
+			actualizarContadoresItems();
+		} catch (Exception e) {
+			eventos.setText("Error inesperado al usar dado rápido: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
 	public void handleLento() {
-		 try {
-		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
-		            jugadorActual.getPinguino().getInv() == null) {
-		            eventos.setText("Error: Jugador no inicializado");
-		            return;
-		        }
-		if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
-			jugadorActual.getPinguino().getInv().quitarItem("dado lento");
-			int movimiento = new Random().nextInt(3) + 1;
-			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-			eventos.setText(eventos.getText() + "\nHas avanzado " + movimiento + " casillas.");
-			actualizarInterfazJugador();
-		} else {
-			eventos.setText(eventos.getText() + "\nNo tienes dado lento.");
+		try {
+			if (jugadorActual == null || jugadorActual.getPinguino() == null
+					|| jugadorActual.getPinguino().getInv() == null) {
+				eventos.setText("Error: Jugador no inicializado");
+				return;
+			}
+			if (jugadorActual.getPinguino().getInv().contieneItem("dado lento")) {
+				jugadorActual.getPinguino().getInv().quitarItem("dado lento");
+				int movimiento = new Random().nextInt(3) + 1;
+				gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
+				eventos.setText(eventos.getText() + "\nHas avanzado " + movimiento + " casillas.");
+				actualizarInterfazJugador();
+			} else {
+				eventos.setText(eventos.getText() + "\nNo tienes dado lento.");
+			}
+			actualizarContadoresItems();
+		} catch (Exception e) {
+			eventos.setText("Error al usar dado rápido: " + e.getMessage());
+			e.printStackTrace();
 		}
-		actualizarContadoresItems();
-		    } catch (Exception e) {
-		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
-		        e.printStackTrace();
-		    }
 	}
 
 	@FXML
 	public void handleNieve() {
-		 try {
-		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
-		            jugadorActual.getPinguino().getInv() == null) {
-		            eventos.setText("Error: Jugador no inicializado");
-		            return;
-		        }
-		if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
-			jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
+		try {
+			if (jugadorActual == null || jugadorActual.getPinguino() == null
+					|| jugadorActual.getPinguino().getInv() == null) {
+				eventos.setText("Error: Jugador no inicializado");
+				return;
+			}
+			if (jugadorActual.getPinguino().getInv().contieneItem("bola de nieve")) {
+				jugadorActual.getPinguino().getInv().quitarItem("bola de nieve");
 
-			eventos.setText(eventos.getText() + "\nNo hay un segundo jugador para afectar.");
-		} else {
-			eventos.setText(eventos.getText() + "\nNo tienes bolas de nieve.");
+				eventos.setText(eventos.getText() + "\nNo hay un segundo jugador para afectar.");
+			} else {
+				eventos.setText(eventos.getText() + "\nNo tienes bolas de nieve.");
+			}
+
+			actualizarContadoresItems();
+		} catch (Exception e) {
+			eventos.setText("Error al usar dado rápido: " + e.getMessage());
+			e.printStackTrace();
 		}
-
-		actualizarContadoresItems();
-		    } catch (Exception e) {
-		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
-		        e.printStackTrace();
-		    }
 	}
 
 	@FXML
 	public void handlePeces() {
-		 try {
-		        if (jugadorActual == null || jugadorActual.getPinguino() == null || 
-		            jugadorActual.getPinguino().getInv() == null) {
-		            eventos.setText("Error: Jugador no inicializado");
-		            return;
-		        }
-		if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
-			jugadorActual.getPinguino().getInv().quitarItem("pez");
-			jugadorActual.setProtegidoDelOso(true);
-			eventos.setText(eventos.getText() + "\nEstás protegido contra los osos.");
-			actualizarInterfazJugador();
-		} else {
-			eventos.setText(eventos.getText() + "\nNo tienes peces.");
+		try {
+			if (jugadorActual == null || jugadorActual.getPinguino() == null
+					|| jugadorActual.getPinguino().getInv() == null) {
+				eventos.setText("Error: Jugador no inicializado");
+				return;
+			}
+			if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
+				jugadorActual.getPinguino().getInv().quitarItem("pez");
+				jugadorActual.setProtegidoDelOso(true);
+				eventos.setText(eventos.getText() + "\nEstás protegido contra los osos.");
+				actualizarInterfazJugador();
+			} else {
+				eventos.setText(eventos.getText() + "\nNo tienes peces.");
+			}
+			actualizarContadoresItems();
+		} catch (Exception e) {
+			eventos.setText("Error al usar dado rápido: " + e.getMessage());
+			e.printStackTrace();
 		}
-		actualizarContadoresItems();
-		    } catch (Exception e) {
-		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
-		        e.printStackTrace();
-		    }
 	}
 
 	private void actualizarInterfazJugador() {
-		  if (jugadorActual == null || tablero == null) return;
-		    
-		    // Actualizar posición del jugador en el tablero
-		    int posicion = jugadorActual.getPosicion();
-		    int row = posicion / COLUMNS;
-		    int col = posicion % COLUMNS;
+		if (jugadorActual == null || tablero == null)
+			return;
 
+		// Actualizar posición del jugador en el tablero
+		int posicion = jugadorActual.getPosicion();
+		int row = posicion / COLUMNS;
+		int col = posicion % COLUMNS;
 
-		    Platform.runLater(() -> {
-		        GridPane.setRowIndex(P1, row);
-		        GridPane.setColumnIndex(P1, col);
-		        
-		        // Verificar tipo de casilla
-		        String tipo = gestorTablero.getTablero().getCasillaTipo(posicion);
-		        if (!"Normal".equals(tipo)) {
-		            eventos.setText(eventos.getText() + "\nHas caído en una casilla: " + tipo);
-		        }
-		        
-		        actualizarContadoresItems();
-		    });
+		Platform.runLater(() -> {
+			GridPane.setRowIndex(P1, row);
+			GridPane.setColumnIndex(P1, col);
 
-	    }
-	
+			// Verificar tipo de casilla
+			String tipo = gestorTablero.getTablero().getCasillaTipo(posicion);
+			if (!"Normal".equals(tipo)) {
+				eventos.setText(eventos.getText() + "\nHas caído en una casilla: " + tipo);
+			}
+
+			actualizarContadoresItems();
+		});
+
+	}
 
 	private void actualizarContadoresItems() {
 		// Actualizar los textos que muestran la cantidad de items
@@ -306,36 +304,35 @@ public class pantallaJuegoController {
 	}
 
 	public void initializeController(GestorJugador gestorJugador, GestorTablero gestorTablero, Jugador jugadorActual) {
-	    if (gestorJugador == null || gestorTablero == null || jugadorActual == null) {
-	        throw new IllegalArgumentException("Los parámetros no pueden ser nulos");
-	    }
+		if (gestorJugador == null || gestorTablero == null || jugadorActual == null) {
+			throw new IllegalArgumentException("Los parámetros no pueden ser nulos");
+		}
 
-	    this.gestorJugador = gestorJugador;
-	    this.gestorTablero = gestorTablero;
-	    this.jugadorActual = jugadorActual;
+		this.gestorJugador = gestorJugador;
+		this.gestorTablero = gestorTablero;
+		this.jugadorActual = jugadorActual;
 
-	    // Inicializar inventario con items básicos si está vacío
-	    if (this.jugadorActual.getPinguino() == null) {
-	        this.jugadorActual.setPinguino(new Pinguino(new Inventario(new ArrayList<>())));
-	    }
-	    
-	    if (this.jugadorActual.getPinguino().getInv() == null) {
-	        this.jugadorActual.getPinguino().setInv(new Inventario(new ArrayList<>()));
-	    }
-	    
-	    // Añadir items iniciales si el inventario está vacío
-	    if (this.jugadorActual.getPinguino().getInv().getLista().isEmpty()) {
-	        this.jugadorActual.getPinguino().getInv().añadirItem(new Item("dado rápido", 1));
-	        this.jugadorActual.getPinguino().getInv().añadirItem(new Item("dado lento", 1));
-	        this.jugadorActual.getPinguino().getInv().añadirItem(new Item("bola de nieve", 2));
-	        this.jugadorActual.getPinguino().getInv().añadirItem(new Item("pez", 3));
-	    }
+		// Inicializar inventario con items básicos si está vacío
+		if (this.jugadorActual.getPinguino() == null) {
+			this.jugadorActual.setPinguino(new Pinguino(new Inventario(new ArrayList<>())));
+		}
 
-	    Platform.runLater(() -> {
-	        actualizarTablero();
-	        actualizarInterfazJugador();
-	    });
+		if (this.jugadorActual.getPinguino().getInv() == null) {
+			this.jugadorActual.getPinguino().setInv(new Inventario(new ArrayList<>()));
+		}
+
+		// Añadir items iniciales si el inventario está vacío
+		if (this.jugadorActual.getPinguino().getInv().getLista().isEmpty()) {
+			this.jugadorActual.getPinguino().getInv().añadirItem(new Item("dado rápido", 1));
+			this.jugadorActual.getPinguino().getInv().añadirItem(new Item("dado lento", 1));
+			this.jugadorActual.getPinguino().getInv().añadirItem(new Item("bola de nieve", 2));
+			this.jugadorActual.getPinguino().getInv().añadirItem(new Item("pez", 3));
+		}
+
+		Platform.runLater(() -> {
+			actualizarTablero();
+			actualizarInterfazJugador();
+		});
 	}
 
-	}
-
+}
