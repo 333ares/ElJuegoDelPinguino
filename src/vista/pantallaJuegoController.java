@@ -239,16 +239,15 @@ public class pantallaJuegoController {
 			jugadorActual.getPinguino().getInv().quitarItem("dado lento");
 			int movimiento = new Random().nextInt(3) + 1;
 			gestorTablero.actualizarMovimientoJugador(jugadorActual, movimiento);
-
 			eventos.setText(eventos.getText() + "\nHas avanzado " + movimiento + " casillas.");
+			actualizarInterfazJugador();
 		} else {
 			eventos.setText(eventos.getText() + "\nNo tienes dado lento.");
-
 		}
-
 		actualizarContadoresItems();
 		    } catch (Exception e) {
 		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
+		        e.printStackTrace();
 		    }
 	}
 
@@ -271,6 +270,7 @@ public class pantallaJuegoController {
 		actualizarContadoresItems();
 		    } catch (Exception e) {
 		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
+		        e.printStackTrace();
 		    }
 	}
 
@@ -285,35 +285,42 @@ public class pantallaJuegoController {
 		if (jugadorActual.getPinguino().getInv().contieneItem("pez")) {
 			jugadorActual.getPinguino().getInv().quitarItem("pez");
 			jugadorActual.setProtegidoDelOso(true);
-
 			eventos.setText(eventos.getText() + "\nEstás protegido contra los osos.");
+			actualizarInterfazJugador();
 		} else {
 			eventos.setText(eventos.getText() + "\nNo tienes peces.");
 		}
-
 		actualizarContadoresItems();
 		    } catch (Exception e) {
 		        eventos.setText("Error al usar dado rápido: " + e.getMessage());
+		        e.printStackTrace();
 		    }
 	}
 
 	private void actualizarInterfazJugador() {
-		// Actualizar posición del jugador en el tablero
-		int row = jugadorActual.getPosicion() / COLUMNS;
-		int col = jugadorActual.getPosicion() % COLUMNS;
+		  if (jugadorActual == null || tablero == null) return;
+		    
+		    // Actualizar posición del jugador en el tablero
+		    int posicion = jugadorActual.getPosicion();
+		    int row = posicion / COLUMNS;
+		    int col = posicion % COLUMNS;
 
-		// Hay un Circle para cada jugador
-		GridPane.setRowIndex(P1, row);
-		GridPane.setColumnIndex(P1, col);
 
-		actualizarContadoresItems();
-		
-		  // Verificar tipo de casilla
-	    String tipo = gestorTablero.getTablero().getCasillaTipo(jugadorActual.getPosicion());
-	    if (!"Normal".equals(tipo)) {
-	        eventos.setText(eventos.getText() + "\nHas caído en una casilla: " + tipo);
+		    Platform.runLater(() -> {
+		        GridPane.setRowIndex(P1, row);
+		        GridPane.setColumnIndex(P1, col);
+		        
+		        // Verificar tipo de casilla
+		        String tipo = gestorTablero.getTablero().getCasillaTipo(posicion);
+		        if (!"Normal".equals(tipo)) {
+		            eventos.setText(eventos.getText() + "\nHas caído en una casilla: " + tipo);
+		        }
+		        
+		        actualizarContadoresItems();
+		    });
+
 	    }
-	}
+	
 
 	private void actualizarContadoresItems() {
 		// Actualizar los textos que muestran la cantidad de items

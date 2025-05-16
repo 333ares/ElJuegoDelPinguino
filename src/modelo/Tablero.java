@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import controlador.GestorTablero;
 
@@ -35,10 +36,13 @@ public class Tablero {
 	private List<Integer> posicionesOsos = new ArrayList<>();
 	private List<Integer> posicionesTrineos = new ArrayList<>();
 	private List<Integer> posicionesEventos = new ArrayList<>();
-	
-	  public void setGestorTablero(GestorTablero gestorTablero) {
-	        this.gestorTablero = gestorTablero;
-	    }
+
+	public void setGestorTablero(GestorTablero gestorTablero) {
+	    this.gestorTablero = gestorTablero;
+	    // Pasamos las posiciones de agujeros al gestor
+	    this.gestorTablero.setPosicionesAgujeros(new ArrayList<>(this.posicionesAgujeros));
+	}
+
 
 	public Tablero() {
 		this.casillas = new Casilla[50];
@@ -48,37 +52,48 @@ public class Tablero {
 	}
 
 	public void inicializarCasillas() {
-		 // Limpiar listas de posiciones especiales
+		// Limpiar listas de posiciones especiales
 	    posicionesOsos.clear();
 	    posicionesAgujeros.clear();
 	    posicionesTrineos.clear();
 	    posicionesEventos.clear();
 
+	    Random rand = new Random();
+	    
 	    for (int i = 0; i < casillas.length; i++) {
-	        int tipo = (int) (Math.random() * 20);
-	        if (tipo == 0) { // Oso
-	            casillas[i] = new Oso(i);
-	            posicionesOsos.add(i);
-	        } else if (tipo == 1 || tipo == 2) { // Agujero
-	            // Asegúrate de pasar el gestorTablero correcto
-	            casillas[i] = new Agujero(i, gestorTablero);
-	            posicionesAgujeros.add(i);
-	        } else if (tipo == 3 || tipo == 4) { // Trineo
-	            casillas[i] = new Trineo(i);
-	            posicionesTrineos.add(i);
-	        } else if (tipo == 5 || tipo == 6) { // Evento
-	            casillas[i] = new Evento(i);
-	            posicionesEventos.add(i);
-	        } else { // Normal
-	            casillas[i] = new CasillaNormal(i);
+	        int tipo = rand.nextInt(20); // 0-19
+	        
+	        switch (tipo) {
+	            case 0: // Oso (5% probabilidad)
+	                crearCasillaEspecial(i, new Oso(i), posicionesOsos);
+	                break;
+	            case 1: case 2: // Agujero (10% probabilidad)
+	                crearCasillaEspecial(i, new Agujero(i, gestorTablero), posicionesAgujeros);
+	                break;
+	            case 3: case 4: // Trineo (10% probabilidad)
+	                crearCasillaEspecial(i, new Trineo(i), posicionesTrineos);
+	                break;
+	            case 5: case 6: // Evento (10% probabilidad)
+	                crearCasillaEspecial(i, new Evento(i), posicionesEventos);
+	                break;
+	            default: // Casilla normal (65% probabilidad)
+	                casillas[i] = new CasillaNormal(i);
 	        }
 	    }
-	    
-	    // Asegurar al menos algunas casillas especiales
+
+	    asegurarCasillasEspeciales();
+	}
+
+	private void crearCasillaEspecial(int posicion, Casilla casilla, List<Integer> listaPosiciones) {
+	    casillas[posicion] = casilla;
+	    listaPosiciones.add(posicion);
+	}
+
+	private void asegurarCasillasEspeciales() {
+	    // Asegurar al menos 1 oso
 	    if (posicionesOsos.isEmpty()) {
-	        int pos = (int) (Math.random() * casillas.length);
-	        casillas[pos] = new Oso(pos);
-	        posicionesOsos.add(pos);
+	        int pos = new Random().nextInt(casillas.length);
+	        crearCasillaEspecial(pos, new Oso(pos), posicionesOsos);
 	    }
 	}
 
@@ -176,5 +191,7 @@ public class Tablero {
 	public void setPosicionesOsos(List<Integer> posicionesOsos) {
 		this.posicionesOsos = posicionesOsos;
 	}
+
+
 
 }
