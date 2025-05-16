@@ -85,7 +85,6 @@ public class pantallaJuegoController {
 
 		// Update the position
 		moveP1(diceResult);
-		actualizarInterfazJugador();
 	}
 
 	private void moveP1(int steps) {
