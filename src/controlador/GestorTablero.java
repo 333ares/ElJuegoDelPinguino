@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import modelo.Agujero;
 import modelo.Casilla;
+import modelo.CasillaNormal;
 import modelo.Evento;
 import modelo.Jugador;
 import modelo.Oso;
@@ -35,7 +36,7 @@ public class GestorTablero {
 	 * 
 	 */
 	public void actualizarMovimientoJugador(Jugador j, int movimientos) {
-		  int nuevaPosicion = j.getPosicion() + movimientos;
+		   int nuevaPosicion = j.getPosicion() + movimientos;
 		    
 		    // Verificar límites del tablero
 		    if (nuevaPosicion < 0) nuevaPosicion = 0;
@@ -43,14 +44,34 @@ public class GestorTablero {
 		        nuevaPosicion = tablero.getCasillas().length - 1;
 		    }
 		    
+		    // Guardar posición anterior para mensajes
+		    int posicionAnterior = j.getPosicion();
 		    j.setPosicion(nuevaPosicion);
 		    
 		    // Ejecutar acción de la casilla
 		    Casilla casillaActual = tablero.getCasillas()[nuevaPosicion];
+		    String mensaje = "Moviste de " + posicionAnterior + " a " + nuevaPosicion;
+		    
+		    // Verificar si es una casilla especial
+		    if (!(casillaActual instanceof CasillaNormal)) {
+		        mensaje += "\n¡Casilla especial! " + obtenerDescripcionCasilla(casillaActual);
+		    }
+		    
 		    casillaActual.realizarAccion(j);
+		    
+		  
+		    }
 	
 
-	    }
+
+		private String obtenerDescripcionCasilla(Casilla casilla) {
+		    if (casilla instanceof Oso) return "¡Cuidado con el oso!";
+		    if (casilla instanceof Agujero) return "¡Agujero! Retrocedes";
+		    if (casilla instanceof Trineo) return "¡Trineo! Avanzas";
+		    if (casilla instanceof Evento) return "¡Evento especial!";
+		    return "";
+		}
+
 
 
 

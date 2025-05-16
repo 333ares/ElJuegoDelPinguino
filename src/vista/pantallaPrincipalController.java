@@ -58,42 +58,44 @@ public class pantallaPrincipalController {
 		// Basic check (just for demo, replace with real login logic)
 		if (!username.isEmpty() && !password.isEmpty()) {
 			try {
-		        // Cargar pantalla de juego
-		        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-		        Parent root = loader.load();
-		        
-		        // Configurar controlador del juego
-		        pantallaJuegoController juegoController = loader.getController();
-		        
-		     // En tu método que inicializa el juego:
-		        Tablero tablero = new Tablero();
-		        GestorTablero gestorTablero = new GestorTablero(tablero);
-		        tablero.setGestorTablero(gestorTablero);  // Esto es crucial para los agujeros
+				// Cargar pantalla de juego
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+				Parent root = loader.load();
 
-		        // Crear jugador con inventario
-		        ArrayList<Item> itemsIniciales = new ArrayList<>();
-		        itemsIniciales.add(new Item("dado rápido", 1));
-		        itemsIniciales.add(new Item("dado lento", 1));
-		        itemsIniciales.add(new Item("bola de nieve", 2));
-		        itemsIniciales.add(new Item("pez", 3));
+				// Configurar controlador del juego
+				pantallaJuegoController juegoController = loader.getController();
 
-		        Inventario inventario = new Inventario(itemsIniciales);
-		        Pinguino pinguino = new Pinguino(inventario);
-		        Jugador jugador = new Jugador(0, "Jugador1", "Azul", pinguino);
+				// En tu método que inicializa el juego:
+				Tablero tablero = new Tablero();
+				GestorTablero gestorTablero = new GestorTablero(tablero);
+				tablero.setGestorTablero(gestorTablero); // Esto es crucial para los agujeros
 
-		        GestorJugador gestorJugador = new GestorJugador(jugador, tablero);
-		        
-		        // Inicializar controlador
-		        juegoController.initializeController(gestorJugador, gestorTablero, jugador);
-		        
-		        // Mostrar pantalla de juego
-		        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		        stage.setScene(new Scene(root));
-		        stage.setTitle("El Juego del Pingüino");
-		    } catch (IOException e) {
-		        e.printStackTrace(); // Mostrar mensaje de error
-		        
-		    }
+				// Crear jugador con inventario
+				ArrayList<Item> itemsIniciales = new ArrayList<>();
+				itemsIniciales.add(new Item("dado rápido", 1));
+				itemsIniciales.add(new Item("dado lento", 1));
+				itemsIniciales.add(new Item("bola de nieve", 2));
+				itemsIniciales.add(new Item("pez", 3));
+
+				Inventario inventario = new Inventario(itemsIniciales);
+				Pinguino pinguino = new Pinguino(inventario);
+				Jugador jugador = new Jugador(0, "Jugador1", "Azul", pinguino);
+
+				// Crear gestor de jugador y establecer la referencia en el tablero
+				GestorJugador gestorJugador = new GestorJugador(jugador, tablero);
+				tablero.setGestorJugador(gestorJugador);
+
+				// Inicializar controlador
+				juegoController.initializeController(gestorJugador, gestorTablero, jugador);
+
+				// Mostrar pantalla de juego
+				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				stage.setScene(new Scene(root));
+				stage.setTitle("El Juego del Pingüino");
+			} catch (IOException e) {
+				e.printStackTrace(); // Mostrar mensaje de error
+
+			}
 		}
 	}
 
