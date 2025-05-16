@@ -23,14 +23,10 @@ public class Trineo extends Casilla {
 	}
 
 	public void realizarAccion(Jugador j) {
-
-		System.out.println("¡Evento aleatorio!");
-		System.out.println("¡Enhorabuena! Has encontrado un trineo. Avanzas 10 casillas.");
-		int nuevaPosicion = j.getPosicion() + 10;
-		if (nuevaPosicion >= 50)
-			nuevaPosicion = 49;
-		j.setPosicion(nuevaPosicion);
-
+	     int avance = 10; // Avanza 10 casillas
+	        int nuevaPos = Math.min(j.getPosicion() + avance, 49); // No pasar del límite
+	        System.out.println("¡Trineo mágico! Avanzas a " + nuevaPos);
+	        j.setPosicion(nuevaPos);
 	}
 
 }

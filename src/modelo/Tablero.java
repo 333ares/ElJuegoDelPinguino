@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import controlador.GestorJugador;
 import controlador.GestorTablero;
 
 public class Tablero {
@@ -30,6 +31,7 @@ public class Tablero {
 	private Jugador jugadorActual;
 	private int turnos;
 	private GestorTablero gestorTablero;
+	private GestorJugador gestorJugador; 
 
 	// Registros de posiciones especiales
 	private List<Integer> posicionesAgujeros = new ArrayList<>();
@@ -43,7 +45,14 @@ public class Tablero {
 	    this.gestorTablero.setPosicionesAgujeros(new ArrayList<>(this.posicionesAgujeros));
 	}
 
-
+    public void setGestorJugador(GestorJugador gestorJugador) {
+        this.gestorJugador = gestorJugador;
+    }
+    
+    public GestorJugador getGestorJugador() {
+        return this.gestorJugador;
+    }
+    
 	public Tablero() {
 		this.casillas = new Casilla[50];
 		this.jugadorActual = inicializarJugador();

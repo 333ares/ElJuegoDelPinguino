@@ -11,10 +11,9 @@ public class Agujero extends Casilla {
     }
 
     public void realizarAccion(Jugador j) {
-    	if (gestor != null) {
-            int nuevaPos = gestor.buscarAgujeroAnterior(j.getPosicion());
-            System.out.println("Agujero: Retrocediendo a posición " + nuevaPos);
-            j.setPosicion(nuevaPos);
-        }
+    	  int nuevaPos = gestor.buscarAgujeroAnterior(getPosicion());
+          System.out.println("¡Caíste en un agujero! Retrocedes a " + nuevaPos);
+          j.setPosicion(nuevaPos);
+
     }
 }
