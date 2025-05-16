@@ -19,7 +19,7 @@ public class GestorTablero {
 
 	public GestorTablero(Tablero tablero) {
 		this.tablero = tablero;
-
+		 this.posicionesAgujeros = new ArrayList<>();
 	}
 
 	/*
@@ -35,40 +35,24 @@ public class GestorTablero {
 	 * 
 	 */
 	public void actualizarMovimientoJugador(Jugador j, int movimientos) {
-	    int nuevaPosicion = j.getPosicion() + movimientos;
-	    
-	    // Verificar límites del tablero
-	    if (nuevaPosicion < 0) nuevaPosicion = 0;
-	    if (nuevaPosicion >= tablero.getCasillas().length) {
-	        nuevaPosicion = tablero.getCasillas().length - 1;
+		  int nuevaPosicion = j.getPosicion() + movimientos;
+		    
+		    // Verificar límites del tablero
+		    if (nuevaPosicion < 0) nuevaPosicion = 0;
+		    if (nuevaPosicion >= tablero.getCasillas().length) {
+		        nuevaPosicion = tablero.getCasillas().length - 1;
+		    }
+		    
+		    j.setPosicion(nuevaPosicion);
+		    
+		    // Ejecutar acción de la casilla
+		    Casilla casillaActual = tablero.getCasillas()[nuevaPosicion];
+		    casillaActual.realizarAccion(j);
+	
+
 	    }
-	    
-	    j.setPosicion(nuevaPosicion);
-	    
-	    // Ejecutar acción de la casilla
-	    Casilla casillaActual = tablero.getCasillas()[nuevaPosicion];
-	    casillaActual.realizarAccion(j);
-	    
-	    // Mostrar mensaje en eventos
-	    String tipo = tablero.getCasillaTipo(nuevaPosicion);
-	    String mensaje = "";
-	    
-	    switch (tipo) {
-	        case "Oso":
-	            mensaje = "¡Un oso te ha atrapado! Vuelves al inicio.";
-	            break;
-	        case "Agujero":
-	            mensaje = "¡Caíste en un agujero! Retrocedes al agujero anterior.";
-	            break;
-	        case "Trineo":
-	            mensaje = "¡Un trineo te lleva más adelante!";
-	            break;
-	        case "Evento":
-	            mensaje = "¡Evento especial! Ganas un item.";
-	            break;
-	    }
-	    
-	}
+
+
 
 	public int buscarAgujeroAnterior(int posicionActual) {
 		/*
@@ -106,4 +90,7 @@ public class GestorTablero {
 	public void setTablero(Tablero tablero) {
 		this.tablero = tablero;
 	}
+    public void setPosicionesAgujeros(ArrayList<Integer> posiciones) {
+        this.posicionesAgujeros = posiciones;
+    }
 }
