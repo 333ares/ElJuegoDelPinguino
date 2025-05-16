@@ -124,8 +124,8 @@ public class pantallaPrincipalController {
 		        stage.setScene(new Scene(root));
 		        stage.setTitle("El Juego del Pingüino");
 		    } catch (IOException e) {
-		        e.printStackTrace();
-		        // Mostrar mensaje de error
+		        e.printStackTrace(); // Mostrar mensaje de error
+		        
 		    }
 		}
 	}
