@@ -29,13 +29,7 @@ public class pantallaJuegoController {
 	private Jugador jugadorActual;
 
 	@FXML
-	private Button newGame;
-	@FXML
 	private Button saveGame;
-	@FXML
-	private Button loadGame;
-	@FXML
-	private Button quitGame;
 
 	@FXML
 	private Button dado;
@@ -76,33 +70,8 @@ public class pantallaJuegoController {
 		// actualizarTablero();
 	}
 
-	@FXML
-	private void handleNewGame() {
-		eventos.setText("New game.");
-		// TODO
-	}
-
-	@FXML
 	private void handleSaveGame() {
 		eventos.setText("Saved game.");
-		// TODO
-	}
-
-	@FXML
-	private void handleLoadGame() {
-		eventos.setText("Loaded game.");
-		// TODO
-	}
-
-	@FXML
-	private void handleQuitGame() {
-		eventos.setText("Exit...");
-		// TODO
-	}
-
-	@FXML
-	private void handleRankingPlayers() {
-		eventos.setText("Players ranking.");
 		// TODO
 	}
 
