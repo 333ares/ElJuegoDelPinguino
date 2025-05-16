@@ -24,9 +24,9 @@ public class pantallaPartida {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
 		Parent root;
 		try {
-			 root = loader.load();
-             pantallaJuegoController controller = loader.getController();
-            controller.initializeController(new GestorJugador(jugadorActual, tablero), gestorTablero, jugadorActual);
+			root = loader.load();
+            pantallaJuegoController controller = loader.getController();
+			controller.initializeController(new GestorJugador(jugadorActual, tablero), gestorTablero, jugadorActual, tablero);
 
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();

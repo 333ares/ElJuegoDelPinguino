@@ -59,7 +59,7 @@ public class pantallaPrincipalController {
 		if (!username.isEmpty() && !password.isEmpty()) {
 			try {
 				// Cargar pantalla de juego
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaMenu.fxml"));
 				Parent root = loader.load();
 
 				// Configurar controlador del juego
@@ -86,12 +86,12 @@ public class pantallaPrincipalController {
 				tablero.setGestorJugador(gestorJugador);
 
 				// Inicializar controlador
-				juegoController.initializeController(gestorJugador, gestorTablero, jugador);
+				juegoController.initializeController(gestorJugador, gestorTablero, jugador, tablero);
 
 				// Mostrar pantalla de juego
 				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				stage.setScene(new Scene(root));
-				stage.setTitle("El Juego del Pingüino");
+				stage.setTitle("Menu principal");
 			} catch (IOException e) {
 				e.printStackTrace(); // Mostrar mensaje de error
 
