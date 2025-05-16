@@ -46,7 +46,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="638.0" prefWidth="1128.0" xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaJuegoController">
+<VBox prefHeight="638.0" prefWidth="1128.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.pantallaJuegoController">
   <children>
       <BorderPane prefHeight="638.0" prefWidth="100.0">
          <bottom>
@@ -54,42 +54,42 @@
                <children>
                   <AnchorPane prefHeight="132.0" prefWidth="1210.0">
                      <children>
-                        <Text fx:id="rapido_t" layoutX="133.0" layoutY="42.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Dado rápido: 0" AnchorPane.leftAnchor="133.0" AnchorPane.topAnchor="26.0">
+                        <Text fx:id="rapido_t" layoutX="206.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dado rápido: 0" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="23.5">
                            <font>
                               <Font name="Calibri" size="22.0" />
                            </font>
                         </Text>
-                        <Text fx:id="lento_t" layoutX="316.0" layoutY="43.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Dado lento: 0" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="27.0">
+                        <Text fx:id="lento_t" layoutX="389.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dado lento: 0" AnchorPane.leftAnchor="389.0" AnchorPane.topAnchor="24.5">
                            <font>
                               <Font name="Calibri" size="22.0" />
                            </font>
                         </Text>
-                        <Text fx:id="peces_t" layoutX="511.0" layoutY="43.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Peces: 0" AnchorPane.leftAnchor="511.0" AnchorPane.topAnchor="27.0">
+                        <Text fx:id="peces_t" layoutX="584.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Peces: 0" AnchorPane.leftAnchor="584.0" AnchorPane.topAnchor="24.5">
                            <font>
                               <Font name="Calibri" size="22.0" />
                            </font>
                         </Text>
-                        <Text fx:id="nieve_t" layoutX="651.0" layoutY="43.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Bolas de nieve: 0" AnchorPane.leftAnchor="651.0" AnchorPane.rightAnchor="408.3408203125" AnchorPane.topAnchor="27.0">
+                        <Text fx:id="nieve_t" layoutX="724.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bolas de nieve: 0" AnchorPane.leftAnchor="724.0" AnchorPane.rightAnchor="335.3408203125" AnchorPane.topAnchor="24.5">
                            <font>
                               <Font name="Calibri" size="22.0" />
                            </font>
                         </Text>
-                        <Button fx:id="rapido" layoutX="170.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleRapido" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="170.0" AnchorPane.topAnchor="68.0">
+                        <Button fx:id="rapido" layoutX="243.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleRapido" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="243.0" AnchorPane.topAnchor="65.0">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
                         </Button>
-                        <Button fx:id="lento" layoutX="347.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleLento" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="347.0" AnchorPane.topAnchor="69.0">
+                        <Button fx:id="lento" layoutX="420.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleLento" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="420.0" AnchorPane.topAnchor="66.0">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
                         </Button>
-                        <Button fx:id="peces" layoutX="519.0" layoutY="69.0" mnemonicParsing="false" onAction="#handlePeces" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="519.0" AnchorPane.topAnchor="69.0">
+                        <Button fx:id="peces" layoutX="592.0" layoutY="66.0" mnemonicParsing="false" onAction="#handlePeces" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="592.0" AnchorPane.topAnchor="66.0">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
                         </Button>
-                        <Button fx:id="nieve" layoutX="697.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleNieve" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="697.0" AnchorPane.topAnchor="69.0">
+                        <Button fx:id="nieve" layoutX="770.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleNieve" prefHeight="54.0" prefWidth="54.0" text="Usar" AnchorPane.leftAnchor="770.0" AnchorPane.topAnchor="66.0">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
@@ -109,6 +109,11 @@
                               <Font name="Calibri Italic" size="20.0" />
                            </font>
                         </Text>
+                        <Button fx:id="saveGame" layoutX="53.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleSaveGame" prefHeight="41.0" prefWidth="85.0" text="Guardar">
+                           <font>
+                              <Font name="Calibri" size="17.0" />
+                           </font>
+                        </Button>
                      </children>
                      <padding>
                         <Insets bottom="20.0" />
@@ -173,9 +178,9 @@
                   </Text>
                   <ScrollPane layoutX="8.0" layoutY="71.0" prefHeight="414.0" prefWidth="250.0">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="235.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="838.0" prefWidth="235.0">
                            <children>
-                              <Text fx:id="eventos" layoutX="5.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Los eventos apareceran aqui..." wrappingWidth="226.13671875">
+                              <Text fx:id="eventos" layoutX="5.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Los eventos apareceran aqui..." wrappingWidth="226.13671875">
                                  <font>
                                     <Font name="Calibri Italic" size="16.0" />
                                  </font>

@@ -116,6 +116,14 @@
                      <font>
                         <Font name="Calibri Bold" size="17.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="quitGame" mnemonicParsing="false" onAction="#handleQuitGame" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #d3b48a; -fx-border-color: white; -fx-border-radius: 5; -fx-background-radius: 10;" text="Salir" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri Bold" size="17.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>
