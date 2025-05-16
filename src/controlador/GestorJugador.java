@@ -49,25 +49,28 @@ public class GestorJugador {
 	        return;
 	    }
 
+
 	    Inventario inventario = jugadorActual.getPinguino().getInv();
-	    String item = buscarItemEnInventario(inventario, nombreItem);
+	    Item item = buscarItemEnInventario(inventario, nombreItem); // Ahora recibe un Item, no un String
+
 
 	    if (item == null) {
 	        System.out.println("No tienes el item: " + nombreItem);
 	        return;
 	    }
 
+
 	    System.out.println("Usando " + nombreItem + "...");
 	    
 	    switch (nombreItem) {
 	        case "pez":
-	            inventario.quitarItem(item);
+	            inventario.quitarItem(nombreItem); // Pasamos el nombre del ítem, no el objeto
 	            jugadorActual.setProtegidoDelOso(true);
 	            System.out.println("Has usado un pez. Estás protegido del Oso durante este turno.");
 	            break;
 	            
 	        case "bola de nieve":
-	            inventario.quitarItem(item);
+	            inventario.quitarItem(nombreItem);
 	            System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
 	            // Lógica para seleccionar otro jugador
 	            break;
@@ -75,7 +78,7 @@ public class GestorJugador {
 	        case "dado rápido":
 	            Random random = new Random();
 	            int movRapido = random.nextInt(6) + 5; // 5-10
-	            inventario.quitarItem(item);
+	            inventario.quitarItem(nombreItem);
 	            actualizarMovimientoJugador(jugadorActual, movRapido);
 	            System.out.println("Has usado un dado rápido. Avanzas " + movRapido + " casillas.");
 	            break;
@@ -83,7 +86,7 @@ public class GestorJugador {
 	        case "dado lento":
 	            Random rand = new Random();
 	            int movLento = rand.nextInt(3) + 1; // 1-3
-	            inventario.quitarItem(item);
+	            inventario.quitarItem(nombreItem);
 	            actualizarMovimientoJugador(jugadorActual, movLento);
 	            System.out.println("Has usado un dado lento. Avanzas " + movLento + " casillas.");
 	            break;
@@ -92,6 +95,7 @@ public class GestorJugador {
 	            System.out.println("Item no reconocido: " + nombreItem);
 	    }
 	}
+
 
 	private Item buscarItemEnInventario(Inventario inventario, String nombreItem) {
 	    for (Item item : inventario.getLista()) {
