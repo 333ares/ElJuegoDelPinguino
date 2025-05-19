@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class pantallaMenuController {
 
-    private Connection con;
+    /*private Connection con;
     private Jugador jugadorActual;
     private Tablero tableroActual;
 
@@ -177,5 +177,5 @@ public class pantallaMenuController {
     @FXML
     private void handleQuitGame() {
     	System.exit(0);
-    }
+    }*/
 }
