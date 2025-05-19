@@ -11,48 +11,42 @@ import controlador.GestorTablero;
 public class Tablero {
 
 	/*
-	 * Hereda de Casilla y representa un obstáculo en el tablero.
-	 * 
-	 * Constructor solo necesita posición (delega a clase padre).
-	 * 
-	 * Al activarse (realizarAccion):
-	 * 
-	 * Notifica: "El oso atrapó al pingüino"
-	 * 
-	 * Penaliza: envía jugador al inicio (posición 0)
-	 * 
-	 * Ejemplo de efecto negativo en casillas especiales
-	 * 
-	 * Usa herencia para personalizar comportamiento base de Casilla
-	 * 
-	 * 
+	 * Representa el tablero de juego con sus casillas especiales y estado del juego.
+	 * Gera la lógica principal del tablero y la interacción con los jugadores.
 	 */
 	private Casilla[] casillas;
 	private Jugador jugadorActual;
 	private int turnos;
 	private GestorTablero gestorTablero;
-	private GestorJugador gestorJugador; 
+	private GestorJugador gestorJugador;
 
-	// Registros de posiciones especiales
+	// Listas de posiciones de casillas especiales
 	private List<Integer> posicionesAgujeros = new ArrayList<>();
 	private List<Integer> posicionesOsos = new ArrayList<>();
 	private List<Integer> posicionesTrineos = new ArrayList<>();
 	private List<Integer> posicionesEventos = new ArrayList<>();
 
 	public void setGestorTablero(GestorTablero gestorTablero) {
-	    this.gestorTablero = gestorTablero;
-	    // Pasamos las posiciones de agujeros al gestor
-	    this.gestorTablero.setPosicionesAgujeros(new ArrayList<>(this.posicionesAgujeros));
+		this.gestorTablero = gestorTablero;
+		// Pasamos las posiciones de agujeros al gestor
+		// this.gestorTablero.setPosicionesAgujeros(new ArrayList<>(this.posicionesAgujeros));
 	}
 
-    public void setGestorJugador(GestorJugador gestorJugador) {
-        this.gestorJugador = gestorJugador;
-    }
-    
-    public GestorJugador getGestorJugador() {
-        return this.gestorJugador;
-    }
-    
+	public void setGestorJugador(GestorJugador gestorJugador) {
+		this.gestorJugador = gestorJugador;
+	}
+
+	public GestorJugador getGestorJugador() {
+		return this.gestorJugador;
+	}
+
+	/*
+     * Constructor que inicializa un tablero con:
+     * - 50 casillas
+     * - Un jugador inicial
+     * - Turno en 0
+     * - Casillas especiales distribuidas aleatoriamente
+     */
 	public Tablero() {
 		this.casillas = new Casilla[50];
 		this.jugadorActual = inicializarJugador();
@@ -61,49 +55,53 @@ public class Tablero {
 	}
 
 	public void inicializarCasillas() {
-		// Limpiar listas de posiciones especiales
-	    posicionesOsos.clear();
-	    posicionesAgujeros.clear();
-	    posicionesTrineos.clear();
-	    posicionesEventos.clear();
+		// Limpieza de listas anteriores
+		posicionesOsos.clear();
+		posicionesAgujeros.clear();
+		posicionesTrineos.clear();
+		posicionesEventos.clear();
 
-	    Random rand = new Random();
-	    
-	    for (int i = 0; i < casillas.length; i++) {
-	        int tipo = rand.nextInt(20); // 0-19
-	        
-	        switch (tipo) {
-	            case 0: // Oso (5% probabilidad)
-	                crearCasillaEspecial(i, new Oso(i), posicionesOsos);
-	                break;
-	            case 1: case 2: // Agujero (10% probabilidad)
-	                crearCasillaEspecial(i, new Agujero(i, gestorTablero), posicionesAgujeros);
-	                break;
-	            case 3: case 4: // Trineo (10% probabilidad)
-	                crearCasillaEspecial(i, new Trineo(i), posicionesTrineos);
-	                break;
-	            case 5: case 6: // Evento (10% probabilidad)
-	                crearCasillaEspecial(i, new Evento(i), posicionesEventos);
-	                break;
-	            default: // Casilla normal (65% probabilidad)
-	                casillas[i] = new CasillaNormal(i);
-	        }
-	    }
+		Random rand = new Random();
 
-	    asegurarCasillasEspeciales();
+		for (int i = 0; i < casillas.length; i++) {
+			int tipo = rand.nextInt(20); // 0-19
+
+			switch (tipo) {
+			case 0: // Oso (5% probabilidad)
+				crearCasillaEspecial(i, new Oso(i), posicionesOsos);
+				break;
+			case 1:
+			case 2: // Agujero (10% probabilidad)
+				crearCasillaEspecial(i, new Agujero(i, gestorTablero), posicionesAgujeros);
+				break;
+			case 3:
+			case 4: // Trineo (10% probabilidad)
+				crearCasillaEspecial(i, new Trineo(i), posicionesTrineos);
+				break;
+			case 5:
+			case 6: // Evento (10% probabilidad)
+				crearCasillaEspecial(i, new Evento(i), posicionesEventos);
+				break;
+			default: // Casilla normal (65% probabilidad)
+				casillas[i] = new CasillaNormal(i);
+			}
+		}
+
+		asegurarCasillasEspeciales();
 	}
 
+	// Crea una casilla especial y registra su posición
 	private void crearCasillaEspecial(int posicion, Casilla casilla, List<Integer> listaPosiciones) {
-	    casillas[posicion] = casilla;
-	    listaPosiciones.add(posicion);
+		casillas[posicion] = casilla;
+		listaPosiciones.add(posicion);
 	}
 
 	private void asegurarCasillasEspeciales() {
-	    // Asegurar al menos 1 oso
-	    if (posicionesOsos.isEmpty()) {
-	        int pos = new Random().nextInt(casillas.length);
-	        crearCasillaEspecial(pos, new Oso(pos), posicionesOsos);
-	    }
+		// Asegurar al menos 1 oso
+		if (posicionesOsos.isEmpty()) {
+			int pos = new Random().nextInt(casillas.length);
+			crearCasillaEspecial(pos, new Oso(pos), posicionesOsos);
+		}
 	}
 
 	// Método que devuelve el tipo de casilla en una posición específica
@@ -111,7 +109,8 @@ public class Tablero {
 		if (posicion < 0 || posicion >= casillas.length) {
 			return "Invalid";
 		}
-		if (casillas[posicion] instanceof Oso) {
+		if (casillas[posicion] instanceof Oso) { // instanceof = operador de Java que comprueba si un objeto es una
+			// instancia de una clase específica o de sus subclases
 			return "Oso";
 		} else if (casillas[posicion] instanceof Agujero) {
 			return "Agujero";
@@ -132,10 +131,6 @@ public class Tablero {
 
 	public void avanzarTurno() {
 		turnos++;
-	}
-
-	public void actualizarTablero() {
-
 	}
 
 	public void actualizarJugador(Jugador j) {
@@ -200,7 +195,5 @@ public class Tablero {
 	public void setPosicionesOsos(List<Integer> posicionesOsos) {
 		this.posicionesOsos = posicionesOsos;
 	}
-
-
 
 }

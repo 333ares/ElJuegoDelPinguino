@@ -30,7 +30,6 @@ public class Jugador {
 		this.pinguino = pinguino != null ? pinguino : new Pinguino(new Inventario(null));
 		this.tablero = tablero;
 		
-
 	}
 
 	// GETTERS Y SETTERS
@@ -77,14 +76,6 @@ public class Jugador {
 	}
 
 	// FUNCIONES
-
-	public void tirarDado() {
-		Random random = new Random();
-		int resultado = random.nextInt(6) + 1; // Dado de 1 a 6
-		System.out.println("Has tirado el dado y ha salido: " + resultado);
-
-	}
-
 	public void moverPosicion(int nuevaPosicion) {
 		// El if se utiliza para asegurar que la nueva posición del jugador esté dentro
 		// de los límites del tablero (0 a 49, ya que hay 50 casillas).

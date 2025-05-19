@@ -6,7 +6,7 @@ public class Pinguino {
 
 	// CONSTRUCTOR
 	public Pinguino(Inventario inv) {
-		this.inv = inv != null ? inv : new Inventario(null);
+		this.inv = inv != null ? inv : new Inventario(null); // Lista inicial de items, si es null crea una vacía.
 	}
 
 	// GETTERS Y SETTERS
@@ -16,23 +16,6 @@ public class Pinguino {
 
 	public void setInv(Inventario inv) {
 		this.inv = inv;
-	}
-
-	// FUNCIONES
-	public void gestionarBatala() {
-
-	}
-
-	public void usarObjeto() {
-
-	}
-
-	public void añadirItem() {
-
-	}
-
-	public void quitarItem() {
-
 	}
 
 }
