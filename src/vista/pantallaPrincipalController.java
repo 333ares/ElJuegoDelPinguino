@@ -42,12 +42,18 @@ public class pantallaPrincipalController {
 	@FXML
 	private Button registerButton;
 
+	/*
+	 * Controlador de la pantalla principal. Se encarga del inicio de sesión,
+	 * registro de usuarios y de lanzar el juego si el login es exitoso.
+	 */
+
 	@FXML
 	private void initialize() {
 		// Establecer la conexión a la base de datos al inicializar el controlador
 		con = bbdd.conectarBaseDatos();
 	}
 
+	// Inicio de sesión
 	@FXML
 	private void handleLogin(ActionEvent event) {
 		String username = userField.getText();
@@ -59,7 +65,7 @@ public class pantallaPrincipalController {
 		if (!username.isEmpty() && !password.isEmpty()) {
 			try {
 				// Cargar pantalla de juego
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaMenu.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
 				Parent root = loader.load();
 
 				// Configurar controlador del juego
@@ -99,6 +105,7 @@ public class pantallaPrincipalController {
 		}
 	}
 
+	// Registro de usuarios
 	@FXML
 	private void handleRegister() {
 		String username = userField.getText();
