@@ -1,17 +1,10 @@
 package controlador;
 
 import java.util.ArrayList;
-
-import javafx.application.Platform;
-import modelo.Agujero;
 import modelo.Casilla;
-import modelo.CasillaNormal;
-import modelo.Evento;
 import modelo.Jugador;
 import modelo.Oso;
-import modelo.Pinguino;
 import modelo.Tablero;
-import modelo.Trineo;
 
 public class GestorTablero {
 	private Tablero tablero; // Declara un campo privado tablero de tipo Tablero, que almacenará la
@@ -20,7 +13,7 @@ public class GestorTablero {
 
 	public GestorTablero(Tablero tablero) {
 		this.tablero = tablero;
-		 this.posicionesAgujeros = new ArrayList<>();
+		this.posicionesAgujeros = new ArrayList<>();
 	}
 
 	/*
@@ -35,53 +28,62 @@ public class GestorTablero {
 	 * 
 	 * 
 	 */
-	public void actualizarMovimientoJugador(Jugador j, int movimientos) {
-		   int nuevaPosicion = j.getPosicion() + movimientos;
-		    
-		    // Verificar límites del tablero
-		    if (nuevaPosicion < 0) nuevaPosicion = 0;
-		    if (nuevaPosicion >= tablero.getCasillas().length) {
-		        nuevaPosicion = tablero.getCasillas().length - 1;
-		    }
-		    
-		    // Guardar posición anterior para mensajes
-		    int posicionAnterior = j.getPosicion();
-		    j.setPosicion(nuevaPosicion);
-		    
-		    // Ejecutar acción de la casilla
-		    Casilla casillaActual = tablero.getCasillas()[nuevaPosicion];
-		    String mensaje = "Moviste de " + posicionAnterior + " a " + nuevaPosicion;
-		    
-		    // Verificar si es una casilla especial
-		    if (!(casillaActual instanceof CasillaNormal)) {
-		        mensaje += "\n¡Casilla especial! " + obtenerDescripcionCasilla(casillaActual);
-		    }
-		    
-		    casillaActual.realizarAccion(j);
-		    
-		  
-		    }
-	
 
+	/*
+	 * Actualiza la posición del jugador en el tablero después de moverse y activa
+	 * los efectos de la casilla correspondiente.
+	 */
+	public void actualizarMovimientoJugador(Jugador jugador, int pasos) {
+		// Calculamos la nueva posición sumando los pasos a la posición actual
+		int posicionTemporal = jugador.getPosicion() + pasos;
 
-		private String obtenerDescripcionCasilla(Casilla casilla) {
-		    if (casilla instanceof Oso) return "¡Cuidado con el oso!";
-		    if (casilla instanceof Agujero) return "¡Agujero! Retrocedes";
-		    if (casilla instanceof Trineo) return "¡Trineo! Avanzas";
-		    if (casilla instanceof Evento) return "¡Evento especial!";
-		    return "";
+		// Verificamos que la posición no sea menor a 0 (primera casilla)
+		int posicionMinima = 0;
+
+		// Verificamos que la posición no exceda el tamaño del tablero
+		int posicionMaxima = tablero.getCasillas().length - 1;
+
+		// Aseguramos que la nueva posición esté dentro de los límites
+		int nuevaPosicion = posicionTemporal;
+
+		if (posicionTemporal > posicionMaxima) {
+		    nuevaPosicion = posicionMaxima;
 		}
+		if (posicionTemporal < posicionMinima) {
+		    nuevaPosicion = posicionMinima;
+		}
+		
+		// Actualizamos la posición del jugador
+		jugador.setPosicion(nuevaPosicion);
 
+		// Obtenemos la casilla donde cayó el jugador
+		Casilla casillaDestino = tablero.getCasillas()[nuevaPosicion];
 
+		// Ejecutamos la acción correspondiente a la casilla
+		casillaDestino.realizarAccion(jugador);
 
+		// Verificamos si cayó en un Oso y tenía protección
+		if (casillaDestino instanceof Oso) { // instanceof = operador de Java que comprueba si un objeto es una
+												// instancia de una clase específica o de sus subclases
+			if (jugador.isProtegidoDelOso()) {
+				// Si tenía protección, la consumimos
+				jugador.setProtegidoDelOso(false);
+			}
+		}
+	}
 
 	public int buscarAgujeroAnterior(int posicionActual) {
 		/*
 		 * Esta función busca la posición de un agujero que esté antes de la posición
-		 * actual (posicionActual). Comienza a buscar desde la posición anterior a la
-		 * actual y se mueve hacia atrás. Si encuentra un agujero en la lista
-		 * posicionesAgujeros, devuelve esa posición. Si no encuentra ningún agujero
-		 * antes de llegar al inicio, devuelve 0.
+		 * actual (posicionActual).
+		 * 
+		 * Comienza a buscar desde la posición anterior a la actual y se mueve hacia
+		 * atrás.
+		 * 
+		 * Si encuentra un agujero en la lista posicionesAgujeros, devuelve esa
+		 * posición.
+		 * 
+		 * Si no encuentra ningún agujero antes de llegar al inicio, devuelve 0.
 		 * 
 		 */
 		for (int i = posicionActual - 1; i >= 0; i--) {
@@ -92,18 +94,6 @@ public class GestorTablero {
 		return 0;
 	}
 
-	public void ejecutarCasilla(Pinguino p, Casilla c) {
-
-	}
-
-	public void actualizarFinalTurno() {
-
-	}
-
-	public void actualizarPantalla() {
-
-	}
-
 	public Tablero getTablero() {
 		return this.tablero;
 	}
@@ -111,7 +101,8 @@ public class GestorTablero {
 	public void setTablero(Tablero tablero) {
 		this.tablero = tablero;
 	}
-    public void setPosicionesAgujeros(ArrayList<Integer> posiciones) {
-        this.posicionesAgujeros = posiciones;
-    }
+
+	public void setPosicionesAgujeros(ArrayList<Integer> posiciones) {
+		this.posicionesAgujeros = posiciones;
+	}
 }

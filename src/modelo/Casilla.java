@@ -15,7 +15,6 @@ public abstract class Casilla { // Esta clase es abstracta porque la utilizamos 
 	int posicion;
 
 	// CONSTRUCTOR
-
 	public Casilla(int posicion) {
 		this.posicion = posicion;
 	}

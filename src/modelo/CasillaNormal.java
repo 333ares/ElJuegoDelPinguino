@@ -16,7 +16,8 @@ public class CasillaNormal extends Casilla {
 	}
 
 	public void realizarAccion(Jugador j) {
-		System.out.println("Casilla normal. Continúa tu turno.");
+		
+		
 	}
 
 }

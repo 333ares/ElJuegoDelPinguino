@@ -1,17 +1,9 @@
 package controlador;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-
-import modelo.Foca;
 import modelo.Inventario;
-import modelo.Item;
 import modelo.Jugador;
-import modelo.Pinguino;
 import modelo.Tablero;
-import modelo.Jugador;
 
 public class GestorJugador {
 	/*
@@ -43,6 +35,22 @@ public class GestorJugador {
 	}
 
 	public void jugadorUsaItem(String nombreItem) {
+		/*
+		 * Este método permite que el jugador utilice un ítem específico de su
+		 * inventario, identificado por su nombre.
+		 * 
+		 * Primero, realiza validaciones para asegurarse de que el jugador, su pingüino
+		 * y su inventario están correctamente inicializados.
+		 * 
+		 * Luego, verifica que el inventario contenga el ítem solicitado.
+		 * 
+		 * Si todo está en orden, ejecuta una estructura switch que identifica el tipo
+		 * de ítem usado y aplica su efecto correspondiente: por ejemplo, el “pez”
+		 * proporciona protección contra el oso, el “dado rápido” permite avanzar entre
+		 * 5 y 10 casillas, y el “dado lento” entre 1 y 3.
+		 * 
+		 * Cada uso de ítem reduce la cantidad disponible en el inventario.
+		 */
 		if (jugadorActual == null || jugadorActual.getPinguino() == null
 				|| jugadorActual.getPinguino().getInv() == null) {
 			System.out.println("Error: Jugador o inventario no inicializado");
@@ -63,15 +71,12 @@ public class GestorJugador {
 			if (inventario.getCantidad("pez") > 0) {
 				inventario.quitarItem("pez");
 				jugadorActual.setProtegidoDelOso(true);
-				System.out.println("Has usado un pez. Estás protegido del Oso durante este turno.");
 			}
 			break;
 
 		case "bola de nieve":
 			if (inventario.getCantidad("bola de nieve") > 0) {
 				inventario.quitarItem("bola de nieve");
-				System.out.println("Has usado una bola de nieve. Selecciona un jugador para retroceder.");
-				// Lógica para seleccionar otro jugador (pendiente implementar)
 			}
 			break;
 
@@ -81,7 +86,6 @@ public class GestorJugador {
 				Random random = new Random();
 				int movRapido = random.nextInt(6) + 5; // 5-10
 				actualizarMovimientoJugador(jugadorActual, movRapido);
-				System.out.println("Has usado un dado rápido. Avanzas " + movRapido + " casillas.");
 			}
 			break;
 
@@ -91,7 +95,6 @@ public class GestorJugador {
 				Random rand = new Random();
 				int movLento = rand.nextInt(3) + 1; // 1-3
 				actualizarMovimientoJugador(jugadorActual, movLento);
-				System.out.println("Has usado un dado lento. Avanzas " + movLento + " casillas.");
 			}
 			break;
 
@@ -101,15 +104,21 @@ public class GestorJugador {
 		}
 	}
 
-	private Item buscarItemEnInventario(Inventario inventario, String nombreItem) {
-		for (Item item : inventario.getLista()) {
-			if (item.getNombre().equals(nombreItem) && item.getCantidad() > 0) {
-				return item;
-			}
-		}
-		return null;
-	}
-
+	/*
+	 * Este método se encarga de mover al jugador en el tablero una cantidad
+	 * determinada de casillas.
+	 * 
+	 * Suma el número de movimientos a la posición actual del jugador y, si la nueva
+	 * posición está dentro del rango válido del tablero (entre 0 y 49), actualiza
+	 * la posición del jugador.
+	 * 
+	 * Luego, ejecuta la acción correspondiente a la casilla en la que ha caído,
+	 * invocando el método realizarAccion(j) de esa casilla.
+	 * 
+	 * Si el movimiento resultara en una posición fuera de los límites del tablero,
+	 * el método lo detecta y cancela el desplazamiento, mostrando un mensaje de
+	 * error.
+	 */
 	public void actualizarMovimientoJugador(Jugador j, int movimientos) { // Mueve al jugador en el tablero.
 		int nuevaPosicion = j.getPosicion() + movimientos;
 		if (nuevaPosicion >= 0 && nuevaPosicion < 50) { // El tablero tiene 50 casillas (posiciones 0 a 49).
@@ -122,24 +131,20 @@ public class GestorJugador {
 		}
 	}
 
+	/*
+	 * Este método se usa para el fin del turno del jugador.
+	 * 
+	 * Su principal efecto es reiniciar el estado de protección contra el oso, que
+	 * puede haber sido activado por el uso de un ítem como el pez.
+	 * 
+	 * Establece la propiedad protegidoDelOso del jugador como false, indicando que
+	 * ya no está protegido.
+	 * 
+	 * También imprime un mensaje confirmando que el jugador ha finalizado su turno.
+	 * 
+	 */
 	public void jugadorFinalizaTurno() {
 		jugadorActual.setProtegidoDelOso(false);
 		System.out.println(jugadorActual.getNombre() + " ha finalizado su turno.");
-	}
-
-	public void cambiarJugadorActual() {
-		// No es necesario si solo hay un jugador
-	}
-
-	public void pinguinoEvento(Pinguino p) {
-
-	}
-
-	public void pinguinoGuerra(Pinguino p) {
-
-	}
-
-	public void focaInteractua(Pinguino p, Foca f) {
-
 	}
 }

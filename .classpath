@@ -7,6 +7,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/JavaFX/ojdbc8.jar"/>
 	<classpathentry kind="lib" path="C:/JavaFX/lib/javafx.base.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -47,6 +48,5 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/JavaFX/ojdbc8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

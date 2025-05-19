@@ -36,21 +36,17 @@ public class Evento extends Casilla {
 
 		switch (evento) {
 		case 0:
-			System.out.println("¡Has encontrado un pez! +1 pez.");
 			j.getPinguino().getInv().añadirItem(new Item("pez", 1));
 			break;
 		case 1:
-			System.out.println("¡Has encontrado una bola de nieve! +1 bola de nieve.");
 			j.getPinguino().getInv().añadirItem(new Item("bola de nieve", 1));
 			break;
 		case 2:
 			int movRapido = random.nextInt(6) + 5;
-			System.out.println("¡Dados rápidos! Avanzas " + movRapido + " casillas.");
 			j.setPosicion(j.getPosicion() + movRapido);
 			break;
 		case 3:
 			int movLento = random.nextInt(3) + 1;
-			System.out.println("¡Dados lentos! Avanzas " + movLento + " casillas.");
 			j.setPosicion(j.getPosicion() + movLento);
 			break;
 

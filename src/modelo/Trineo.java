@@ -25,7 +25,6 @@ public class Trineo extends Casilla {
 	public void realizarAccion(Jugador j) {
 	     int avance = 10; // Avanza 10 casillas
 	        int nuevaPos = Math.min(j.getPosicion() + avance, 49); // No pasar del límite
-	        System.out.println("¡Trineo mágico! Avanzas a " + nuevaPos);
 	        j.setPosicion(nuevaPos);
 	}
 
