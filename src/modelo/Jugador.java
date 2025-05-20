@@ -119,21 +119,22 @@ public class Jugador {
 	        sb.append("INV:");
 	        sb.append("dado_rápido:").append(pinguino.getInv().getCantidad("dado rápido")).append(",");
 	        sb.append("dado_lento:").append(pinguino.getInv().getCantidad("dado lento")).append(",");
-	        // ... otros items
+	        sb.append("peces:").append(pinguino.getInv().getCantidad("peces")).append(",");
+	        sb.append("bolas_nieve:").append(pinguino.getInv().getCantidad("bolas de nieve")).append(",");
 	    }
 	    
 	    return sb.toString();
 	}
 
 	public void deserializar(String estado) {
-	    String[] partes = estado.split(";");
+	    String[] partes = estado.split("|");
 	    this.posicion = Integer.parseInt(partes[0]);
 	    this.protegidoDelOso = Boolean.parseBoolean(partes[1]);
 	    
 	    if (partes.length > 2 && partes[2].startsWith("INV:")) {
 	        String[] items = partes[2].substring(4).split(",");
 	        for (String item : items) {
-	            String[] datos = item.split(":");
+	            String[] datos = item.split("-");
 	            String nombre = datos[0].replace("_", " ");
 	            int cantidad = Integer.parseInt(datos[1]);
 	            
