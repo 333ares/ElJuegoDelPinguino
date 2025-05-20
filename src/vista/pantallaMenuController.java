@@ -51,9 +51,8 @@ public class pantallaMenuController {
     @FXML
     private void handleNewGame(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-            Parent root = loader.load();
             Tablero tablero = new Tablero();
+            String nickname = jugador.getNombre();
             
             // Luego el gestor de tablero
             GestorTablero gestorTablero = new GestorTablero(tablero);
