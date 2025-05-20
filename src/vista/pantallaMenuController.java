@@ -38,13 +38,21 @@ public class pantallaMenuController {
         this.con = con;
     }
     
+    private String serializarJugador() {
+	    // Implementa la lógica para convertir el estado del jugador a String
+	    return jugador.serializar();
+	}
+	
+	private String serializarTablero() {
+	    // Implementa la lógica para convertir el estado del tablero a String
+	    return tablero.serializar();
+	}
+	
     @FXML
     private void handleNewGame(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
             Parent root = loader.load();
-
-            // Primero crear el tablero
             Tablero tablero = new Tablero();
             
             // Luego el gestor de tablero
@@ -65,20 +73,42 @@ public class pantallaMenuController {
             
             Inventario inventario = new Inventario(itemsIniciales);
             Pinguino pinguino = new Pinguino(inventario);
-            Jugador jugadorNuevo = new Jugador(0, jugador.getNombre(), "Azul", pinguino);
+            Jugador jugadorNuevo = new Jugador(0, nickname, "Azul", pinguino);
             
-            GestorJugador gestorJugador = new GestorJugador(jugador, tablero);
+            String estadoTablero = serializarTablero();
+	        String estadoJugador = serializarJugador();
             
-            // Configurar controlador
+            // 3. Insertar nueva partida en la BD
+	        String sqlInsert = "INSERT INTO PARTIDAS (NUM_PARTIDA, FECHA, HORA, ESTADO_TABLERO, ESTADO_PARTIDA) VALUES (" +
+	                 "JP_S01.NEXTVAL, " +
+	                 "CURRENT_DATE, " +
+	                 "TO_CHAR(CURRENT_TIMESTAMP, 'HH24:MI:SS'), " +
+	                 "'" + estadoTablero + "', " +
+	                 "'" + estadoJugador + "')";
+            
+            bbdd.insert(con, sqlInsert);
+            
+            // 4. Actualizar contador de partidas del jugador
+            String sqlUpdate = "UPDATE JUGADORES SET PARTIDAS_JUGADAS = PARTIDAS_JUGADAS + 1 " +
+                              "WHERE NICKNAME = '" + nickname + "'";
+            bbdd.update(con, sqlUpdate);
+            
+            // 5. Configurar y mostrar la pantalla de juego
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+            Parent root = loader.load();
+            
+            GestorJugador gestorJugador = new GestorJugador(jugadorNuevo, tablero);
             pantallaJuegoController juegoController = loader.getController();
-            juegoController.initializeController(gestorJugador, gestorTablero, jugador, tablero);
-            juegoController.setConnection(con); // Pasar la conexión
+            juegoController.initializeController(gestorJugador, gestorTablero, jugadorNuevo, tablero);
+            juegoController.setConnection(con);
 
-            // Mostrar pantalla de juego
+            // Cambiar a la pantalla de juego
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Juego en curso");
+            
         } catch (IOException e) {
+            showAlert("Error", "No se pudo cargar la pantalla de juego: " + e.getMessage());
             e.printStackTrace();
         }
     }
