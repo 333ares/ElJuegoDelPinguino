@@ -110,29 +110,48 @@ public class Jugador {
 	}
 	
 	public String serializar() {
-		 return String.valueOf(this.posicion);
-	    
+		  StringBuilder sb = new StringBuilder();
+		    sb.append(posicion).append(";")
+		      .append(protegidoDelOso).append(";")
+		      .append("INV:");
+		    
+		    // Serializar inventario
+		    if (pinguino != null && pinguino.getInv() != null) {
+		        for (Item item : pinguino.getInv().getLista()) {
+		            sb.append(item.getNombre().replace(" ", "_")).append("-")
+		              .append(item.getCantidad()).append(",");
+		        }
+		    }
+		    
+		    return sb.toString();
 	}
 
 	public void deserializar(String estado) {
-	    String[] partes = estado.split("|");
-	    this.posicion = Integer.parseInt(partes[0]);
-	    this.protegidoDelOso = Boolean.parseBoolean(partes[1]);
-	    
-	    if (partes.length > 2 && partes[2].startsWith("INV:")) {
-	        String[] items = partes[2].substring(4).split(",");
-	        for (String item : items) {
-	            String[] datos = item.split("-");
-	            String nombre = datos[0].replace("_", " ");
-	            int cantidad = Integer.parseInt(datos[1]);
-	            
-	            if (pinguino == null) {
-	                pinguino = new Pinguino(new Inventario(new ArrayList<>()));
-	            }
-	            
-	            pinguino.getInv().añadirItem(new Item(nombre, cantidad));
-	        }
-	    }
+		 String[] partes = estado.split(";");
+		    if (partes.length > 0) {
+		        this.posicion = Integer.parseInt(partes[0]);
+		    }
+		    if (partes.length > 1) {
+		        this.protegidoDelOso = Boolean.parseBoolean(partes[1]);
+		    }
+		    if (partes.length > 2 && partes[2].startsWith("INV:")) {
+		        String[] items = partes[2].substring(4).split(",");
+		        for (String item : items) {
+		            if (!item.isEmpty()) {
+		                String[] datos = item.split("-");
+		                String nombre = datos[0].replace("_", " ");
+		                int cantidad = Integer.parseInt(datos[1]);
+		                
+		                if (pinguino == null) {
+		                    pinguino = new Pinguino(new Inventario(new ArrayList<>()));
+		                }
+		                if (pinguino.getInv() == null) {
+		                    pinguino.setInv(new Inventario(new ArrayList<>()));
+		                }
+		                
+		                pinguino.getInv().añadirItem(new Item(nombre, cantidad));
+		            }
+		        }
+		    }
 	}
-
 }

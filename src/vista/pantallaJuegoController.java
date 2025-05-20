@@ -127,16 +127,17 @@ public class pantallaJuegoController implements GestorMensajes {
 	        int numBolasNieve = jugadorActual.getPinguino().getInv().getCantidad("bola de nieve");
 
 	        // 4. Insertar nueva partida
-	        String sqlPartida = "INSERT INTO PARTIDAS (num_partida, fecha, hora, estado_tablero, estado_partida) " +
-	                          "VALUES (JP_S01.NEXTVAL, SYSDATE, " +
-	                          "TO_CHAR(SYSTIMESTAMP, 'HH24MI'), " +
-	                          "?, ?)";
-	        
-	        try (PreparedStatement psPartida = con.prepareStatement(sqlPartida)) {
-	            psPartida.setString(1, estadoTablero);
-	            psPartida.setString(2, estadoPartida);
-	            psPartida.executeUpdate();
-	        }
+	        String sqlPartida = "INSERT INTO PARTIDAS (num_partida, fecha, hora, estado_tablero, estado_partida, jugador) " +
+                    "VALUES (JP_S01.NEXTVAL, SYSDATE, " +
+                    "TO_CHAR(SYSTIMESTAMP, 'HH24MI'), " +
+                    "?, ?, ?)";
+  
+  try (PreparedStatement psPartida = con.prepareStatement(sqlPartida)) {
+      psPartida.setString(1, estadoTablero);
+      psPartida.setString(2, estadoPartida);
+      psPartida.setString(3, jugadorActual.getNombre());
+      psPartida.executeUpdate();
+  }
 
 	        // 5. Actualizar inventario del jugador (con dados separados)
 	        String sqlInventario = "MERGE INTO INVENTARIO_JUGADORES " +
