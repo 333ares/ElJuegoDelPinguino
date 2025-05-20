@@ -47,15 +47,13 @@ switch (evento) {
 			 mensaje = "Evento: ¡Has obtenido 1 bola de nieve!";
 			break;
 		case 2:
-			int movRapido = random.nextInt(6) + 5;
-			j.setPosicion(j.getPosicion() + movRapido);
-			 mensaje = "Evento: ¡Dados rápidos! Avanzas " + movRapido + " casillas";
-			break;
+			 j.getPinguino().getInv().añadirItem(new Item("dado rápido", 1));
+			    mensaje = "Evento: ¡Has obtenido un dado rápido!";
+			    break;
 		case 3:
-			int movLento = random.nextInt(3) + 1;
-			j.setPosicion(j.getPosicion() + movLento);
-			 mensaje = "Evento: ¡Dados lentos! Avanzas " + movLento + " casillas";
-			break;
+			j.getPinguino().getInv().añadirItem(new Item("dado lento", 1));
+		    mensaje = "Evento: ¡Has obtenido un dado lento!";
+		    break;
 
 		}
 

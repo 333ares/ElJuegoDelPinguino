@@ -77,19 +77,21 @@ public class pantallaJuegoController implements GestorMensajes {
 	
 	 @Override
 	    public void agregarMensaje(String mensaje) {
-	        Platform.runLater(() -> {
-	            eventos.setText(eventos.getText() + "\n" + mensaje);
-	            
-	            // Limitar el historial de eventos a 5 líneas
-	            String[] lineas = eventos.getText().split("\n");
-	            if (lineas.length > 5) {
-	                StringBuilder nuevoTexto = new StringBuilder();
-	                for (int i = lineas.length - 5; i < lineas.length; i++) {
-	                    nuevoTexto.append(lineas[i]).append("\n");
-	                }
-	                eventos.setText(nuevoTexto.toString().trim());
-	            }
-	        });
+		  Platform.runLater(() -> {
+		        // Solo añade el nuevo mensaje sin borrar los anteriores
+		        eventos.setText(eventos.getText() + "\n" + mensaje);
+		        
+		        // Opcional: puedes limitar a un máximo de líneas si lo prefieres
+		        String[] lineas = eventos.getText().split("\n");
+		        if (lineas.length > 20) { // Por ejemplo, mantener 20 líneas como máximo
+		            StringBuilder nuevoTexto = new StringBuilder();
+		            for (int i = lineas.length - 20; i < lineas.length; i++) {
+		                nuevoTexto.append(lineas[i]).append("\n");
+		            }
+		            eventos.setText(nuevoTexto.toString().trim());
+		        }
+		    });
+
 	    }
 
 	@FXML

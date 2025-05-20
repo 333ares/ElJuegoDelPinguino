@@ -44,9 +44,17 @@ public class pantallaMenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
             Parent root = loader.load();
 
-            // Inicializar juego nuevo
+            // Primero crear el tablero
             Tablero tablero = new Tablero();
+            
+            // Luego el gestor de tablero
             GestorTablero gestorTablero = new GestorTablero(tablero);
+            
+            // Asignar el gestor al tablero
+            tablero.setGestorTablero(gestorTablero);
+            
+            // Ahora inicializar las casillas
+            tablero.inicializarTableroCompleto();
             
             // Crear jugador con inventario inicial
             ArrayList<Item> itemsIniciales = new ArrayList<>();

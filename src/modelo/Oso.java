@@ -1,6 +1,5 @@
 package modelo;
 
-
 public class Oso extends Casilla {
 
 	/*
@@ -16,25 +15,25 @@ public class Oso extends Casilla {
 	public Oso(int posicion) {
 		super(posicion);
 	}
-	public void realizarAccion(Jugador j) {
-		
-		   if (!j.isProtegidoDelOso()) {
-	            j.setPosicion(0); // Envía al jugador al inicio
-	      
-	           String mensaje = "¡Oh no! Un oso te ha atrapado. Vuelves al inicio.";
-	           if (j.getGestorMensajes() != null) {
-	               j.getGestorMensajes().agregarMensaje(mensaje);
-	           }
-	        } else {
-	            j.setProtegidoDelOso(false); // Consume la protección
-	            
-	            String mensaje = "Un oso te atacó, pero tu pez te protegió.";
-	            if (j.getGestorMensajes() != null) {
-	                j.getGestorMensajes().agregarMensaje(mensaje);
-	            }
 
-	       
-	        }
+	public void realizarAccion(Jugador j) {
+
+		if (!j.isProtegidoDelOso()) {
+			j.setPosicion(0); // Envía al jugador al inicio
+
+			String mensaje = "¡Oh no! Un oso te ha atrapado. Vuelves al inicio.";
+			if (j.getGestorMensajes() != null) {
+				j.getGestorMensajes().agregarMensaje(mensaje);
+			}
+		} else {
+			j.setProtegidoDelOso(false); // Consume la protección
+
+			String mensaje = "Un oso te atacó, pero tu pez te protegió.";
+			if (j.getGestorMensajes() != null) {
+				j.getGestorMensajes().agregarMensaje(mensaje);
+			}
+
+		}
 	}
 
 }

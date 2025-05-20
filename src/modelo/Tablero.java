@@ -54,6 +54,10 @@ public class Tablero {
 		inicializarCasillas();
 	}
 
+	public void inicializarTableroCompleto() {
+	    inicializarCasillas();
+	}
+
 	public void inicializarCasillas() {
 		// Limpieza de listas anteriores
 		posicionesOsos.clear();

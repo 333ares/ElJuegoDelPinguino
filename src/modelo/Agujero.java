@@ -1,5 +1,8 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import controlador.GestorTablero;
 
 public class Agujero extends Casilla {
@@ -12,25 +15,24 @@ public class Agujero extends Casilla {
 
 	public void realizarAccion(Jugador j) {
 		if (gestor != null) {
-            // Buscar posición del agujero anterior
-            int nuevaPos = gestor.buscarAgujeroAnterior(getPosicion());
-            
-            // Mover jugador a la nueva posición
-            j.setPosicion(nuevaPos);
-            
-            String mensaje = "Has caído en un Agujero: Retrocedes a la casilla " + nuevaPos;
-            if (j.getGestorMensajes() != null) {
-                j.getGestorMensajes().agregarMensaje(mensaje);
-            }
+	        // Obtener las posiciones actuales de agujeros directamente del tablero
+	        List<Integer> posicionesActuales = gestor.getTablero().getPosicionesAgujeros();
+	        gestor.setPosicionesAgujeros(new ArrayList<>(posicionesActuales));
+	        
+	        int nuevaPos = gestor.buscarAgujeroAnterior(getPosicion());
+	        j.setPosicion(nuevaPos);
+	        
+	        String mensaje = "Has caído en un Agujero: Retrocedes a la casilla " + nuevaPos;
+	        if (j.getGestorMensajes() != null) {
+	            j.getGestorMensajes().agregarMensaje(mensaje);
+	        }
 
-            // Verificar si la nueva posición tiene otro efecto
-            Casilla destino = gestor.getTablero().getCasillas()[nuevaPos];
-            
-            // Si la nueva casilla NO es normal, activar su efecto
-            if (!(destino instanceof CasillaNormal)) {
-                destino.realizarAccion(j);
-            }
-        }
+	        // Evitar bucle infinito: solo activar acción si la casilla destino no es un agujero
+	        Casilla destino = gestor.getTablero().getCasillas()[nuevaPos];
+	        if (!(destino instanceof Agujero)) { // Añadido esta condición
+	            destino.realizarAccion(j);
+	        }
+	    }
 
 	}
 }

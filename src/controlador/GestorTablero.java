@@ -63,13 +63,21 @@ public class GestorTablero {
 		// Ejecutamos la acción correspondiente a la casilla
 		casillaDestino.realizarAccion(jugador);
 
-		// Verificamos si cayó en un Oso y tenía protección
-		if (casillaDestino instanceof Oso) { // instanceof = operador de Java que comprueba si un objeto es una
-												// instancia de una clase específica o de sus subclases
-			if (jugador.isProtegidoDelOso()) {
-				// Si tenía protección, la consumimos
-				jugador.setProtegidoDelOso(false);
-			}
+		 // Verificar si el jugador ha alcanzado la última casilla
+	    if (jugador.getPosicion() == tablero.getCasillas().length - 1) {
+	        String mensaje = "¡Has finalizado la partida!";
+	        if (jugador.getGestorMensajes() != null) {
+	            jugador.getGestorMensajes().agregarMensaje(mensaje);
+	        }
+	    }
+
+	    // Verificamos si cayó en un Oso y tenía protección
+	    if (casillaDestino instanceof Oso) { // instanceof = operador de Java que comprueba si un objeto es una instancia de una clase específica o de sus subclases
+	        if (jugador.isProtegidoDelOso()) {
+	            // Si tenía protección, la consumimos
+	            jugador.setProtegidoDelOso(false);
+	        
+		    }	
 		}
 	}
 
@@ -87,12 +95,15 @@ public class GestorTablero {
 		 * Si no encuentra ningún agujero antes de llegar al inicio, devuelve 0.
 		 * 
 		 */
-		for (int i = posicionActual - 1; i >= 0; i--) {
-			if (posicionesAgujeros.contains(i)) {
-				return i;
-			}
-		}
-		return 0;
+		 // Buscar desde la posición anterior hasta el inicio
+	    for (int i = posicionActual - 1; i >= 0; i--) {
+	        if (posicionesAgujeros.contains(i)) {
+	            return i; // Devuelve el primer agujero encontrado
+	        }
+	    }
+	    // Si no encuentra agujeros, devuelve la posición actual (no mover)
+	    return posicionActual;
+
 	}
 
 	public Tablero getTablero() {
