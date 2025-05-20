@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import controlador.GestorJugador;
@@ -95,6 +96,43 @@ public class Jugador {
 
 	public boolean isProtegidoDelOso() {
 		return protegidoDelOso;
+	}
+	
+	public String serializar() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append(posicion).append(";");
+	    sb.append(protegidoDelOso).append(";");
+	    
+	    // Serializar inventario
+	    if (pinguino != null && pinguino.getInv() != null) {
+	        sb.append("INV:");
+	        sb.append("dado_rápido:").append(pinguino.getInv().getCantidad("dado rápido")).append(",");
+	        sb.append("dado_lento:").append(pinguino.getInv().getCantidad("dado lento")).append(",");
+	        // ... otros items
+	    }
+	    
+	    return sb.toString();
+	}
+
+	public void deserializar(String estado) {
+	    String[] partes = estado.split(";");
+	    this.posicion = Integer.parseInt(partes[0]);
+	    this.protegidoDelOso = Boolean.parseBoolean(partes[1]);
+	    
+	    if (partes.length > 2 && partes[2].startsWith("INV:")) {
+	        String[] items = partes[2].substring(4).split(",");
+	        for (String item : items) {
+	            String[] datos = item.split(":");
+	            String nombre = datos[0].replace("_", " ");
+	            int cantidad = Integer.parseInt(datos[1]);
+	            
+	            if (pinguino == null) {
+	                pinguino = new Pinguino(new Inventario(new ArrayList<>()));
+	            }
+	            
+	            pinguino.getInv().añadirItem(new Item(nombre, cantidad));
+	        }
+	    }
 	}
 
 }

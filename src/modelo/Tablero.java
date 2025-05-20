@@ -195,5 +195,47 @@ public class Tablero {
 	public void setPosicionesOsos(List<Integer> posicionesOsos) {
 		this.posicionesOsos = posicionesOsos;
 	}
+	
+	public String serializar() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append(turnos).append(";");
+	    
+	    // Serializar casillas especiales
+	    for (int i = 0; i < casillas.length; i++) {
+	        String tipo = getCasillaTipo(i);
+	        if (!"Normal".equals(tipo)) {
+	            sb.append(i).append(":").append(tipo).append(",");
+	        }
+	    }
+	    
+	    return sb.toString();
+	}
+
+	public void deserializar(String estado) {
+	    String[] partes = estado.split(";");
+	    this.turnos = Integer.parseInt(partes[0]);
+	    
+	    // Reconstruir casillas especiales
+	    if (partes.length > 1) {
+	        String[] casillasEspeciales = partes[1].split(",");
+	        for (String casilla : casillasEspeciales) {
+	            if (!casilla.isEmpty()) {
+	                String[] datos = casilla.split(":");
+	                int posicion = Integer.parseInt(datos[0]);
+	                String tipo = datos[1];
+	                
+	                switch (tipo) {
+	                    case "Oso":
+	                        crearCasillaEspecial(posicion, new Oso(posicion), posicionesOsos);
+	                        break;
+	                    case "Agujero":
+	                        crearCasillaEspecial(posicion, new Agujero(posicion, gestorTablero), posicionesAgujeros);
+	                        break;
+	                    // ... otros tipos
+	                }
+	            }
+	        }
+	    }
+	}
 
 }
