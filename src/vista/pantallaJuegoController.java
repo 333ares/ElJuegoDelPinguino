@@ -20,11 +20,18 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+<<<<<<< Updated upstream
 public class pantallaJuegoController implements GestorMensajes {
+=======
+import bbdd.bbdd;
+
+public class pantallaJuegoController {
+>>>>>>> Stashed changes
 
 	private GestorTablero gestorTablero;
 	private Jugador jugadorActual;
@@ -64,6 +71,7 @@ public class pantallaJuegoController implements GestorMensajes {
 
 	private final int COLUMNS = 5;
 	private GestorJugador gestorJugador;
+	private Connection con;
 
 	/*
 	 * Este método se ejecuta automáticamente al cargar la pantalla del juego.
@@ -93,11 +101,84 @@ public class pantallaJuegoController implements GestorMensajes {
 	private void initialize() {
 		eventos.setText("¡El juego ha comenzado!");
 	}
+	
+	public void setConnection(Connection con) {
+        this.con = con;
+    }
 
 	// Boton de guardar del juego
 	@FXML
 	private void handleSaveGame(ActionEvent event) {
-		eventos.setText("Juego guardado.");
+	   try {
+	        // 1. Serializar el estado del tablero y del jugador (Pasar a String)
+	        String estadoTablero = serializarTablero();
+	        String estadoJugador = serializarJugador();
+	        
+	        // 2. Obtener datos del inventario
+	        int numDados = jugadorActual.getPinguino().getInv().getCantidad("dado rápido") + 
+	                      jugadorActual.getPinguino().getInv().getCantidad("dado lento");
+	        int numPeces = jugadorActual.getPinguino().getInv().getCantidad("pez");
+	        int numBolasNieve = jugadorActual.getPinguino().getInv().getCantidad("bola de nieve");
+
+	        // 3. Obtener conexión a la BD
+	        Connection con = bbdd.conectarBaseDatos();
+	        
+	        // 4. Guardar partida
+	        String sqlPartida = "INSERT INTO PARTIDAS (NICKNAME, FECHA, HORA, ESTADO_TABLERO, ESTADO_PARTIDA) " +
+	                           "VALUES ('" + jugadorActual.getNombre() + "', " +
+	                           "SYSDATE, " + // Usamos la fecha actual del sistema
+	                           "TO_CHAR(SYSTIMESTAMP, 'HH24:MI:SS'), " +
+	                           "'" + estadoTablero + "', " +
+	                           "'" + estadoJugador + "')";
+	        bbdd.insert(con, sqlPartida);
+
+	        // 5. Actualizar inventario del jugador
+	        String sqlInventario = "UPDATE JUGADOR SET " +
+	                              "NUM_DADOS = " + numDados + ", " +
+	                              "NUM_PECES = " + numPeces + ", " +
+	                              "NUM_BOLASNIEVE = " + numBolasNieve + " " +
+	                              "WHERE NICKNAME = '" + jugadorActual.getNombre() + "'";
+	        bbdd.update(con, sqlInventario);
+
+	        eventos.setText("Partida guardada correctamente");
+	    } catch (Exception e) {
+	        eventos.setText("Error al guardar la partida: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
+
+	private String serializarTablero() {
+	    // Implementa la serialización del tablero
+	    StringBuilder sb = new StringBuilder();
+	    sb.append(jugadorActual.getPosicion()).append(";");
+	    sb.append(tableroActual.getTurnos()).append(";");
+	    
+	    // Serializar casillas especiales
+	    for (int i = 0; i < tableroActual.getCasillas().length; i++) {
+	        String tipo = tableroActual.getCasillaTipo(i);
+	        if (!"Normal".equals(tipo)) {
+	            sb.append(i).append(":").append(tipo).append(",");
+	        }
+	    }
+	    
+	    return sb.toString();
+	}
+
+	private String serializarJugador() {
+	    // Implementa la serialización del jugador
+	    StringBuilder sb = new StringBuilder();
+	    sb.append(jugadorActual.getNombre()).append(";");
+	    sb.append(jugadorActual.getColor()).append(";");
+	    sb.append(jugadorActual.isProtegidoDelOso()).append(";");
+	    
+	    // Serializar inventario
+	    sb.append("INV:");
+	    sb.append("dado_rápido:").append(jugadorActual.getPinguino().getInv().getCantidad("dado rápido")).append(",");
+	    sb.append("dado_lento:").append(jugadorActual.getPinguino().getInv().getCantidad("dado lento")).append(",");
+	    sb.append("bola_nieve:").append(jugadorActual.getPinguino().getInv().getCantidad("bola de nieve")).append(",");
+	    sb.append("pez:").append(jugadorActual.getPinguino().getInv().getCantidad("pez"));
+	    
+	    return sb.toString();
 	}
 
 	// Lógica para hacer funcionar el dado
