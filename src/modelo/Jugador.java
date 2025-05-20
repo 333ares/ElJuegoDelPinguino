@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import controlador.GestorJugador;
+import vista.GestorMensajes;
 
 public class Jugador {
 
@@ -12,7 +13,7 @@ public class Jugador {
 	String color;
 	Pinguino pinguino;
 	Tablero tablero;
-
+	private GestorMensajes gestorMensajes;
 	/*
 	 * Clase que representa un jugador con posición, nombre, color y un Pinguino
 	 * asociado. Contiene métodos para moverse por el tablero (0-49 posiciones) y
@@ -35,6 +36,16 @@ public class Jugador {
 
 	// GETTERS Y SETTERS
 
+	 public GestorMensajes getGestorMensajes() {
+	        return gestorMensajes;
+	    }
+
+
+	    public void setGestorMensajes(GestorMensajes gestorMensajes) {
+	        this.gestorMensajes = gestorMensajes;
+	    }
+
+	
 	public Tablero getTablero() {
 		return tablero;
 	}

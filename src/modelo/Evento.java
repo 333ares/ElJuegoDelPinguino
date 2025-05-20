@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.Random;
 
+
+
 public class Evento extends Casilla {
 
 	/*
@@ -21,6 +23,7 @@ public class Evento extends Casilla {
 	 */
 	String tipoEvento;
 
+
 	// CONSTRUCTOR
 	public Evento(int posicion) {
 		super(posicion);
@@ -33,23 +36,32 @@ public class Evento extends Casilla {
 	public void realizarAccion(Jugador j) {
 		Random random = new Random();
 		int evento = random.nextInt(4);
-
-		switch (evento) {
+		 String mensaje = "";
+switch (evento) {
 		case 0:
 			j.getPinguino().getInv().añadirItem(new Item("pez", 1));
+			 mensaje = "Evento: ¡Has obtenido 1 pez!";
 			break;
 		case 1:
 			j.getPinguino().getInv().añadirItem(new Item("bola de nieve", 1));
+			 mensaje = "Evento: ¡Has obtenido 1 bola de nieve!";
 			break;
 		case 2:
 			int movRapido = random.nextInt(6) + 5;
 			j.setPosicion(j.getPosicion() + movRapido);
+			 mensaje = "Evento: ¡Dados rápidos! Avanzas " + movRapido + " casillas";
 			break;
 		case 3:
 			int movLento = random.nextInt(3) + 1;
 			j.setPosicion(j.getPosicion() + movLento);
+			 mensaje = "Evento: ¡Dados lentos! Avanzas " + movLento + " casillas";
 			break;
 
 		}
+
+if (j.getGestorMensajes() != null) {
+    j.getGestorMensajes().agregarMensaje(mensaje);
+}
+
 	}
 }
