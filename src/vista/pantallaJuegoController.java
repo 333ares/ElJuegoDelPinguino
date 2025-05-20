@@ -109,24 +109,19 @@ public class pantallaJuegoController implements GestorMensajes {
 	@FXML
 	private void handleSaveGame(ActionEvent event) {
 	    try {
-	        // 1. Verificar que tenemos conexión
-	        if (con == null || con.isClosed()) {
-	            eventos.setText("Error: No hay conexión a la BD");
-	            return;
-	        }
-
-	        // 2. Serializar el estado del tablero y del jugador
+	        // Serializar el estado del tablero y del jugador
 	        String estadoTablero = serializarTablero();
 	        String estadoJugador = serializarJugador();
+	        String nickname = jugadorActual.getNombre();
 	        
-	        // 3. Obtener datos del inventario
+	        // Obtener datos del inventario
 	        int numDados = jugadorActual.getPinguino().getInv().getCantidad("dado rápido") + 
 	                      jugadorActual.getPinguino().getInv().getCantidad("dado lento");
 	        int numPeces = jugadorActual.getPinguino().getInv().getCantidad("pez");
 	        int numBolasNieve = jugadorActual.getPinguino().getInv().getCantidad("bola de nieve");
 
-	        // 4. Verificar si ya existe una partida para actualizar
-	        String sqlCheck = "SELECT * FROM PARTIDAS WHERE NICKNAME = '" + jugadorActual.getNombre() + "'";
+	        // Verificar si ya existe una partida para actualizar
+	        String sqlCheck = "SELECT * FROM PARTIDAS WHERE NICKNAME = '" + nickname + "'";
 	        ResultSet rs = bbdd.select(con, sqlCheck);
 
 	        if (rs.next()) {
@@ -136,12 +131,12 @@ public class pantallaJuegoController implements GestorMensajes {
 	                              "HORA = TO_CHAR(SYSTIMESTAMP, 'HH24:MI:SS'), " +
 	                              "ESTADO_TABLERO = '" + estadoTablero + "', " +
 	                              "ESTADO_PARTIDA = '" + estadoJugador + "' " +
-	                              "WHERE NICKNAME = '" + jugadorActual.getNombre() + "'";
+	                              "WHERE NICKNAME = '" + nickname + "'";
 	            bbdd.update(con, sqlPartida);
 	        } else {
 	            // Insertar nueva partida
-	            String sqlPartida = "INSERT INTO PARTIDAS (NICKNAME, FECHA, HORA, ESTADO_TABLERO, ESTADO_PARTIDA) " +
-	                              "VALUES ('" + jugadorActual.getNombre() + "', " +
+	            String sqlPartida = "INSERT INTO PARTIDAS (NUM_PARTIDA, FECHA, HORA, ESTADO_TABLERO, ESTADO_PARTIDA) " +
+	                              "VALUES (" + "JP_S01.nextval, " +
 	                              "SYSDATE, " +
 	                              "TO_CHAR(SYSTIMESTAMP, 'HH24:MI:SS'), " +
 	                              "'" + estadoTablero + "', " +
@@ -149,12 +144,12 @@ public class pantallaJuegoController implements GestorMensajes {
 	            bbdd.insert(con, sqlPartida);
 	        }
 
-	        // 5. Actualizar inventario del jugador
+	        // Actualizar inventario del jugador
 	        String sqlInventario = "UPDATE JUGADOR SET " +
 	                              "NUM_DADOS = " + numDados + ", " +
 	                              "NUM_PECES = " + numPeces + ", " +
 	                              "NUM_BOLASNIEVE = " + numBolasNieve + " " +
-	                              "WHERE NICKNAME = '" + jugadorActual.getNombre() + "'";
+	                              "WHERE NICKNAME = '" + nickname + "'";
 	        bbdd.update(con, sqlInventario);
 
 	        eventos.setText("Partida guardada correctamente");
