@@ -24,14 +24,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-<<<<<<< Updated upstream
-public class pantallaJuegoController implements GestorMensajes {
-=======
 import bbdd.bbdd;
 
-public class pantallaJuegoController {
->>>>>>> Stashed changes
+public class pantallaJuegoController implements GestorMensajes {
 
 	private GestorTablero gestorTablero;
 	private Jugador jugadorActual;
