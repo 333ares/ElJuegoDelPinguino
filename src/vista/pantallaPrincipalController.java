@@ -56,54 +56,41 @@ public class pantallaPrincipalController {
 	// Inicio de sesión
 	@FXML
 	private void handleLogin(ActionEvent event) {
-		String username = userField.getText();
-		String password = passField.getText();
+	    String username = userField.getText();
+	    String password = passField.getText();
 
-		System.out.println("Login pressed: " + username + " / " + password);
+	    if (!username.isEmpty() && !password.isEmpty()) {
+	        try {
+	            String sqlCheck = "SELECT * FROM JUGADORES WHERE NICKNAME = '" + username + "' AND CONTRASEÑA = '" + password + "'";
+	            ResultSet rs = bbdd.select(con, sqlCheck);
 
-		// Basic check (just for demo, replace with real login logic)
-		if (!username.isEmpty() && !password.isEmpty()) {
-			try {
-				// Cargar pantalla de juego
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-				Parent root = loader.load();
+	            if (rs.next()) {
+	                FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaMenu.fxml"));
+	                Parent root = loader.load();
 
-				// Configurar controlador del juego
-				pantallaJuegoController juegoController = loader.getController();
+	                pantallaMenuController menuController = loader.getController();
+	                
+	                menuController.initializeController(
+	                    new Jugador(0, username, "Azul", new Pinguino(new Inventario(new ArrayList<>()))),
+	                    new Tablero()
+	                );
+	                menuController.setConnection(con);
 
-				// En tu método que inicializa el juego:
-				Tablero tablero = new Tablero();
-				GestorTablero gestorTablero = new GestorTablero(tablero);
-				tablero.setGestorTablero(gestorTablero); // Esto es crucial para los agujeros
-
-				// Crear jugador con inventario
-				ArrayList<Item> itemsIniciales = new ArrayList<>();
-				itemsIniciales.add(new Item("dado rápido", 1));
-				itemsIniciales.add(new Item("dado lento", 1));
-				itemsIniciales.add(new Item("bola de nieve", 2));
-				itemsIniciales.add(new Item("pez", 3));
-
-				Inventario inventario = new Inventario(itemsIniciales);
-				Pinguino pinguino = new Pinguino(inventario);
-				Jugador jugador = new Jugador(0, "Jugador1", "Azul", pinguino);
-
-				// Crear gestor de jugador y establecer la referencia en el tablero
-				GestorJugador gestorJugador = new GestorJugador(jugador, tablero);
-				tablero.setGestorJugador(gestorJugador);
-
-				// Inicializar controlador
-				juegoController.initializeController(gestorJugador, gestorTablero, jugador, tablero);
-
-				// Mostrar pantalla de juego
-				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				stage.setScene(new Scene(root));
-				stage.setTitle("Menu principal");
-			} catch (IOException e) {
-				e.printStackTrace(); // Mostrar mensaje de error
-
-			}
-		}
+	                ((Stage) loginButton.getScene().getWindow()).close();
+	                
+	                Stage stage = new Stage();
+	                stage.setScene(new Scene(root));
+	                stage.setTitle("Menú Principal");
+	                stage.show();
+	            } else {
+	                System.out.println("Credenciales incorrectas");
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
+
 
 	// Registro de usuarios
 	@FXML
