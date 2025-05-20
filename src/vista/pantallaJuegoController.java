@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -108,60 +109,74 @@ public class pantallaJuegoController implements GestorMensajes {
 	// Boton de guardar del juego
 	@FXML
 	private void handleSaveGame(ActionEvent event) {
-	    try {
-	        // 1. Verificar que tenemos conexión
+		try {
+	        // 1. Verificar conexión
 	        if (con == null || con.isClosed()) {
 	            eventos.setText("Error: No hay conexión a la BD");
 	            return;
 	        }
 
-	        // 2. Serializar el estado del tablero y del jugador
+	        // 2. Serializar estados
 	        String estadoTablero = serializarTablero();
-	        String estadoJugador = serializarJugador();
-	        
-	        // 3. Obtener datos del inventario
-	        int numDados = jugadorActual.getPinguino().getInv().getCantidad("dado rápido") + 
-	                      jugadorActual.getPinguino().getInv().getCantidad("dado lento");
+	        String estadoPartida = serializarJugador();
+
+	        // 3. Obtener datos del inventario (ahora separados)
+	        int numDadosRapidos = jugadorActual.getPinguino().getInv().getCantidad("dado rápido");
+	        int numDadosLentos = jugadorActual.getPinguino().getInv().getCantidad("dado lento");
 	        int numPeces = jugadorActual.getPinguino().getInv().getCantidad("pez");
 	        int numBolasNieve = jugadorActual.getPinguino().getInv().getCantidad("bola de nieve");
 
-	        // 4. Verificar si ya existe una partida para actualizar
-	        String sqlCheck = "SELECT * FROM PARTIDAS WHERE NICKNAME = '" + jugadorActual.getNombre() + "'";
-	        ResultSet rs = bbdd.select(con, sqlCheck);
-
-	        if (rs.next()) {
-	            // Actualizar partida existente
-	            String sqlPartida = "UPDATE PARTIDAS SET " +
-	                              "FECHA = SYSDATE, " +
-	                              "HORA = TO_CHAR(SYSTIMESTAMP, 'HH24:MI:SS'), " +
-	                              "ESTADO_TABLERO = '" + estadoTablero + "', " +
-	                              "ESTADO_PARTIDA = '" + estadoJugador + "' " +
-	                              "WHERE NICKNAME = '" + jugadorActual.getNombre() + "'";
-	            bbdd.update(con, sqlPartida);
-	        } else {
-	            // Insertar nueva partida
-	            String sqlPartida = "INSERT INTO PARTIDAS (NICKNAME, FECHA, HORA, ESTADO_TABLERO, ESTADO_PARTIDA) " +
-	                              "VALUES ('" + jugadorActual.getNombre() + "', " +
-	                              "SYSDATE, " +
-	                              "TO_CHAR(SYSTIMESTAMP, 'HH24:MI:SS'), " +
-	                              "'" + estadoTablero + "', " +
-	                              "'" + estadoJugador + "')";
-	            bbdd.insert(con, sqlPartida);
+	        // 4. Insertar nueva partida
+	        String sqlPartida = "INSERT INTO PARTIDAS (num_partida, fecha, hora, estado_tablero, estado_partida) " +
+	                          "VALUES (JP_S01.NEXTVAL, SYSDATE, " +
+	                          "TO_CHAR(SYSTIMESTAMP, 'HH24MI'), " +
+	                          "?, ?)";
+	        
+	        try (PreparedStatement psPartida = con.prepareStatement(sqlPartida)) {
+	            psPartida.setString(1, estadoTablero);
+	            psPartida.setString(2, estadoPartida);
+	            psPartida.executeUpdate();
 	        }
 
-	        // 5. Actualizar inventario del jugador
-	        String sqlInventario = "UPDATE JUGADOR SET " +
-	                              "NUM_DADOS = " + numDados + ", " +
-	                              "NUM_PECES = " + numPeces + ", " +
-	                              "NUM_BOLASNIEVE = " + numBolasNieve + " " +
-	                              "WHERE NICKNAME = '" + jugadorActual.getNombre() + "'";
-	        bbdd.update(con, sqlInventario);
+	        // 5. Actualizar inventario del jugador (con dados separados)
+	        String sqlInventario = "MERGE INTO INVENTARIO_JUGADORES " +
+	                             "USING DUAL ON (jugador = ?) " +
+	                             "WHEN MATCHED THEN UPDATE SET " +
+	                             "num_dadosr = ?, num_dadosl = ?, " +
+	                             "num_peces = ?, num_bolasNieve = ? " +
+	                             "WHEN NOT MATCHED THEN INSERT " +
+	                             "(jugador, num_dadosr, num_dadosl, num_peces, num_bolasNieve) " +
+	                             "VALUES (?, ?, ?, ?, ?)";
+	        
+	        try (PreparedStatement psInventario = con.prepareStatement(sqlInventario)) {
+	            psInventario.setString(1, jugadorActual.getNombre());
+	            psInventario.setInt(2, numDadosRapidos);
+	            psInventario.setInt(3, numDadosLentos);
+	            psInventario.setInt(4, numPeces);
+	            psInventario.setInt(5, numBolasNieve);
+	            psInventario.setString(6, jugadorActual.getNombre());
+	            psInventario.setInt(7, numDadosRapidos);
+	            psInventario.setInt(8, numDadosLentos);
+	            psInventario.setInt(9, numPeces);
+	            psInventario.setInt(10, numBolasNieve);
+	            psInventario.executeUpdate();
+	        }
+
+	        // 6. Actualizar contador de partidas del jugador
+	        String sqlUpdateJugador = "UPDATE JUGADORES SET partidas_jugadas = partidas_jugadas + 1 " +
+	                                 "WHERE nickname = ?";
+	        
+	        try (PreparedStatement psUpdate = con.prepareStatement(sqlUpdateJugador)) {
+	            psUpdate.setString(1, jugadorActual.getNombre());
+	            psUpdate.executeUpdate();
+	        }
 
 	        eventos.setText("Partida guardada correctamente");
 	    } catch (SQLException e) {
 	        eventos.setText("Error al guardar: " + e.getMessage());
 	        e.printStackTrace();
 	    }
+
 	}
 	
 	private String serializarJugador() {

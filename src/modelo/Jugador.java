@@ -110,19 +110,8 @@ public class Jugador {
 	}
 	
 	public String serializar() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append(posicion).append(";");
-	    sb.append(protegidoDelOso).append(";");
+		 return String.valueOf(this.posicion);
 	    
-	    // Serializar inventario
-	    if (pinguino != null && pinguino.getInv() != null) {
-	        sb.append("INV:");
-	        sb.append("dado_rápido:").append(pinguino.getInv().getCantidad("dado rápido")).append(",");
-	        sb.append("dado_lento:").append(pinguino.getInv().getCantidad("dado lento")).append(",");
-	        // ... otros items
-	    }
-	    
-	    return sb.toString();
 	}
 
 	public void deserializar(String estado) {

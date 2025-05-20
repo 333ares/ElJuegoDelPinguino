@@ -2,6 +2,7 @@ package vista;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -78,14 +79,17 @@ public class pantallaMenuController {
 	        String estadoJugador = serializarJugador();
             
             // 3. Insertar nueva partida en la BD
+	     // Cambiar el INSERT a PARTIDAS para que coincida con el modelo
 	        String sqlInsert = "INSERT INTO PARTIDAS (NUM_PARTIDA, FECHA, HORA, ESTADO_TABLERO, ESTADO_PARTIDA) VALUES (" +
 	                 "JP_S01.NEXTVAL, " +
 	                 "CURRENT_DATE, " +
-	                 "TO_CHAR(CURRENT_TIMESTAMP, 'HH24:MI:SS'), " +
+	                 "TO_CHAR(CURRENT_TIMESTAMP, 'HH24MI'), " +
 	                 "'" + estadoTablero + "', " +
-	                 "'" + estadoJugador + "')";
-            
-            bbdd.insert(con, sqlInsert);
+	                 "'" + estadoJugador + "')"; 
+	        // Y agregar esto para registrar la relación jugador-partida (si es necesaria)
+	        String sqlRelacion = "INSERT INTO INVENTARIO_JUGADORES (jugador, num_dados, num_peces, num_bolasNieve) " +
+	                            "VALUES ('" + nickname + "', 0, 0, 0)";
+	        bbdd.insert(con, sqlRelacion);
             
             // 4. Actualizar contador de partidas del jugador
             String sqlUpdate = "UPDATE JUGADORES SET PARTIDAS_JUGADAS = PARTIDAS_JUGADAS + 1 " +
@@ -114,38 +118,55 @@ public class pantallaMenuController {
 
     @FXML
     private void handleLoadGame(ActionEvent event) {
-        try {
-            String sql = "SELECT * FROM PARTIDAS WHERE NICKNAME = '" + jugador.getNombre() + "' ORDER BY FECHA DESC, HORA DESC";
-            ResultSet rs = bbdd.select(con, sql);
+    	 try {
+    	        String sql = "SELECT * FROM PARTIDAS WHERE num_partida = " +
+    	                   "(SELECT MAX(num_partida) FROM PARTIDAS)";
+    	        ResultSet rs = bbdd.select(con, sql);
 
-            if (rs.next()) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
-                Parent root = loader.load();
+    	        if (rs.next()) {
+    	            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaJuego.fxml"));
+    	            Parent root = loader.load();
 
-                // Cargar partida existente
-                String estadoTablero = rs.getString("ESTADO_TABLERO");
-                String estadoPartida = rs.getString("ESTADO_PARTIDA");
-                
-                Tablero tablero = deserializarTablero(estadoTablero);
-                Jugador jugador = deserializarJugador(estadoPartida);
-                
-                GestorTablero gestorTablero = new GestorTablero(tablero);
-                GestorJugador gestorJugador = new GestorJugador(jugador, tablero);
-                
-                pantallaJuegoController juegoController = loader.getController();
-                juegoController.initializeController(gestorJugador, gestorTablero, jugador, tablero);
-                juegoController.setConnection(con);
+    	            // Cargar partida existente
+    	            String estadoTablero = rs.getString("ESTADO_TABLERO");
+    	            String estadoPartida = rs.getString("ESTADO_PARTIDA");
+    	            
+    	            Tablero tablero = deserializarTablero(estadoTablero);
+    	            Jugador jugador = deserializarJugador(estadoPartida);
+    	            
+    	            // Cargar inventario
+    	            String sqlInventario = "SELECT * FROM INVENTARIO_JUGADORES WHERE jugador = ?";
+    	            try (PreparedStatement ps = con.prepareStatement(sqlInventario)) {
+    	                ps.setString(1, jugador.getNombre());
+    	                ResultSet rsInv = ps.executeQuery();
+    	                
+    	                if (rsInv.next()) {
+    	                    Inventario inv = new Inventario(new ArrayList<>());
+    	                    inv.añadirItem(new Item("dado rápido", rsInv.getInt("num_dadosr")));
+    	                    inv.añadirItem(new Item("dado lento", rsInv.getInt("num_dadosl")));
+    	                    inv.añadirItem(new Item("pez", rsInv.getInt("num_peces")));
+    	                    inv.añadirItem(new Item("bola de nieve", rsInv.getInt("num_bolasNieve")));
+    	                    jugador.getPinguino().setInv(inv);
+    	                }
+    	            }
+    	            
+    	            GestorTablero gestorTablero = new GestorTablero(tablero);
+    	            GestorJugador gestorJugador = new GestorJugador(jugador, tablero);
+    	            
+    	            pantallaJuegoController juegoController = loader.getController();
+    	            juegoController.initializeController(gestorJugador, gestorTablero, jugador, tablero);
+    	            juegoController.setConnection(con);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Partida cargada");
-            } else {
-                showAlert("Información", "No tienes partidas guardadas");
-            }
-        } catch (Exception e) {
-            showAlert("Error", "No se pudo cargar la partida: " + e.getMessage());
-            e.printStackTrace();
-        }
+    	            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	            stage.setScene(new Scene(root));
+    	            stage.setTitle("Partida cargada");
+    	        } else {
+    	            showAlert("Información", "No tienes partidas guardadas");
+    	        }
+    	    } catch (Exception e) {
+    	        showAlert("Error", "No se pudo cargar la partida: " + e.getMessage());
+    	        e.printStackTrace();
+    	    }
     }
     
     @FXML
