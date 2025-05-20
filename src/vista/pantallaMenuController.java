@@ -81,7 +81,7 @@ public class pantallaMenuController {
             // 3. Insertar nueva partida en la BD
 	     // Cambiar el INSERT a PARTIDAS para que coincida con el modelo
 	        String sqlInsert = "INSERT INTO PARTIDAS (NUM_PARTIDA, FECHA, HORA, ESTADO_TABLERO, ESTADO_PARTIDA) VALUES (" +
-	                 "JP_S01.NEXTVAL, " +
+	                 "JP_S01.nextval, " +
 	                 "CURRENT_DATE, " +
 	                 "TO_CHAR(CURRENT_TIMESTAMP, 'HH24MI'), " +
 	                 "'" + estadoTablero + "', " +

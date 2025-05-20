@@ -11,8 +11,9 @@ import controlador.GestorTablero;
 public class Tablero {
 
 	/*
-	 * Representa el tablero de juego con sus casillas especiales y estado del juego.
-	 * Gera la lógica principal del tablero y la interacción con los jugadores.
+	 * Representa el tablero de juego con sus casillas especiales y estado del
+	 * juego. Gera la lógica principal del tablero y la interacción con los
+	 * jugadores.
 	 */
 	private Casilla[] casillas;
 	private Jugador jugadorActual;
@@ -29,7 +30,8 @@ public class Tablero {
 	public void setGestorTablero(GestorTablero gestorTablero) {
 		this.gestorTablero = gestorTablero;
 		// Pasamos las posiciones de agujeros al gestor
-		// this.gestorTablero.setPosicionesAgujeros(new ArrayList<>(this.posicionesAgujeros));
+		// this.gestorTablero.setPosicionesAgujeros(new
+		// ArrayList<>(this.posicionesAgujeros));
 	}
 
 	public void setGestorJugador(GestorJugador gestorJugador) {
@@ -41,12 +43,9 @@ public class Tablero {
 	}
 
 	/*
-     * Constructor que inicializa un tablero con:
-     * - 50 casillas
-     * - Un jugador inicial
-     * - Turno en 0
-     * - Casillas especiales distribuidas aleatoriamente
-     */
+	 * Constructor que inicializa un tablero con: - 50 casillas - Un jugador inicial
+	 * - Turno en 0 - Casillas especiales distribuidas aleatoriamente
+	 */
 	public Tablero() {
 		this.casillas = new Casilla[50];
 		this.jugadorActual = inicializarJugador();
@@ -55,7 +54,7 @@ public class Tablero {
 	}
 
 	public void inicializarTableroCompleto() {
-	    inicializarCasillas();
+		inicializarCasillas();
 	}
 
 	public void inicializarCasillas() {
@@ -199,47 +198,52 @@ public class Tablero {
 	public void setPosicionesOsos(List<Integer> posicionesOsos) {
 		this.posicionesOsos = posicionesOsos;
 	}
-	
+
 	public String serializar() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append(turnos).append(";");
-	    
-	    // Serializar casillas especiales
-	    for (int i = 0; i < casillas.length; i++) {
-	        String tipo = getCasillaTipo(i);
-	        if (!"Normal".equals(tipo)) {
-	            sb.append(i).append(":").append(tipo).append(",");
-	        }
-	    }
-	    
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append(turnos).append(";");
+
+		// Serializar casillas especiales
+		for (int i = 0; i < casillas.length; i++) {
+			String tipo = getCasillaTipo(i);
+			if (!"Normal".equals(tipo)) {
+				sb.append(i).append("-").append(tipo).append(",");
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public void deserializar(String estado) {
-	    String[] partes = estado.split(";");
-	    this.turnos = Integer.parseInt(partes[0]);
-	    
-	    // Reconstruir casillas especiales
-	    if (partes.length > 1) {
-	        String[] casillasEspeciales = partes[1].split(",");
-	        for (String casilla : casillasEspeciales) {
-	            if (!casilla.isEmpty()) {
-	                String[] datos = casilla.split(":");
-	                int posicion = Integer.parseInt(datos[0]);
-	                String tipo = datos[1];
-	                
-	                switch (tipo) {
-	                    case "Oso":
-	                        crearCasillaEspecial(posicion, new Oso(posicion), posicionesOsos);
-	                        break;
-	                    case "Agujero":
-	                        crearCasillaEspecial(posicion, new Agujero(posicion, gestorTablero), posicionesAgujeros);
-	                        break;
-	                    // ... otros tipos
-	                }
-	            }
-	        }
-	    }
+		String[] partes = estado.split("|");
+		this.turnos = Integer.parseInt(partes[0]);
+
+		// Reconstruir casillas especiales
+		if (partes.length > 1) {
+			String[] casillasEspeciales = partes[1].split(",");
+			for (String casilla : casillasEspeciales) {
+				if (!casilla.isEmpty()) {
+					String[] datos = casilla.split("-");
+					int posicion = Integer.parseInt(datos[0]);
+					String tipo = datos[1];
+
+					switch (tipo) {
+					case "Oso":
+						crearCasillaEspecial(posicion, new Oso(posicion), posicionesOsos);
+						break;
+					case "Agujero":
+						crearCasillaEspecial(posicion, new Agujero(posicion, gestorTablero), posicionesAgujeros);
+						break;
+					case "Trineo":
+						crearCasillaEspecial(posicion, new Trineo(posicion), posicionesTrineos);
+						break;
+					case "Evento":
+						crearCasillaEspecial(posicion, new Evento(posicion), posicionesEventos);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 }

@@ -115,14 +115,14 @@ public class Jugador {
 	}
 
 	public void deserializar(String estado) {
-	    String[] partes = estado.split(";");
+	    String[] partes = estado.split("|");
 	    this.posicion = Integer.parseInt(partes[0]);
 	    this.protegidoDelOso = Boolean.parseBoolean(partes[1]);
 	    
 	    if (partes.length > 2 && partes[2].startsWith("INV:")) {
 	        String[] items = partes[2].substring(4).split(",");
 	        for (String item : items) {
-	            String[] datos = item.split(":");
+	            String[] datos = item.split("-");
 	            String nombre = datos[0].replace("_", " ");
 	            int cantidad = Integer.parseInt(datos[1]);
 	            
