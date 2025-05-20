@@ -1,5 +1,7 @@
 package modelo;
 
+
+
 public class Trineo extends Casilla {
 
 	/*
@@ -23,9 +25,17 @@ public class Trineo extends Casilla {
 	}
 
 	public void realizarAccion(Jugador j) {
+	
 	     int avance = 10; // Avanza 10 casillas
 	        int nuevaPos = Math.min(j.getPosicion() + avance, 49); // No pasar del límite
 	        j.setPosicion(nuevaPos);
+	     
+	        String mensaje = "Has caído en la casilla Trineo: Avanzas " + avance + " casillas";
+	        if (j.getGestorMensajes() != null) {
+	            j.getGestorMensajes().agregarMensaje(mensaje);
+	        }
+
+	        
 	}
 
 }

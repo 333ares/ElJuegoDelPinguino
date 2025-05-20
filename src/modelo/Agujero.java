@@ -11,19 +11,26 @@ public class Agujero extends Casilla {
 	}
 
 	public void realizarAccion(Jugador j) {
-		// Buscar posición del agujero anterior
-		int nuevaPos = gestor.buscarAgujeroAnterior(getPosicion());
+		if (gestor != null) {
+            // Buscar posición del agujero anterior
+            int nuevaPos = gestor.buscarAgujeroAnterior(getPosicion());
+            
+            // Mover jugador a la nueva posición
+            j.setPosicion(nuevaPos);
+            
+            String mensaje = "Has caído en un Agujero: Retrocedes a la casilla " + nuevaPos;
+            if (j.getGestorMensajes() != null) {
+                j.getGestorMensajes().agregarMensaje(mensaje);
+            }
 
-		// Mover jugador a la nueva posición
-		j.setPosicion(nuevaPos);
+            // Verificar si la nueva posición tiene otro efecto
+            Casilla destino = gestor.getTablero().getCasillas()[nuevaPos];
+            
+            // Si la nueva casilla NO es normal, activar su efecto
+            if (!(destino instanceof CasillaNormal)) {
+                destino.realizarAccion(j);
+            }
+        }
 
-		// Verificar si la nueva posición tiene otro efecto
-		Casilla destino = gestor.getTablero().getCasillas()[nuevaPos];
-
-		// Si la nueva casilla NO es normal, activar su efecto
-		if (!(destino instanceof CasillaNormal)) { // instanceof = operador de Java que comprueba si un objeto es una
-													// instancia de una clase específica o de sus subclases
-			destino.realizarAccion(j);
-		}
 	}
 }

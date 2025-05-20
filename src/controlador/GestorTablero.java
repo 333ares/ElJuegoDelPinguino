@@ -34,6 +34,7 @@ public class GestorTablero {
 	 * los efectos de la casilla correspondiente.
 	 */
 	public void actualizarMovimientoJugador(Jugador jugador, int pasos) {
+		
 		// Calculamos la nueva posición sumando los pasos a la posición actual
 		int posicionTemporal = jugador.getPosicion() + pasos;
 

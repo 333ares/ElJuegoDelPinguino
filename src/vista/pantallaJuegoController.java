@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class pantallaJuegoController {
+public class pantallaJuegoController implements GestorMensajes {
 
 	private GestorTablero gestorTablero;
 	private Jugador jugadorActual;
@@ -71,6 +71,24 @@ public class pantallaJuegoController {
 	 * ha comenzado.
 	 * 
 	 */
+	
+	 @Override
+	    public void agregarMensaje(String mensaje) {
+	        Platform.runLater(() -> {
+	            eventos.setText(eventos.getText() + "\n" + mensaje);
+	            
+	            // Limitar el historial de eventos a 5 líneas
+	            String[] lineas = eventos.getText().split("\n");
+	            if (lineas.length > 5) {
+	                StringBuilder nuevoTexto = new StringBuilder();
+	                for (int i = lineas.length - 5; i < lineas.length; i++) {
+	                    nuevoTexto.append(lineas[i]).append("\n");
+	                }
+	                eventos.setText(nuevoTexto.toString().trim());
+	            }
+	        });
+	    }
+
 	@FXML
 	private void initialize() {
 		eventos.setText("¡El juego ha comenzado!");
@@ -273,6 +291,9 @@ public class pantallaJuegoController {
 		this.jugadorActual = jugadorActual;
 		this.tableroActual = tablero;
 
+		 // Configurar el gestor de mensajes
+        jugadorActual.setGestorMensajes(this);
+		
 		// Inicializar inventario con items básicos si está vacío
 		if (this.jugadorActual.getPinguino() == null) {
 			this.jugadorActual.setPinguino(new Pinguino(new Inventario(new ArrayList<>())));
