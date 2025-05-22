@@ -56,41 +56,40 @@ public class pantallaPrincipalController {
 	// Inicio de sesión
 	@FXML
 	private void handleLogin(ActionEvent event) {
-	    String username = userField.getText();
-	    String password = passField.getText();
+		String username = userField.getText();
+		String password = passField.getText();
 
-	    if (!username.isEmpty() && !password.isEmpty()) {
-	        try {
-	            String sqlCheck = "SELECT * FROM JUGADORES WHERE NICKNAME = '" + username + "' AND CONTRASEÑA = '" + password + "'";
-	            ResultSet rs = bbdd.select(con, sqlCheck);
+		if (!username.isEmpty() && !password.isEmpty()) {
+			try {
+				String sqlCheck = "SELECT * FROM JUGADORES WHERE NICKNAME = '" + username + "' AND CONTRASEÑA = '"
+						+ password + "'";
+				ResultSet rs = bbdd.select(con, sqlCheck);
 
-	            if (rs.next()) {
-	                FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaMenu.fxml"));
-	                Parent root = loader.load();
+				if (rs.next()) {
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/pantallaMenu.fxml"));
+					Parent root = loader.load();
 
-	                pantallaMenuController menuController = loader.getController();
-	                
-	                menuController.initializeController(
-	                    new Jugador(0, username, "Azul", new Pinguino(new Inventario(new ArrayList<>()))),
-	                    new Tablero()
-	                );
-	                menuController.setConnection(con);
+					pantallaMenuController menuController = loader.getController();
 
-	                ((Stage) loginButton.getScene().getWindow()).close();
-	                
-	                Stage stage = new Stage();
-	                stage.setScene(new Scene(root));
-	                stage.setTitle("Menú Principal");
-	                stage.show();
-	            } else {
-	                System.out.println("Credenciales incorrectas");
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
+					menuController.initializeController(
+							new Jugador(0, username, "Azul", new Pinguino(new Inventario(new ArrayList<>()))),
+							new Tablero());
+					menuController.setConnection(con);
+
+					((Stage) loginButton.getScene().getWindow()).close();
+
+					Stage stage = new Stage();
+					stage.setScene(new Scene(root));
+					stage.setTitle("Menú Principal");
+					stage.show();
+				} else {
+					System.out.println("Credenciales incorrectas");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
 
 	// Registro de usuarios
 	@FXML

@@ -16,8 +16,7 @@ public class CasillaNormal extends Casilla {
 	}
 
 	public void realizarAccion(Jugador j) {
-		
-		
+
 	}
 
 }

@@ -37,7 +37,7 @@ public class Inventario {
 					// Si tiene más de 1, reduce la cantidad
 					itemActual.setCantidad(itemActual.getCantidad() - 1);
 				} else {
-					 // Si solo queda 1, elimina el ítem completamente
+					// Si solo queda 1, elimina el ítem completamente
 					items.remove(i);
 				}
 				break; // Terminamos el bucle tras encontrar el ítem

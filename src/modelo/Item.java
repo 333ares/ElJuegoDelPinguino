@@ -4,7 +4,8 @@ public class Item {
 	private String nombre;
 	private int cantidad;
 
-	/* Representa un ítem dentro del inventario del jugador.
+	/*
+	 * Representa un ítem dentro del inventario del jugador.
 	 * 
 	 * Contiene información sobre el tipo de ítem y la cantidad disponible.
 	 */

@@ -31,21 +31,19 @@ public class Jugador {
 		this.color = color;
 		this.pinguino = pinguino != null ? pinguino : new Pinguino(new Inventario(null));
 		this.tablero = tablero;
-		
+
 	}
 
 	// GETTERS Y SETTERS
 
-	 public GestorMensajes getGestorMensajes() {
-	        return gestorMensajes;
-	    }
+	public GestorMensajes getGestorMensajes() {
+		return gestorMensajes;
+	}
 
+	public void setGestorMensajes(GestorMensajes gestorMensajes) {
+		this.gestorMensajes = gestorMensajes;
+	}
 
-	    public void setGestorMensajes(GestorMensajes gestorMensajes) {
-	        this.gestorMensajes = gestorMensajes;
-	    }
-
-	
 	public Tablero getTablero() {
 		return tablero;
 	}
@@ -108,50 +106,47 @@ public class Jugador {
 	public boolean isProtegidoDelOso() {
 		return protegidoDelOso;
 	}
-	
+
 	public String serializar() {
-		  StringBuilder sb = new StringBuilder();
-		    sb.append(posicion).append(";")
-		      .append(protegidoDelOso).append(";")
-		      .append("INV:");
-		    
-		    // Serializar inventario
-		    if (pinguino != null && pinguino.getInv() != null) {
-		        for (Item item : pinguino.getInv().getLista()) {
-		            sb.append(item.getNombre().replace(" ", "_")).append("-")
-		              .append(item.getCantidad()).append(",");
-		        }
-		    }
-		    
-		    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append(posicion).append(";").append(protegidoDelOso).append(";").append("INV:");
+
+		// Serializar inventario
+		if (pinguino != null && pinguino.getInv() != null) {
+			for (Item item : pinguino.getInv().getLista()) {
+				sb.append(item.getNombre().replace(" ", "_")).append("-").append(item.getCantidad()).append(",");
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public void deserializar(String estado) {
-		 String[] partes = estado.split(";");
-		    if (partes.length > 0) {
-		        this.posicion = Integer.parseInt(partes[0]);
-		    }
-		    if (partes.length > 1) {
-		        this.protegidoDelOso = Boolean.parseBoolean(partes[1]);
-		    }
-		    if (partes.length > 2 && partes[2].startsWith("INV:")) {
-		        String[] items = partes[2].substring(4).split(",");
-		        for (String item : items) {
-		            if (!item.isEmpty()) {
-		                String[] datos = item.split("-");
-		                String nombre = datos[0].replace("_", " ");
-		                int cantidad = Integer.parseInt(datos[1]);
-		                
-		                if (pinguino == null) {
-		                    pinguino = new Pinguino(new Inventario(new ArrayList<>()));
-		                }
-		                if (pinguino.getInv() == null) {
-		                    pinguino.setInv(new Inventario(new ArrayList<>()));
-		                }
-		                
-		                pinguino.getInv().añadirItem(new Item(nombre, cantidad));
-		            }
-		        }
-		    }
+		String[] partes = estado.split(";");
+		if (partes.length > 0) {
+			this.posicion = Integer.parseInt(partes[0]);
+		}
+		if (partes.length > 1) {
+			this.protegidoDelOso = Boolean.parseBoolean(partes[1]);
+		}
+		if (partes.length > 2 && partes[2].startsWith("INV:")) {
+			String[] items = partes[2].substring(4).split(",");
+			for (String item : items) {
+				if (!item.isEmpty()) {
+					String[] datos = item.split("-");
+					String nombre = datos[0].replace("_", " ");
+					int cantidad = Integer.parseInt(datos[1]);
+
+					if (pinguino == null) {
+						pinguino = new Pinguino(new Inventario(new ArrayList<>()));
+					}
+					if (pinguino.getInv() == null) {
+						pinguino.setInv(new Inventario(new ArrayList<>()));
+					}
+
+					pinguino.getInv().añadirItem(new Item(nombre, cantidad));
+				}
+			}
+		}
 	}
 }

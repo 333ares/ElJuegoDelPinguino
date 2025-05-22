@@ -77,119 +77,112 @@ public class pantallaJuegoController implements GestorMensajes {
 	 * ha comenzado.
 	 * 
 	 */
-	
-	 @Override
-	    public void agregarMensaje(String mensaje) {
-		  Platform.runLater(() -> {
-		        // Solo añade el nuevo mensaje sin borrar los anteriores
-		        eventos.setText(eventos.getText() + "\n" + mensaje);
-		        
-		        // Opcional: puedes limitar a un máximo de líneas si lo prefieres
-		        String[] lineas = eventos.getText().split("\n");
-		        if (lineas.length > 20) { // Por ejemplo, mantener 20 líneas como máximo
-		            StringBuilder nuevoTexto = new StringBuilder();
-		            for (int i = lineas.length - 20; i < lineas.length; i++) {
-		                nuevoTexto.append(lineas[i]).append("\n");
-		            }
-		            eventos.setText(nuevoTexto.toString().trim());
-		        }
-		    });
 
-	    }
+	@Override
+	public void agregarMensaje(String mensaje) {
+		Platform.runLater(() -> {
+			// Solo añade el nuevo mensaje sin borrar los anteriores
+			eventos.setText(eventos.getText() + "\n" + mensaje);
+
+			String[] lineas = eventos.getText().split("\n");
+			if (lineas.length > 20) {
+				StringBuilder nuevoTexto = new StringBuilder();
+				for (int i = lineas.length - 20; i < lineas.length; i++) {
+					nuevoTexto.append(lineas[i]).append("\n");
+				}
+				eventos.setText(nuevoTexto.toString().trim());
+			}
+		});
+
+	}
 
 	@FXML
 	private void initialize() {
 		eventos.setText("¡El juego ha comenzado!");
 	}
-	
+
 	public void setConnection(Connection con) {
-        this.con = con;
-    }
+		this.con = con;
+	}
 
 	// Boton de guardar del juego
 	@FXML
 	private void handleSaveGame(ActionEvent event) {
 		try {
-	        // 1. Verificar conexión
-	        if (con == null || con.isClosed()) {
-	            eventos.setText("Error: No hay conexión a la BD");
-	            return;
-	        }
+			// 1. Verificar conexión
+			if (con == null || con.isClosed()) {
+				eventos.setText("Error: No hay conexión a la BD");
+				return;
+			}
 
-	        // 2. Serializar estados
-	        String estadoTablero = serializarTablero();
-	        String estadoPartida = serializarJugador();
+			// 2. Serializar estados
+			String estadoTablero = serializarTablero();
+			String estadoPartida = serializarJugador();
 
-	        // 3. Obtener datos del inventario (ahora separados)
-	        int numDadosRapidos = jugadorActual.getPinguino().getInv().getCantidad("dado rápido");
-	        int numDadosLentos = jugadorActual.getPinguino().getInv().getCantidad("dado lento");
-	        int numPeces = jugadorActual.getPinguino().getInv().getCantidad("pez");
-	        int numBolasNieve = jugadorActual.getPinguino().getInv().getCantidad("bola de nieve");
+			// 3. Obtener datos del inventario (ahora separados)
+			int numDadosRapidos = jugadorActual.getPinguino().getInv().getCantidad("dado rápido");
+			int numDadosLentos = jugadorActual.getPinguino().getInv().getCantidad("dado lento");
+			int numPeces = jugadorActual.getPinguino().getInv().getCantidad("pez");
+			int numBolasNieve = jugadorActual.getPinguino().getInv().getCantidad("bola de nieve");
 
-	        // 4. Insertar nueva partida
-	        String sqlPartida = "INSERT INTO PARTIDAS (num_partida, fecha, hora, estado_tablero, estado_partida, jugador) " +
-                    "VALUES (JP_S01.NEXTVAL, SYSDATE, " +
-                    "TO_CHAR(SYSTIMESTAMP, 'HH24MI'), " +
-                    "?, ?, ?)";
-  
-  try (PreparedStatement psPartida = con.prepareStatement(sqlPartida)) {
-      psPartida.setString(1, estadoTablero);
-      psPartida.setString(2, estadoPartida);
-      psPartida.setString(3, jugadorActual.getNombre());
-      psPartida.executeUpdate();
-  }
+			// 4. Insertar nueva partida
+			String sqlPartida = "INSERT INTO PARTIDAS (num_partida, fecha, hora, estado_tablero, estado_partida, jugador) "
+					+ "VALUES (JP_S01.NEXTVAL, SYSDATE, " + "TO_CHAR(SYSTIMESTAMP, 'HH24MI'), " + "?, ?, ?)";
 
-	        // 5. Actualizar inventario del jugador (con dados separados)
-	        String sqlInventario = "MERGE INTO INVENTARIO_JUGADORES " +
-	                             "USING DUAL ON (jugador = ?) " +
-	                             "WHEN MATCHED THEN UPDATE SET " +
-	                             "num_dadosr = ?, num_dadosl = ?, " +
-	                             "num_peces = ?, num_bolasNieve = ? " +
-	                             "WHEN NOT MATCHED THEN INSERT " +
-	                             "(jugador, num_dadosr, num_dadosl, num_peces, num_bolasNieve) " +
-	                             "VALUES (?, ?, ?, ?, ?)";
-	        
-	        try (PreparedStatement psInventario = con.prepareStatement(sqlInventario)) {
-	            psInventario.setString(1, jugadorActual.getNombre());
-	            psInventario.setInt(2, numDadosRapidos);
-	            psInventario.setInt(3, numDadosLentos);
-	            psInventario.setInt(4, numPeces);
-	            psInventario.setInt(5, numBolasNieve);
-	            psInventario.setString(6, jugadorActual.getNombre());
-	            psInventario.setInt(7, numDadosRapidos);
-	            psInventario.setInt(8, numDadosLentos);
-	            psInventario.setInt(9, numPeces);
-	            psInventario.setInt(10, numBolasNieve);
-	            psInventario.executeUpdate();
-	        }
+			try (PreparedStatement psPartida = con.prepareStatement(sqlPartida)) {
+				psPartida.setString(1, estadoTablero);
+				psPartida.setString(2, estadoPartida);
+				psPartida.setString(3, jugadorActual.getNombre());
+				psPartida.executeUpdate();
+			}
 
-	        // 6. Actualizar contador de partidas del jugador
-	        String sqlUpdateJugador = "UPDATE JUGADORES SET partidas_jugadas = partidas_jugadas + 1 " +
-	                                 "WHERE nickname = ?";
-	        
-	        try (PreparedStatement psUpdate = con.prepareStatement(sqlUpdateJugador)) {
-	            psUpdate.setString(1, jugadorActual.getNombre());
-	            psUpdate.executeUpdate();
-	        }
+			// 5. Actualizar inventario del jugador (con dados separados)
+			String sqlInventario = "MERGE INTO INVENTARIO_JUGADORES " + "USING DUAL ON (jugador = ?) "
+					+ "WHEN MATCHED THEN UPDATE SET " + "num_dadosr = ?, num_dadosl = ?, "
+					+ "num_peces = ?, num_bolasNieve = ? " + "WHEN NOT MATCHED THEN INSERT "
+					+ "(jugador, num_dadosr, num_dadosl, num_peces, num_bolasNieve) " + "VALUES (?, ?, ?, ?, ?)";
 
-	        eventos.setText("Partida guardada correctamente");
-	    } catch (SQLException e) {
-	        eventos.setText("Error al guardar: " + e.getMessage());
-	        e.printStackTrace();
-	    }
+			try (PreparedStatement psInventario = con.prepareStatement(sqlInventario)) {
+				psInventario.setString(1, jugadorActual.getNombre());// IN
+				psInventario.setInt(2, numDadosRapidos);
+				psInventario.setInt(3, numDadosLentos);
+				psInventario.setInt(4, numPeces);
+				psInventario.setInt(5, numBolasNieve);
+				psInventario.setString(6, jugadorActual.getNombre());// OUT
+				psInventario.setInt(7, numDadosRapidos);
+				psInventario.setInt(8, numDadosLentos);
+				psInventario.setInt(9, numPeces);
+				psInventario.setInt(10, numBolasNieve);
+				psInventario.executeUpdate();
+			}
+
+			// 6. Actualizar contador de partidas del jugador
+			String sqlUpdateJugador = "UPDATE JUGADORES SET partidas_jugadas = partidas_jugadas + 1 "
+					+ "WHERE nickname = ?";
+
+			try (PreparedStatement psUpdate = con.prepareStatement(sqlUpdateJugador)) {
+				psUpdate.setString(1, jugadorActual.getNombre());
+				psUpdate.executeUpdate();
+			}
+
+			eventos.setText("Partida guardada correctamente");
+		} catch (SQLException e) {
+			eventos.setText("Error al guardar: " + e.getMessage());
+			e.printStackTrace();
+		}
 
 	}
-	
+
 	private String serializarJugador() {
-	    // Implementa la lógica para convertir el estado del jugador a String
-	    return jugadorActual.serializar();
+		// Implementa la lógica para convertir el estado del jugador a String
+		return jugadorActual.serializar();
 	}
-	
+
 	private String serializarTablero() {
-	    // Implementa la lógica para convertir el estado del tablero a String
-	    return tableroActual.serializar();
+		// Implementa la lógica para convertir el estado del tablero a String
+		return tableroActual.serializar();
 	}
-	
+
 	// Lógica para hacer funcionar el dado
 	@FXML
 	private void handleDado(ActionEvent event) {
@@ -381,9 +374,9 @@ public class pantallaJuegoController implements GestorMensajes {
 		this.jugadorActual = jugadorActual;
 		this.tableroActual = tablero;
 
-		 // Configurar el gestor de mensajes
-        jugadorActual.setGestorMensajes(this);
-		
+		// Configurar el gestor de mensajes
+		jugadorActual.setGestorMensajes(this);
+
 		// Inicializar inventario con items básicos si está vacío
 		if (this.jugadorActual.getPinguino() == null) {
 			this.jugadorActual.setPinguino(new Pinguino(new Inventario(new ArrayList<>())));

@@ -2,8 +2,6 @@ package modelo;
 
 import java.util.Random;
 
-
-
 public class Evento extends Casilla {
 
 	/*
@@ -23,7 +21,6 @@ public class Evento extends Casilla {
 	 */
 	String tipoEvento;
 
-
 	// CONSTRUCTOR
 	public Evento(int posicion) {
 		super(posicion);
@@ -36,30 +33,30 @@ public class Evento extends Casilla {
 	public void realizarAccion(Jugador j) {
 		Random random = new Random();
 		int evento = random.nextInt(4);
-		 String mensaje = "";
-switch (evento) {
+		String mensaje = "";
+		switch (evento) {
 		case 0:
 			j.getPinguino().getInv().añadirItem(new Item("pez", 1));
-			 mensaje = "Evento: ¡Has obtenido 1 pez!";
+			mensaje = "Evento: ¡Has obtenido 1 pez!";
 			break;
 		case 1:
 			j.getPinguino().getInv().añadirItem(new Item("bola de nieve", 1));
-			 mensaje = "Evento: ¡Has obtenido 1 bola de nieve!";
+			mensaje = "Evento: ¡Has obtenido 1 bola de nieve!";
 			break;
 		case 2:
-			 j.getPinguino().getInv().añadirItem(new Item("dado rápido", 1));
-			    mensaje = "Evento: ¡Has obtenido un dado rápido!";
-			    break;
+			j.getPinguino().getInv().añadirItem(new Item("dado rápido", 1));
+			mensaje = "Evento: ¡Has obtenido un dado rápido!";
+			break;
 		case 3:
 			j.getPinguino().getInv().añadirItem(new Item("dado lento", 1));
-		    mensaje = "Evento: ¡Has obtenido un dado lento!";
-		    break;
+			mensaje = "Evento: ¡Has obtenido un dado lento!";
+			break;
 
 		}
 
-if (j.getGestorMensajes() != null) {
-    j.getGestorMensajes().agregarMensaje(mensaje);
-}
+		if (j.getGestorMensajes() != null) {
+			j.getGestorMensajes().agregarMensaje(mensaje);
+		}
 
 	}
 }
